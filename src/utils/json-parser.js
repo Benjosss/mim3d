@@ -9,15 +9,6 @@ export default class JsonParser {
     }
 
     /**
-     * Retourne les données parsées
-     * @param data
-     * @returns {*}
-     */
-    parse(data) {
-        return data;
-    }
-
-    /**
      * Lit et parse le fichier de données
      * @returns {Promise<any>}
      */
@@ -30,13 +21,19 @@ export default class JsonParser {
                 return response.json();
             })
             .then(data => {
-                return this.parse(data);
+                return data;
             })
             .catch(error => {
                 console.error('Erreur lors de la récupération :', error);
             });
     }
 
+    /**
+     * Rempli le tableau des zones à partir du fichier de données
+     * @param ZONES Tableau de zones
+     * @param path Fichier de données
+     * @returns {Promise<*>}
+     */
     async fillZonesTab(ZONES, path) {
         const jsonData = await this.fetchJSONData(path);
 
