@@ -31,6 +31,10 @@ export class ZoneManager {
         console.log(`Zone ${zone.name} enregistrée.`);
     }
 
+    registerMultiZones(zones) {
+        zones.forEach(zone => this.registerZone(zone));
+    }
+
     /**
      * Gère les transitions et les chargements de manière non blocante.
      * @param playerPosition THREE.Vector3
