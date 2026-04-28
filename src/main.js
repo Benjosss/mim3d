@@ -1,6 +1,4 @@
 import * as THREE from 'three';
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import InitLoader from "./utils/init-loader.js";
 
 // ── Cursor ──────────────────────────────────────────────

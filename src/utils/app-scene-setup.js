@@ -51,8 +51,6 @@ export default class SceneSetup {
     }
 
     buildRenderer(){
-        const scene = this.scene;
-
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true;
