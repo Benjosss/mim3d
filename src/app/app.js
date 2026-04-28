@@ -1,18 +1,19 @@
 import * as THREE from 'three';
 import {PointerLockControls} from 'three/addons/controls/PointerLockControls.js';
-import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import {computeBoundsTree, disposeBoundsTree, acceleratedRaycast} from 'three-mesh-bvh';
 import jsonParser from "../utils/json-parser.js"
-import {Zone} from '../map-manager/zone.js'
 import {ZoneManager} from '../map-manager/zone-manager.js'
+import SceneSetup from "../utils/app-scene-setup.js";
+import InitLoader from "../utils/init-loader.js";
+import AppInitFpsPlayer from "../utils/app-init-fps-player.js";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
+const DEBUG_STATS = true;
 const DEBUG_BBOX_COLOR = true;
 
 // ================= CONFIG =================
@@ -28,9 +29,9 @@ const CONFIG = {
 
 // ================= DÉFINITION DES ZONES =================
 let ZONES = [];
-
 const parser = new jsonParser();
-ZONES = await parser.fillZonesTab(ZONES, "data/zones.json")
+ZONES = await parser.fillZonesTab(ZONES, "/data/zones.json")
+
 
 // --- Chrono ---
 const t0 = performance.now();
@@ -53,53 +54,21 @@ loadingScreen.innerHTML = `
 document.body.appendChild(loadingScreen);
 
 // ================= SCENE SETUP =================
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x1a1a2e);
+const sceneSetup = new SceneSetup(CONFIG);
 
-let skyArray = [];
-let texture_ft = new THREE.TextureLoader().load('models/skybox/miramar_ft.jpg');
-let texture_bk = new THREE.TextureLoader().load('models/skybox/miramar_bk.jpg');
-let texture_up = new THREE.TextureLoader().load('models/skybox/miramar_up.jpg');
-let texture_dn = new THREE.TextureLoader().load('models/skybox/miramar_dn.jpg');
-let texture_rt = new THREE.TextureLoader().load('models/skybox/miramar_rt.jpg');
-let texture_lf = new THREE.TextureLoader().load('models/skybox/miramar_lf.jpg');
+const scene = sceneSetup.getScene();
+sceneSetup.buildSky();
+sceneSetup.buildLights();
+const camera = sceneSetup.buildCamera();
+const renderer = sceneSetup.buildRenderer();
+sceneSetup.initResize(camera, renderer);
 
-skyArray.push(new THREE.MeshBasicMaterial({map: texture_ft}));
-skyArray.push(new THREE.MeshBasicMaterial({map: texture_bk}));
-skyArray.push(new THREE.MeshBasicMaterial({map: texture_up}));
-skyArray.push(new THREE.MeshBasicMaterial({map: texture_dn}));
-skyArray.push(new THREE.MeshBasicMaterial({map: texture_rt}));
-skyArray.push(new THREE.MeshBasicMaterial({map: texture_lf}));
-
-for (let i = 0; i < 6; i++) {
-    skyArray[i].side = THREE.BackSide;
-}
-
-let skyboxGeo = new THREE.BoxGeometry(10000, 10000, 10000);
-let skybox = new THREE.Mesh(skyboxGeo, skyArray);
-scene.add(skybox);
-
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-camera.position.set(...CONFIG.spawnPoint);
-scene.add(camera);
-
-const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-document.body.appendChild(renderer.domElement);
-
-scene.add(new THREE.AmbientLight(0xffffff, 1));
-const dirLight = new THREE.DirectionalLight(0xffffff, 3);
-dirLight.position.set(10, 20, 10);
-dirLight.castShadow = true;
-scene.add(dirLight);
 
 // ================= TOOLS =================
 const stats = new Stats();
-document.body.appendChild(stats.dom);
-new Benchmark(renderer, scene, camera);
+if(DEBUG_STATS) {
+    document.body.appendChild(stats.dom);
+}
 
 // ================= PHYSIQUE =================
 const clock = new THREE.Clock();
@@ -142,57 +111,11 @@ controls.addEventListener('unlock', () => {
 
 
 // ================= LOAD ASSETS =================
-const dLoader = new DRACOLoader();
-dLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
-dLoader.setDecoderConfig({type: "js"});
-
-const gltfLoader = new GLTFLoader();
-gltfLoader.setDRACOLoader(dLoader);
+const gltfLoader = new InitLoader().initGltfLoader();
 
 // ================= CHARGEMENT DU PERSONNAGE =================
-const player = new THREE.Group();
-scene.add(player);
-
-let characterModel = null;
-let mixer = null;
-
-// Noms de nodes à masquer en vue FPS
-const FPS_HIDDEN_PARTS = ['head', 'hair', 'eyes', 'internal', 'internal2'];
-
-gltfLoader.load('models/players/woman_anim.glb', (gltf) => {
-    characterModel = gltf.scene;
-    characterModel.scale.set(0.8, 0.8, 0.8);
-    characterModel.position.y = 0;
-    characterModel.rotation.y = Math.PI; // Rotation de 180 deg
-
-    characterModel.traverse(node => {
-        if (node.isMesh) {
-            node.castShadow = true;
-            node.receiveShadow = true;
-            const nameLower = node.name.toLowerCase();
-            node.visible = !FPS_HIDDEN_PARTS.some(part => nameLower.includes(part));
-        }
-    });
-
-    mixer = new THREE.AnimationMixer(characterModel);
-
-    const animations = gltf.animations;
-    const clip = animations[0];
-
-    // Supprime les déplacement du modèle (root motion)
-    clip.tracks = clip.tracks.filter(track => {
-        return !(track.name.includes('position') &&
-            (track.name.includes('Hips') || track.name.includes('hips')));
-    });
-
-    const walkAction = mixer.clipAction(clip);
-    walkAction.play();
-    walkAction.paused = true;
-    characterModel.userData.walkAction = walkAction;
-
-    player.add(characterModel);
-
-}, undefined, (error) => console.error("Erreur chargement personnage :", error));
+const playerInit = new AppInitFpsPlayer(scene, gltfLoader);
+const player = playerInit.initFpsCharacter("/models/characters/woman_anim.glb");
 
 // ================= ZONE MANAGER =================
 // On passe colliderMeshes au ZoneManager
@@ -200,7 +123,7 @@ gltfLoader.load('models/players/woman_anim.glb', (gltf) => {
 const colliderMeshes = [];
 
 const zoneManager = new ZoneManager({scene, loader: gltfLoader, colliderMeshes});
-ZONES.forEach(zone => zoneManager.registerZone(zone));
+zoneManager.registerMultiZones(ZONES);
 if (DEBUG_BBOX_COLOR) {
     ZONES.forEach(zone => {
         const helper = new THREE.Box3Helper(zone.triggerBox, 0xffff00);
@@ -225,8 +148,7 @@ setTimeout(() => loadingScreen.remove(), 500);
 const t1 = performance.now();
 const res_load = `⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`
 console.log(`⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`);
-const statsHTML = document.getElementById('stats_time');
-statsHTML.textContent = res_load;
+
 
 function printHierarchy() {
     const zones = zoneManager.zones;
@@ -279,14 +201,6 @@ document.addEventListener('keydown', e => {
     }
 });
 
-// ================= RESIZE =================
-
-
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
 
 // ================= PHYSIQUE BVH =================
 
@@ -447,7 +361,7 @@ function animate() {
     const deltaTime = Math.min(0.05, clock.getDelta());
 
     // Mise à jour du mixer
-    if (mixer) mixer.update(deltaTime);
+    if (playerInit.mixer) playerInit.mixer.update(deltaTime);
 
     if (controls.isLocked) {
         const speed = CONFIG.moveSpeed;
@@ -465,8 +379,8 @@ function animate() {
         if (keyMap['KeyA'] || keyMap['ArrowLeft']) playerVelocity.add(getSideVector().multiplyScalar(-speed));
         if (keyMap['KeyD'] || keyMap['ArrowRight']) playerVelocity.add(getSideVector().multiplyScalar(speed));
 
-        if (characterModel?.userData.walkAction) {
-            characterModel.userData.walkAction.paused = !isMoving;
+        if (playerInit.model?.userData.walkAction) {
+            playerInit.model.userData.walkAction.paused = !isMoving;
         }
 
         if (!playerOnFloor) {
@@ -510,9 +424,9 @@ function animate() {
 
         // Modèle visible
         player.position.copy(playerPos);
-        if (characterModel) {
+        if (playerInit.model) {
             const yaw = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ').y;
-            characterModel.rotation.y = yaw + Math.PI;
+            playerInit.model.rotation.y = yaw + Math.PI;
         }
 
         // ZoneManager : détection de transition à chaque frame
@@ -534,7 +448,9 @@ function animate() {
         console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
     }
 
-    stats.update();
+    if(DEBUG_STATS){
+        stats.update();
+    }
     document.getElementById('current_zone').innerHTML = "Salle actuelle : " + (zoneManager.currentRoom?.name ?? 'aucune') + "<br>" + "Type : " + (zoneManager.currentRoom?.type  ?? "Empty") + "<br>" + "Description : " + (zoneManager.currentRoom?.description  ?? "Empty");
 
     // console.log(renderer.info.render.calls);
