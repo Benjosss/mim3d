@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIM3D</title>
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="cursor"></div>
+
+<div class="page">
+
+    <!-- ── LEFT ── -->
+    <div class="left">
+        <nav class="nav">
+            <span class="logo">mim3d</span>
+            <span class="nav-badge">Visite virtuelle</span>
+        </nav>
+
+        <div class="hero">
+            <p class="eyebrow">UFR MIM</p>
+
+            <h1>
+                <span class="h1-line"><span class="h1-inner">Explorez</span></span>
+                <span class="h1-line"><span class="h1-inner">l'UFR MIM</span></span>
+                <span class="h1-line"><span class="h1-inner">en 3D.</span></span>
+            </h1>
+
+            <p class="desc">
+                Naviguez librement dans les couloirs, repérez vos salles de cours,
+                et découvrez les espaces de la faculté — depuis n'importe où,
+                avant même d'y mettre les pieds.
+            </p>
+
+            <div class="actions">
+                <a href="./app" class="btn-primary">
+                    <span>Commencer la visite</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+                <a href="#" class="btn-secondary">En savoir plus</a>
+            </div>
+        </div>
+
+        <footer class="left-footer">
+            <div class="stat">
+                <span class="stat-val">5</span>
+                <span class="stat-label">Étages</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-val">100+</span>
+                <span class="stat-label">Salles et Bureaux</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-val">Guidée ou automatique</span>
+                <span class="stat-label">Navigation</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ── RIGHT ── -->
+    <div class="right">
+        <canvas id="three-canvas"></canvas>
+        <div class="canvas-label">
+            <div class="canvas-label-title">UFR MIM - Metz</div>
+            <div class="canvas-label-sub">Modèle 3D</div>
+        </div>
+    </div>
+
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
