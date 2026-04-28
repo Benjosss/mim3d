@@ -36,7 +36,7 @@ camera.position.set(60, 40, 80);
 camera.lookAt(0, 0, 0);
 
 // ── Lumières ────────────────────────────────────────────
-const ambient = new THREE.AmbientLight(0xf5ece0, 0.6);
+const ambient = new THREE.AmbientLight(0xf5ece0, 0.5);
 scene.add(ambient);
 
 const key = new THREE.DirectionalLight(0xfff5e0, 2.5);
@@ -89,7 +89,7 @@ document.addEventListener('mousemove', e => {
 
 // ── Particules flottantes ────────────────────────────────
 const particlesGeo = new THREE.BufferGeometry();
-const N = 120;
+const N = 1000;
 const pos = new Float32Array(N * 3);
 for (let i = 0; i < N; i++) {
     pos[i*3]   = (Math.random() - 0.5) * 80;
