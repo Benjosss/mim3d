@@ -1,0 +1,224 @@
+[
+  {
+    "name": "floor-1",
+    "path": "models/-1_floor_aisle_b_sized.glb",
+    "impostorPath" : "models/impostors/-1_floor_aisle_b_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Rez de jardin aile b",
+    "adjacentZoneNames": ["floor0", "stairs0to-1_1", "floor0ground", "allstairs_2", "allstairs_3"],
+    "triggerBox": {
+      "min": [56.320, -0.200, -69.797],
+      "max": [87.549, 4.006, -9.059]
+    }
+  },
+  {
+    "name": "floor0",
+    "path": "models/0_floor_aisle_b_sized.glb",
+    "impostorPath" : "models/impostors/0_floor_aisle_b_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Rez de chaussé aile b",
+    "adjacentZoneNames": ["stairs1to0_1", "floor1", "floor-1", "floor0ground", "stairs0to-1_1", "allstairs_2", "allstairs_3", "floor0hall"],
+    "triggerBox": {
+      "min": [70.925, 2.651, -75.214],
+      "max": [89.943, 7.642, -0.082]
+    }
+  },
+  {
+    "name": "floor0_a",
+    "path": "models/0_floor_aisle_a_sized.glb",
+    "impostorPath" : "models/impostors/imp_0_floor_aisle_a_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Rez de chaussé aile a",
+    "adjacentZoneNames": ["floor0hall"],
+    "triggerBox": {
+      "min": [5.963, 3.460, -76.234],
+      "max": [56.385, 7.649, -11.819]
+    }
+  },
+  {
+    "name": "floor0ground",
+    "path": "models/0_floor_aisle_b_ground_sized.glb",
+    "impostorPath" : "models/impostors/0_floor_aisle_b_ground_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Sol rez de chaussé",
+    "adjacentZoneNames": ["floor0", "allstairs_2", "floor1", "floor-1", "allstairs_3", "floor0hall"],
+    "triggerBox": {
+      "min": [0,0,0],
+      "max": [0,0,0]
+    }
+  },
+  {
+    "name": "floor0hall",
+    "path": "models/0_floor_hall_sized.glb",
+    "impostorPath" : "models/impostors/imp_0_floor_hall_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Hall rez de chaussé",
+    "adjacentZoneNames": ["floor0", "floor0ground", "floor0_a"],
+    "triggerBox": {
+      "min": [56.119, -0.100, -35.378],
+      "max": [71.158, 6.943, -27.871]
+    }
+  },
+  {
+    "name": "floor1",
+    "path": "models/1_floor_aisle_b_sized.glb",
+    "impostorPath" : "models/impostors/1_floor_aisle_b_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "1er étage aile b",
+    "adjacentZoneNames": ["stairs2to1_1", "floor2", "floor0", "floor0ground", "stairs1to0_1", "allstairs_2", "allstairs_3", "floor1hall"],
+    "triggerBox": {
+      "min": [71.049, 6.443, -75.211],
+      "max": [89.923, 11, -0.106]
+    }
+  },
+  {
+    "name": "floor1hall",
+    "path": "models/1_floor_hall_sized.glb",
+    "impostorPath" : "models/impostors/imp_1_floor_hall_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Passerelle 1er étage",
+    "adjacentZoneNames": ["floor1"],
+    "triggerBox": {
+      "min": [56.119, 7.020, -35.378],
+      "max": [71.158, 10.088, -27.871]
+    }
+  },
+  {
+    "name": "floor2",
+    "path": "models/2_floor_aisle_b_sized.glb",
+    "impostorPath" : "models/impostors/2_floor_aisle_b_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "2ème étage aile b",
+    "adjacentZoneNames": ["stairs3to2_1", "floor1", "floor3", "stairs2to1_1", "allstairs_2", "allstairs_3", "floor2hall"],
+    "triggerBox": {
+      "min": [70.950, 11.075, -75.211],
+      "max": [89.923, 14.553, -0.105]
+    }
+  },
+  {
+    "name": "floor2hall",
+    "path": "models/2_floor_hall_sized.glb",
+    "impostorPath" : "models/impostors/imp_2_floor_hall_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Passerelle 2ème étage",
+    "adjacentZoneNames": ["floor2"],
+    "triggerBox": {
+      "min": [56.119, 10.560, -35.378],
+      "max": [71.158, 14.528, -27.871]
+    }
+  },
+  {
+    "name": "floor3",
+    "path": "models/3_floor_aisle_b_sized.glb",
+    "impostorPath" : "models/impostors/3_floor_aisle_b_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "3ème étage aile b",
+    "adjacentZoneNames": ["floor2", "stairs3to2_1", "allstairs_2", "allstairs_3"],
+    "triggerBox": {
+      "min": [71.019, 14.530, -75.211],
+      "max": [89.925, 18.038, -0.105]
+    }
+  },
+  {
+    "name": "stairs3to2_1",
+    "path": "models/3_to_2_stair_1_sized.glb",
+    "impostorPath" : "models/impostors/3_to_2_stair_1_sized.glb",
+    "physics" : true,
+    "type": "stairs",
+    "description" : "Escalier 1",
+    "adjacentZoneNames": ["floor3", "floor2", "stairs2to1_1"],
+    "triggerBox": {
+      "min": [74.375, 11.078, -25.835],
+      "max": [78.636, 16.021, -20.382]
+    }
+  },
+  {
+    "name": "stairs2to1_1",
+    "path": "models/2_to_1_stair_1_sized.glb",
+    "impostorPath" : "models/impostors/2_to_1_stair_1_sized.glb",
+    "physics" : true,
+    "type": "stairs",
+    "description" : "Escalier 1",
+    "adjacentZoneNames": ["floor2", "floor1", "stairs3to2_1", "stairs1to0_1"],
+    "triggerBox": {
+      "min": [74.375, 7.639, -25.835],
+      "max": [78.635, 11.511, -20.382]
+    }
+  },
+  {
+    "name": "stairs1to0_1",
+    "path": "models/1_to_0_stair_1_sized.glb",
+    "impostorPath" : "models/impostors/1_to_0_stair_1_sized.glb",
+    "physics" : true,
+    "type": "stairs",
+    "description" : "Escalier 1",
+    "adjacentZoneNames": ["floor0", "floor1", "stairs2to1_1"],
+    "triggerBox": {
+      "min": [76.168, 4.240, -27.784],
+      "max": [78.607, 7.854, -21.202]
+    }
+  },
+  {
+    "name": "stairs0to-1_1",
+    "path": "models/0_to_-1_stair_1_sized.glb",
+    "impostorPath" : "models/impostors/0_to_-1_stair_1_sized.glb",
+    "physics" : true,
+    "type": "stairs",
+    "description" : "Escalier 1",
+    "adjacentZoneNames": ["floor0", "floor-1"],
+    "triggerBox": {
+      "min": [83.508, -0.180, -34.614],
+      "max": [87.142, 5.309, -24.841]
+    }
+  },
+  {
+    "name": "allstairs_2",
+    "path": "models/all_stair_2_sized.glb",
+    "impostorPath" : "models/impostors/imp_all_stair_2_sized.glb",
+    "physics" : true,
+    "type": "stairs",
+    "description" : "Escalier 2",
+    "adjacentZoneNames": ["floor0", "floor0ground", "floor-1", "floor1", "floor2", "floor3"],
+    "triggerBox": {
+      "min": [71.247, -0.008, -40.233],
+      "max": [78.236, 16.038, -34.325]
+    }
+  },
+  {
+    "name": "allstairs_3",
+    "path": "models/all_stair_3_sized.glb",
+    "impostorPath" : "models/impostors/imp_all_stair_3_sized.glb",
+    "physics" : true,
+    "type": "stairs",
+    "description" : "Escalier 3",
+    "adjacentZoneNames": ["floor0", "floor0ground", "floor-1", "floor1", "floor2", "floor3"],
+    "triggerBox": {
+      "min": [71.524, -0.100, -69.277],
+      "max": [78.196, 15.816, -63.900]
+    }
+  },
+  {
+    "name": "BN2-005",
+    "path": "models/furnitures/fur_test_salle_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [79.581, 11.075, -38.413],
+      "max": [87.786, 14.752, -31.479]
+    }
+  }
+
+]
