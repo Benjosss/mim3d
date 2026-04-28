@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
+import InitLoader from "./utils/init-loader.js";
 
 // ── Cursor ──────────────────────────────────────────────
 const cursor = document.getElementById('cursor');
@@ -54,12 +55,9 @@ scene.add(rim);
 const pivot = new THREE.Group();
 scene.add(pivot);
 
-const dLoader = new DRACOLoader();
-dLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-const gltfLoader = new GLTFLoader();
-gltfLoader.setDRACOLoader(dLoader);
+const gltfLoader = new InitLoader().initGltfLoader();
 
-gltfLoader.load('public/models/landing-page/ufr_mim.glb', (gltf) => {
+gltfLoader.load('models/landing-page/ufr_mim.glb', (gltf) => {
     const model = gltf.scene;
 
     const SCALE_FACTOR = 0.6;
