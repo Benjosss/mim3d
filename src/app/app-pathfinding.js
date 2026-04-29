@@ -37,25 +37,47 @@ export default class AppPathfinding {
 
     loadNavMesh(path, loader) {
         loader.load(path, (gltf) => {
-            let found = null;
+            let navMeshObject = null;
+
             gltf.scene.traverse((child) => {
-                if (child.isMesh && child.geometry) found = child;
+                if (child.isMesh && child.geometry) {
+                    navMeshObject = child;
+
+                    child.material = new THREE.MeshBasicMaterial({
+                        color: 0x00ff00,
+                        transparent: true,
+                        opacity: 0,
+                        wireframe: true,
+                        depthTest: true // Garde true pour voir où il s'enfonce dans le décor
+                    });
+
+                    child.position.y += 0.05;
+                }
             });
 
-            if (!found) return;
+            if (!navMeshObject) {
+                console.error("Aucun mesh trouvé dans le fichier NavMesh");
+                return;
+            }
 
-            found.updateWorldMatrix(true, false);
-            const geometry = found.geometry.clone();
-            geometry.applyMatrix4(found.matrixWorld);
+            // Préparation de la géométrie pour la logique de pathfinding
+            navMeshObject.updateWorldMatrix(true, false);
+            const geometry = navMeshObject.geometry.clone();
+            geometry.applyMatrix4(navMeshObject.matrixWorld);
 
+            // Initialisation de la zone de navigation
             this.pathfinding.setZoneData(this.zone, Pathfinding.createZone(geometry));
-            this.navmesh = found;
+
+            this.navmesh = navMeshObject;
             this.isNavMeshLoaded = true;
 
+            this.scene.add(gltf.scene);
+
+            // Positionnement initial du joueur
             const start = this.snapToNavMesh(new THREE.Vector3(85, 20, -3));
             if (start) this.playerGroup.position.copy(start);
 
-            console.log("NavMesh prêt");
+            console.log("NavMesh chargé et affiché.");
         });
     }
 
@@ -86,7 +108,7 @@ export default class AppPathfinding {
             if (path && path.length > 0) {
                 // Création de la courbe Catmull-Rom
                 const points = [this.playerGroup.position.clone(), ...path];
-                this.splineCurve = new THREE.CatmullRomCurve3(points, false, 'centripetal');
+                this.splineCurve = new THREE.CatmullRomCurve3(points, false, 'chordal');
                 this.splineTotalLength = this.splineCurve.getLength();
                 this.splineProgress = 0;
 
@@ -146,7 +168,9 @@ export default class AppPathfinding {
 
 
             if (this.visualPathLine) {
-                // this.scene.remove(this.visualPathLine);
+                // this.scene.remove(this.visualPathLine); // Retire la ligne de la scène
+                // this.visualPathLine.geometry.dispose(); // Libère la mémoire
+                // this.visualPathLine.material.dispose();
                 this.visualPathLine = null;
             }
         }
