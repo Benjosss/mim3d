@@ -28,6 +28,8 @@ const CONFIG = {
     gravity: 30,
     debugCapsule: false,
 };
+// --- Chrono ---
+const t0 = performance.now();
 
 // ================= DÉFINITION DES ZONES =================
 let ZONES = [];
@@ -35,8 +37,6 @@ const parser = new jsonParser();
 ZONES = await parser.fillZonesTab(ZONES, "/data/zones.json")
 
 
-// --- Chrono ---
-const t0 = performance.now();
 
 // ================= LOADING SCREEN UI =================
 const loadingScreen = document.createElement('div');
@@ -123,10 +123,6 @@ loadingScreen.style.transition = 'opacity 0.5s';
 loadingScreen.style.opacity = '0';
 setTimeout(() => loadingScreen.remove(), 500);
 
-// --- Fin du chrono ---
-const t1 = performance.now();
-console.log(`⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`);
-
 // ================= PHYSIQUE =================
 const clock = new THREE.Clock();
 
@@ -175,6 +171,10 @@ document.addEventListener('keydown', e => {
         zoneManager.printHierarchyByType("TD");
     }
 });
+
+// --- Fin du chrono ---
+const t1 = performance.now();
+console.log(`⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`);
 
 // ================= BOUCLE DE RENDU =================
 function animate() {
