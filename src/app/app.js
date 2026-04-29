@@ -9,6 +9,7 @@ import InitLoader from "../utils/init-loader.js";
 import AppFpsPlayer from "./app-fps-player.js";
 import AppDebugUtils from "./app-debug-utils.js";
 import AppPhysicsBvh from "./app-physics-bvh.js";
+import AppPathfinding from "./app-pathfinding.js";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
@@ -35,7 +36,6 @@ const t0 = performance.now();
 let ZONES = [];
 const parser = new jsonParser();
 ZONES = await parser.fillZonesTab(ZONES, "/data/zones.json")
-
 
 
 // ================= LOADING SCREEN UI =================
@@ -69,7 +69,7 @@ const debugUtil = new AppDebugUtils(scene, CONFIG);
 
 // ================= TOOLS =================
 const stats = new Stats();
-if(DEBUG_STATS) {
+if (DEBUG_STATS) {
     document.body.appendChild(stats.dom);
 }
 
@@ -123,11 +123,18 @@ loadingScreen.style.transition = 'opacity 0.5s';
 loadingScreen.style.opacity = '0';
 setTimeout(() => loadingScreen.remove(), 500);
 
+// ================= PATHFINDING =================
+
+const pathfinding = new AppPathfinding(scene, player);
+pathfinding.showHelper();
+pathfinding.loadNavMesh("/models/navmeshes/navmesh.glb", gltfLoader);
+
 // ================= PHYSIQUE =================
 const timer = new THREE.Timer();
 
 // La capsule est représentée par sa position (centre bas) + rayon + hauteur.
 const playerPos = CONFIG.spawnPoint.clone();  // position du bas de la capsule
+pathfinding.setPlayerPos(playerPos);
 const playerVelocity = new THREE.Vector3();
 const playerDirection = new THREE.Vector3();
 let playerOnFloor = false;
@@ -170,6 +177,10 @@ document.addEventListener('keydown', e => {
         e.preventDefault();
         zoneManager.printHierarchyByType("TD");
     }
+    if (e.code === 'F7') {
+        e.preventDefault();
+        pathfinding.findPathTo("BN2-005", ZONES)
+    }
 });
 
 // --- Fin du chrono ---
@@ -192,11 +203,21 @@ function animate(timestamp) {
         const yVel = playerVelocity.y;
         playerVelocity.set(0, yVel, 0);
 
-        const isMoving =
+        const isKeyboardMoving =
             keyMap['KeyW'] || keyMap['ArrowUp'] ||
             keyMap['KeyS'] || keyMap['ArrowDown'] ||
             keyMap['KeyA'] || keyMap['ArrowLeft'] ||
             keyMap['KeyD'] || keyMap['ArrowRight'];
+
+        const isAutoMoving = pathfinding.isMoving;
+
+        const isMoving = isKeyboardMoving || isAutoMoving;
+
+        if (pathfinding.isMoving) {
+            CONFIG.playerRadius = 0.2;
+        } else {
+            CONFIG.playerRadius = 0.4;
+        }
 
         if (keyMap['KeyW'] || keyMap['ArrowUp']) playerVelocity.add(bvhPysicsUtils.getForwardVector().multiplyScalar(speed));
         if (keyMap['KeyS'] || keyMap['ArrowDown']) playerVelocity.add(bvhPysicsUtils.getForwardVector().multiplyScalar(-speed));
@@ -224,6 +245,9 @@ function animate(timestamp) {
         if (CONFIG.debugCapsule) {
             debugUtil.playerCapsuleHelperFollow(capsuleHelper, playerPos);
         }
+
+        //Pathfinding
+        pathfinding.move(deltaTime);
     }
 
     // P : log position + zone courante
@@ -232,10 +256,10 @@ function animate(timestamp) {
         console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
     }
 
-    if(DEBUG_STATS){
+    if (DEBUG_STATS) {
         stats.update();
     }
-    document.getElementById('current_zone').innerHTML = "Salle actuelle : " + (zoneManager.currentRoom?.name ?? 'aucune') + "<br>" + "Type : " + (zoneManager.currentRoom?.type  ?? "Empty") + "<br>" + "Description : " + (zoneManager.currentRoom?.description  ?? "Empty");
+    document.getElementById('current_zone').innerHTML = "Salle actuelle : " + (zoneManager.currentRoom?.name ?? 'aucune') + "<br>" + "Type : " + (zoneManager.currentRoom?.type ?? "Empty") + "<br>" + "Description : " + (zoneManager.currentRoom?.description ?? "Empty");
 
     // console.log(renderer.info.render.calls);
     renderer.render(scene, camera);
