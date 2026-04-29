@@ -35,3 +35,7 @@ body { margin: 0; }
 #current_zone {
     margin: 0;
 }
+
+#msg{
+    padding-left: 100px;
+}
