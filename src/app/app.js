@@ -124,7 +124,7 @@ loadingScreen.style.opacity = '0';
 setTimeout(() => loadingScreen.remove(), 500);
 
 // ================= PHYSIQUE =================
-const clock = new THREE.Clock();
+const timer = new THREE.Timer();
 
 // La capsule est représentée par sa position (centre bas) + rayon + hauteur.
 const playerPos = CONFIG.spawnPoint.clone();  // position du bas de la capsule
@@ -177,8 +177,12 @@ const t1 = performance.now();
 console.log(`⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`);
 
 // ================= BOUCLE DE RENDU =================
-function animate() {
-    const deltaTime = Math.min(0.05, clock.getDelta());
+function animate(timestamp) {
+    requestAnimationFrame(animate);
+
+    timer.update(timestamp);
+    const deltaTime = Math.min(0.05, timer.getDelta());
+
 
     // Mise à jour du mixer
     if (fpsPlayer.mixer) fpsPlayer.mixer.update(deltaTime);
@@ -237,4 +241,4 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-renderer.setAnimationLoop(animate);
+requestAnimationFrame(animate);
