@@ -6,7 +6,9 @@ import jsonParser from "../utils/json-parser.js"
 import {ZoneManager} from '../map-manager/zone-manager.js'
 import SceneSetup from "./app-scene-setup.js";
 import InitLoader from "../utils/init-loader.js";
-import AppInitFpsPlayer from "./app-init-fps-player.js";
+import AppFpsPlayer from "./app-fps-player.js";
+import AppDebugUtils from "./app-debug-utils.js";
+import AppPhysicsBvh from "./app-physics-bvh.js";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
@@ -63,6 +65,7 @@ const camera = sceneSetup.buildCamera();
 const renderer = sceneSetup.buildRenderer();
 sceneSetup.initResize(camera, renderer);
 
+const debugUtil = new AppDebugUtils(scene, CONFIG);
 
 // ================= TOOLS =================
 const stats = new Stats();
@@ -70,31 +73,8 @@ if(DEBUG_STATS) {
     document.body.appendChild(stats.dom);
 }
 
-// ================= PHYSIQUE =================
-const clock = new THREE.Clock();
-
-// La capsule est représentée par sa position (centre bas) + rayon + hauteur.
-const playerPos = CONFIG.spawnPoint.clone();  // position du bas de la capsule
-const playerVelocity = new THREE.Vector3();
-const playerDirection = new THREE.Vector3();
-let playerOnFloor = false;
-
-const _capsuleBottom = new THREE.Vector3();
-const _capsuleTop = new THREE.Vector3();
-const _normal = new THREE.Vector3();
-const _matrix = new THREE.Matrix4();
-
 // Debug capsule
-const debugMat = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
-const capsuleHelper = new THREE.Group();
-const bodyMesh = new THREE.Mesh(new THREE.CylinderGeometry(CONFIG.playerRadius, CONFIG.playerRadius, CONFIG.playerHeight, 8), debugMat);
-const sphereTop = new THREE.Mesh(new THREE.SphereGeometry(CONFIG.playerRadius, 8, 8), debugMat);
-const sphereBot = new THREE.Mesh(new THREE.SphereGeometry(CONFIG.playerRadius, 8, 8), debugMat);
-sphereTop.position.y = CONFIG.playerHeight / 2;
-sphereBot.position.y = -CONFIG.playerHeight / 2;
-capsuleHelper.add(bodyMesh, sphereTop, sphereBot);
-capsuleHelper.visible = CONFIG.debugCapsule;
-scene.add(capsuleHelper);
+const capsuleHelper = debugUtil.buildPlayerCapsuleHelper();
 
 // ================= CONTROLS =================
 const menuPanel = document.getElementById('menuPanel');
@@ -114,14 +94,13 @@ controls.addEventListener('unlock', () => {
 const gltfLoader = new InitLoader().initGltfLoader();
 
 // ================= CHARGEMENT DU PERSONNAGE =================
-const playerInit = new AppInitFpsPlayer(scene, gltfLoader);
-const player = playerInit.initFpsCharacter("/models/characters/woman_anim.glb");
+const fpsPlayer = new AppFpsPlayer(scene, gltfLoader, camera, CONFIG);
+const player = fpsPlayer.initFpsCharacter("/models/characters/woman_anim.glb");
 
 // ================= ZONE MANAGER =================
 // On passe colliderMeshes au ZoneManager
 // Il y ajoute/retire les meshes de collision selon les zones visibles
 const colliderMeshes = [];
-
 const zoneManager = new ZoneManager({scene, loader: gltfLoader, colliderMeshes});
 zoneManager.registerMultiZones(ZONES);
 if (DEBUG_BBOX_COLOR) {
@@ -146,34 +125,26 @@ setTimeout(() => loadingScreen.remove(), 500);
 
 // --- Fin du chrono ---
 const t1 = performance.now();
-const res_load = `⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`
 console.log(`⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`);
 
+// ================= PHYSIQUE =================
+const clock = new THREE.Clock();
 
-function printHierarchy() {
-    const zones = zoneManager.zones;
+// La capsule est représentée par sa position (centre bas) + rayon + hauteur.
+const playerPos = CONFIG.spawnPoint.clone();  // position du bas de la capsule
+const playerVelocity = new THREE.Vector3();
+const playerDirection = new THREE.Vector3();
+let playerOnFloor = false;
 
-    let types = [];
-    let sort = [];
-    zones.forEach((zone) => {
-        if(!types.includes(zone.type)) {
-            types.push(zone.type);
-        }
-    })
-    types.forEach((type) => {
-        zones.forEach((zone) => {
-            if(zone.type === type) {
-                sort.push({
-                    name: zone.name,
-                    type: zone.type,
-                    description: zone.description,
-                });
-            }
-        })
-    })
-    console.table(types);
-    console.table(sort);
-}
+const _capsuleBottom = new THREE.Vector3();
+const _capsuleTop = new THREE.Vector3();
+const _normal = new THREE.Vector3();
+const _matrix = new THREE.Matrix4();
+
+const bvhPysicsUtils = new AppPhysicsBvh(CONFIG, camera, colliderMeshes,
+    playerPos, playerVelocity, playerDirection,
+    playerOnFloor, _capsuleTop, _capsuleBottom, _normal, _matrix);
+
 
 // ================= INPUT (AZERTY) =================
 const keyMap = {};
@@ -193,175 +164,24 @@ document.addEventListener('keydown', e => {
     }
     if (e.code === 'F3') {
         e.preventDefault();
-        debugColliderMeshes();
+        debugUtil.buildColliderMeshesHelper(colliderMeshes);
     }
     if (e.code === 'F4') {
         e.preventDefault();
-        printHierarchy();
+        zoneManager.printHierarchy();
+    }
+    if (e.code === 'F6') {
+        e.preventDefault();
+        zoneManager.printHierarchyByType("TD");
     }
 });
-
-
-// ================= PHYSIQUE BVH =================
-
-function debugColliderMeshes() {
-
-    colliderMeshes.forEach(mesh => {
-        // On crée un clone visuel en fil de fer pour ne pas casser le matériau original
-        const wireframeGeom = new THREE.WireframeGeometry(mesh.geometry);
-        const wireframe = new THREE.LineSegments(wireframeGeom);
-
-        // On applique la même position/rotation que le mesh original
-        wireframe.matrixAutoUpdate = false;
-        wireframe.matrix.copy(mesh.matrixWorld);
-
-        // Couleur rouge pour les collisions
-        wireframe.material.color.set(0xff0000);
-        wireframe.material.opacity = 0.5;
-        wireframe.material.transparent = true;
-
-        scene.add(wireframe);
-    });
-}
-
-/**
- * Résolution des collisions capsule/monde via BVH.
- * Teste chaque mesh de collision actif dans colliderMeshes.
- * Pousse le joueur hors des surfaces de manière itérative.
- */
-function playerCollisions() {
-    playerOnFloor = false;
-
-    const EPS = 0.002;          // seuil anti micro-collisions
-    const MAX_PUSH = 3;         // limite de corrections par mesh
-    let pushCount = 0;
-
-    _capsuleBottom.copy(playerPos);
-    _capsuleBottom.y = playerPos.y + CONFIG.playerRadius;
-
-    _capsuleTop.copy(playerPos);
-    _capsuleTop.y = playerPos.y + CONFIG.playerHeight - CONFIG.playerRadius;
-
-    for (const mesh of colliderMeshes) {
-        if (!mesh.geometry.boundsTree) continue;
-
-        pushCount = 0;
-
-        const invMat = _matrix.copy(mesh.matrixWorld).invert();
-
-        const localBottom = _capsuleBottom.clone().applyMatrix4(invMat);
-        const localTop = _capsuleTop.clone().applyMatrix4(invMat);
-
-        const scale = mesh.matrixWorld.getMaxScaleOnAxis();
-        const localR = CONFIG.playerRadius / scale;
-
-        mesh.geometry.boundsTree.shapecast({
-            intersectsBounds: box => {
-                const capsuleBox = new THREE.Box3();
-
-                capsuleBox.min.set(
-                    Math.min(localBottom.x, localTop.x) - localR,
-                    Math.min(localBottom.y, localTop.y) - localR,
-                    Math.min(localBottom.z, localTop.z) - localR
-                );
-
-                capsuleBox.max.set(
-                    Math.max(localBottom.x, localTop.x) + localR,
-                    Math.max(localBottom.y, localTop.y) + localR,
-                    Math.max(localBottom.z, localTop.z) + localR
-                );
-
-                return capsuleBox.intersectsBox(box);
-            },
-
-            intersectsTriangle: tri => {
-
-                if (pushCount >= MAX_PUSH) return false;
-
-                const capsuleSeg = new THREE.Line3(localBottom, localTop);
-
-                const closestPointOnTriangle = new THREE.Vector3();
-                const closestPointOnSegment = new THREE.Vector3();
-
-                tri.closestPointToSegment(
-                    capsuleSeg,
-                    closestPointOnTriangle,
-                    closestPointOnSegment
-                );
-
-                const distance = closestPointOnSegment.distanceTo(closestPointOnTriangle);
-
-                // seuil anti jitter
-                if (distance >= localR - EPS) return false;
-
-                const depth = localR - distance;
-
-                _normal.subVectors(closestPointOnSegment, closestPointOnTriangle);
-
-                if (_normal.lengthSq() === 0) return false;
-
-                _normal.normalize();
-
-                const worldNormal = _normal.clone().transformDirection(mesh.matrixWorld);
-
-                // --- SOL ---
-                if (worldNormal.y > 0.5) {
-                    playerOnFloor = true;
-
-                    // empêche rebond vertical
-                    if (playerVelocity.y < 0) playerVelocity.y = 0;
-
-                    // colle légèrement au sol (empêche les micro-sauts)
-                    playerPos.y -= EPS;
-                }
-
-                // --- PLAFOND ---
-                else if (worldNormal.y < -0.5) {
-                    if (playerVelocity.y > 0) playerVelocity.y = 0;
-                }
-
-                // --- MUR / ESCALIER ---
-                else {
-                    // glissement
-                    const dot = playerVelocity.dot(worldNormal);
-                    if (dot < 0) {
-                        playerVelocity.addScaledVector(worldNormal, -dot);
-                    }
-                }
-
-                // correction position avec clamp
-                const push = depth * scale + 0.003;
-                playerPos.addScaledVector(worldNormal, push);
-
-                pushCount++;
-
-                return false;
-            }
-        });
-    }
-}
-
-function getForwardVector() {
-    camera.getWorldDirection(playerDirection);
-    playerDirection.y = 0;
-    playerDirection.normalize();
-    return playerDirection;
-}
-
-function getSideVector() {
-    camera.getWorldDirection(playerDirection);
-    playerDirection.y = 0;
-    playerDirection.normalize();
-    playerDirection.cross(camera.up);
-    return playerDirection;
-}
 
 // ================= BOUCLE DE RENDU =================
 function animate() {
     const deltaTime = Math.min(0.05, clock.getDelta());
 
     // Mise à jour du mixer
-    if (playerInit.mixer) playerInit.mixer.update(deltaTime);
+    if (fpsPlayer.mixer) fpsPlayer.mixer.update(deltaTime);
 
     if (controls.isLocked) {
         const speed = CONFIG.moveSpeed;
@@ -374,71 +194,31 @@ function animate() {
             keyMap['KeyA'] || keyMap['ArrowLeft'] ||
             keyMap['KeyD'] || keyMap['ArrowRight'];
 
-        if (keyMap['KeyW'] || keyMap['ArrowUp']) playerVelocity.add(getForwardVector().multiplyScalar(speed));
-        if (keyMap['KeyS'] || keyMap['ArrowDown']) playerVelocity.add(getForwardVector().multiplyScalar(-speed));
-        if (keyMap['KeyA'] || keyMap['ArrowLeft']) playerVelocity.add(getSideVector().multiplyScalar(-speed));
-        if (keyMap['KeyD'] || keyMap['ArrowRight']) playerVelocity.add(getSideVector().multiplyScalar(speed));
+        if (keyMap['KeyW'] || keyMap['ArrowUp']) playerVelocity.add(bvhPysicsUtils.getForwardVector().multiplyScalar(speed));
+        if (keyMap['KeyS'] || keyMap['ArrowDown']) playerVelocity.add(bvhPysicsUtils.getForwardVector().multiplyScalar(-speed));
+        if (keyMap['KeyA'] || keyMap['ArrowLeft']) playerVelocity.add(bvhPysicsUtils.getSideVector().multiplyScalar(-speed));
+        if (keyMap['KeyD'] || keyMap['ArrowRight']) playerVelocity.add(bvhPysicsUtils.getSideVector().multiplyScalar(speed));
 
-        if (playerInit.model?.userData.walkAction) {
-            playerInit.model.userData.walkAction.paused = !isMoving;
+        if (fpsPlayer.model?.userData.walkAction) {
+            fpsPlayer.model.userData.walkAction.paused = !isMoving;
         }
 
-        if (!playerOnFloor) {
-            playerVelocity.y -= CONFIG.gravity * deltaTime;
-        } else {
-            playerVelocity.y = Math.max(0, playerVelocity.y);
-        }
-
-        const steps = 8;
-        const subDelta = deltaTime / steps;
-
-        for (let i = 0; i < steps; i++) {
-
-            // appliquer gravité
-            if (!playerOnFloor) {
-                playerVelocity.y -= CONFIG.gravity * subDelta;
-            }
-
-            // déplacement
-            const deltaMove = playerVelocity.clone().multiplyScalar(subDelta);
-            playerPos.add(deltaMove);
-
-            // collisions
-            playerCollisions();
-
-        }
+        bvhPysicsUtils.updatePlayerYVelocity(deltaTime);
+        bvhPysicsUtils.playerCollisionsSubStepping(8, deltaTime);
 
         // Limite le regard vertical
-        const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
-        euler.x = Math.max(-0.9, Math.min(Math.PI / 2, euler.x));
-        camera.quaternion.setFromEuler(euler);
+        fpsPlayer.playerPitchLimit();
 
         // Caméra FPS
-        const forward = new THREE.Vector3();
-        camera.getWorldDirection(forward);
-        camera.position.set(
-            playerPos.x + forward.x * 0.12, // 0.12 pour être juste devant les yeux
-            playerPos.y + CONFIG.playerHeight,
-            playerPos.z + forward.z * 0.12 // 0.12 pour être juste devant les yeux
-        );
-
-        // Modèle visible
-        player.position.copy(playerPos);
-        if (playerInit.model) {
-            const yaw = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ').y;
-            playerInit.model.rotation.y = yaw + Math.PI;
-        }
+        fpsPlayer.cameraFollowPlayer(playerPos)
+        fpsPlayer.playerYawFollow(player, playerPos);
 
         // ZoneManager : détection de transition à chaque frame
         zoneManager.update(camera.position);
         zoneManager.checkImpostorsVisibility();
 
         if (CONFIG.debugCapsule) {
-            capsuleHelper.position.set(
-                playerPos.x,
-                playerPos.y + CONFIG.playerHeight / 2,
-                playerPos.z
-            );
+            debugUtil.playerCapsuleHelperFollow(capsuleHelper, playerPos);
         }
     }
 

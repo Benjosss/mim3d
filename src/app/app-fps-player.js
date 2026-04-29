@@ -1,11 +1,13 @@
 import * as THREE from 'three';
 
-export default class AppInitFpsPlayer {
+export default class AppFpsPlayer {
     FPS_HIDDEN_PARTS = ['head', 'hair', 'eyes', 'internal', 'internal2'];
 
-    constructor(scene, gltfLoader) {
+    constructor(scene, gltfLoader, camera, config) {
         this.scene = scene;
         this.gltfLoader = gltfLoader;
+        this.camera = camera;
+        this.config = config
         this.mixer = null;
         this.model = null;
     }
@@ -50,5 +52,38 @@ export default class AppInitFpsPlayer {
         }, undefined, (error) => console.error("Erreur chargement personnage :", error));
 
         return player
+    }
+
+    camera
+
+    cameraFollowPlayer(playerPos) {
+        const camera = this.camera;
+        const CONFIG = this.config;
+
+        const forward = new THREE.Vector3();
+        camera.getWorldDirection(forward);
+        camera.position.set(
+            playerPos.x + forward.x * 0.12, // 0.12 pour être juste devant les yeux
+            playerPos.y + CONFIG.playerHeight,
+            playerPos.z + forward.z * 0.12 // 0.12 pour être juste devant les yeux
+        );
+    }
+
+    playerYawFollow(player, playerPos){
+        const camera = this.camera;
+
+        player.position.copy(playerPos);
+        if (this.model) {
+            const yaw = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ').y;
+            this.model.rotation.y = yaw + Math.PI;
+        }
+    }
+
+    playerPitchLimit(){
+        const camera = this.camera;
+
+        const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
+        euler.x = Math.max(-0.9, Math.min(Math.PI / 2, euler.x));
+        camera.quaternion.setFromEuler(euler);
     }
 }
