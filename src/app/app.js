@@ -4,9 +4,9 @@ import Stats from 'three/examples/jsm/libs/stats.module.js';
 import {computeBoundsTree, disposeBoundsTree, acceleratedRaycast} from 'three-mesh-bvh';
 import jsonParser from "../utils/json-parser.js"
 import {ZoneManager} from '../map-manager/zone-manager.js'
-import SceneSetup from "../utils/app-scene-setup.js";
+import SceneSetup from "./app-scene-setup.js";
 import InitLoader from "../utils/init-loader.js";
-import AppInitFpsPlayer from "../utils/app-init-fps-player.js";
+import AppInitFpsPlayer from "./app-init-fps-player.js";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
