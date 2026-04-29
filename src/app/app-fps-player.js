@@ -36,7 +36,7 @@ export default class AppFpsPlayer {
             const animations = gltf.animations;
             const clip = animations[0];
 
-            // Supprime les déplacement du modèle (root motion)
+            // Supprime les déplacements du modèle (root motion)
             clip.tracks = clip.tracks.filter(track => {
                 return !(track.name.includes('position') &&
                     (track.name.includes('Hips') || track.name.includes('hips')));
