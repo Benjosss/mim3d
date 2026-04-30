@@ -125,7 +125,7 @@ setTimeout(() => loadingScreen.remove(), 500);
 
 // ================= PATHFINDING =================
 
-const pathfinding = new AppPathfinding(scene, player);
+const pathfinding = new AppPathfinding(scene, camera, player);
 pathfinding.showHelper();
 pathfinding.loadNavMesh("/models/navmeshes/navmesh.glb", gltfLoader);
 

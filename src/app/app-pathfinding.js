@@ -2,8 +2,9 @@ import {Pathfinding, PathfindingHelper} from 'three-pathfinding';
 import * as THREE from "three";
 
 export default class AppPathfinding {
-    constructor(scene, playerGroup) {
+    constructor(scene, camera, playerGroup) {
         this.scene = scene;
+        this.camera = camera;
         this.playerGroup = playerGroup;
 
         this.pathfinding = new Pathfinding();
@@ -146,6 +147,15 @@ export default class AppPathfinding {
 
         const t = this.splineCurve.getUtoTmapping(this.splineProgress, null);
         const newPos = this.splineCurve.getPoint(t);
+
+
+        // Calcul d'un point un tout petit peu plus loin sur la courbe (+5% de progression)
+        const lookAtProgress = Math.min(this.splineProgress + 0.05, 1);
+        const lookAtT = this.splineCurve.getUtoTmapping(lookAtProgress, null);
+        const lookAtTarget = this.splineCurve.getPoint(lookAtT);
+
+        // On fait regarder la caméra vers ce point cible
+        this.camera.lookAt(lookAtTarget);
 
         // Position physique (FPS)
         if (this.playerPos) {
