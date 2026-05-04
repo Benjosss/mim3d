@@ -178,6 +178,11 @@ export default class AppPhysicsBvh {
     }
 
     playerCollisionsSubStepping(steps, deltaTime) {
+        if (this.colliderMeshes.length === 0) {
+            this.playerVelocity.y = 0;
+            return;
+        }
+
         const subDelta = deltaTime / steps;
 
         for (let i = 0; i < steps; i++) {

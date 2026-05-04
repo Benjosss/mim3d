@@ -185,7 +185,8 @@ export class ZoneManager {
             this.currentZone = newZone;
 
             // Mise à jour différée du tableau de colliders
-            this._scheduleColliderRebuild();
+            // this._scheduleColliderRebuild();
+            this._rebuildColliders();
 
             // Déchargement des zones trop éloignées (non bloquant)
             this._scheduleUnloadFarZones(previousZone);

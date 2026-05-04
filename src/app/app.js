@@ -227,6 +227,9 @@ function animate(timestamp) {
         if (fpsPlayer.model?.userData.walkAction) {
             fpsPlayer.model.userData.walkAction.paused = !isMoving;
         }
+        // ZoneManager : détection de transition à chaque frame
+        zoneManager.update(camera.position);
+        zoneManager.checkImpostorsVisibility();
 
         bvhPysicsUtils.updatePlayerYVelocity(deltaTime);
         bvhPysicsUtils.playerCollisionsSubStepping(8, deltaTime);
@@ -238,9 +241,6 @@ function animate(timestamp) {
         fpsPlayer.cameraFollowPlayer(playerPos)
         fpsPlayer.playerYawFollow(player, playerPos);
 
-        // ZoneManager : détection de transition à chaque frame
-        zoneManager.update(camera.position);
-        zoneManager.checkImpostorsVisibility();
 
         if (CONFIG.debugCapsule) {
             debugUtil.playerCapsuleHelperFollow(capsuleHelper, playerPos);
