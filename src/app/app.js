@@ -17,12 +17,12 @@ THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 const DEBUG_STATS = true;
-const DEBUG_BBOX_COLOR = false;
+const DEBUG_BBOX_COLOR = true;
 
 // ================= CONFIG =================
 const CONFIG = {
-    startZone: 'floor1',
-    spawnPoint: new THREE.Vector3(80.049, 8.443, -30.211),
+    startZone: 'floor0',
+    spawnPoint: new THREE.Vector3(75, 5.5, -32),
     playerRadius: 0.4,
     playerHeight: 1.3,
     moveSpeed: 8,

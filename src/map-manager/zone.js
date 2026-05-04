@@ -48,22 +48,26 @@ export class Zone {
             // Propriétés des meshes
             this.content.traverse(child => {
                 if (child.isMesh) {
-                    // Ombrages
-                    child.castShadow = true;
-                    child.receiveShadow = true;
-                    if (child.material.map) {
-                        child.material.map.anisotropy = 16;
-                    }
                     console.log(child.name);
-                    if(this.physics && child.name.includes("ZONE_COLLIDER_ONLY")) {
+
+                    if (child.name.includes("NOCOL")) {
+
+                        child.visible = true;
+                        // Ombrages
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        if (child.material.map) {
+                            child.material.map.anisotropy = 16;
+                        }
+                    }
+
+                    if (this.physics && child.name.includes("SIMP_COL")) {
                         if (!child.geometry.boundsTree) {
                             child.visible = false;
                             child.geometry.computeBoundsTree();
                             child.updateMatrixWorld(true);
                             this.colliderMeshes.push(child);
                         }
-                    }else if(child.name.includes("NOCOL")){
-                        child.visible = true;
                     }
                 }
             });
@@ -94,6 +98,10 @@ export class Zone {
                 }
                 child.castShadow = false;
                 child.receiveShadow = true;
+
+                if (child.name.includes("SIMP_COL")) {
+                    child.visible = false;
+                }
             }
         });
 

@@ -241,6 +241,10 @@ export class ZoneManager {
                 ...this.currentZone.adjacentZoneNames,
             ]);
 
+
+
+            console.log("Zone actuelle :", this.currentZone.name);
+            console.log("Adjacentes détectées :", this.currentZone.adjacentZoneNames);
             for (const [name, zone] of this.zones) {
                 const isHDNeeded = highDetailNames.has(name);
 
@@ -298,6 +302,12 @@ export class ZoneManager {
 
         await zone.load(this.loader);
         this.managedZones.add(zone.name);
+
+        // FIX : Si après chargement, la zone est une voisine de la zone actuelle, on la montre !
+        if (this.currentZone && (this.currentZone.name === zone.name || this.currentZone.adjacentZoneNames.includes(zone.name))) {
+            this._showZone(zone);
+            this._rebuildColliders();
+        }
     }
 
     _queueAdjacentZones(zone) {
