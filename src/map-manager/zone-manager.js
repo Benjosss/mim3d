@@ -100,7 +100,7 @@ export class ZoneManager {
                 // Calcul de distance entre le joueur et la boîte de la zone adjacente
                 const distance = adjZone.triggerBox.distanceToPoint(playerPosition);
 
-                if (distance < 5.0) { // Seuil de 3 mètres avant l'entrée réelle
+                if (distance < 15.0) { // Seuil de 3 mètres avant l'entrée réelle
                     console.log(`Anticipation : Chargement de ${adjName}`);
                     this._loadZone(adjZone);
                 }
