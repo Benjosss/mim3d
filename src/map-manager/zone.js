@@ -48,10 +48,9 @@ export class Zone {
             // Propriétés des meshes
             this.content.traverse(child => {
                 if (child.isMesh) {
-                    console.log(child.name);
 
+                    // Affichage des assets sans collisions
                     if (child.name.includes("NOCOL")) {
-
                         child.visible = true;
                         // Ombrages
                         child.castShadow = true;
@@ -61,6 +60,7 @@ export class Zone {
                         }
                     }
 
+                    // Calcul des collisions et masquage des assets de collisions
                     if (this.physics && child.name.includes("SIMP_COL")) {
                         if (!child.geometry.boundsTree) {
                             child.visible = false;

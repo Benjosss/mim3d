@@ -190,11 +190,8 @@ export default class AppPhysicsBvh {
 
             this.playerCollisions();
 
-            // SÉCURITÉ SERVEUR : Si après résolution, on tombe toujours très vite
-            // et qu'on n'a pas touché le sol (playerOnFloor est géré dans playerCollisions)
-            // c'est qu'on est probablement dans le vide technique.
             if (this.playerVelocity.y < -10 && !this.playerOnFloor) {
-                // Optionnel : on pourrait repositionner le joueur ou ralentir sa chute
+                // TODO : Repositionner le joueur
             }
         }
     }

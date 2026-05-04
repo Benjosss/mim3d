@@ -77,7 +77,7 @@ export class ZoneManager {
             if (name !== this.currentZone.name) {
                 if (zone.impostorPath) {
                     this._manageImpostorVisibility(zone, true).catch((err) => {
-                        console.error("Impossible d'afficher les imposteurs : ", err);
+                        console.error(`Impossible d'afficher les imposteurs (${zone.impostorPath}): `, err);
                     });
                 }
             }
@@ -242,9 +242,6 @@ export class ZoneManager {
             ]);
 
 
-
-            console.log("Zone actuelle :", this.currentZone.name);
-            console.log("Adjacentes détectées :", this.currentZone.adjacentZoneNames);
             for (const [name, zone] of this.zones) {
                 const isHDNeeded = highDetailNames.has(name);
 
@@ -303,7 +300,7 @@ export class ZoneManager {
         await zone.load(this.loader);
         this.managedZones.add(zone.name);
 
-        // FIX : Si après chargement, la zone est une voisine de la zone actuelle, on la montre !
+        // Si après chargement, la zone est une voisine de la zone actuelle
         if (this.currentZone && (this.currentZone.name === zone.name || this.currentZone.adjacentZoneNames.includes(zone.name))) {
             this._showZone(zone);
             this._rebuildColliders();
