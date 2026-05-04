@@ -66,8 +66,8 @@
   },
   {
     "name": "floor1",
-    "path": "/models/zones/1_floor_aisle_b_sized_v2.glb",
-    "impostorPath" : "/models/impostors/imp_1_floor_aisle_b_sized_v2.glb",
+    "path": "/models/zones/1_floor_aisle_b_sized_v3.glb",
+    "impostorPath" : "/models/impostors/imp_1_floor_aisle_b_sized_v3.glb",
     "physics" : true,
     "type": "corridor",
     "description" : "1er étage aile b",
@@ -92,8 +92,8 @@
   },
   {
     "name": "floor2",
-    "path": "/models/zones/2_floor_aisle_b_sized_v2.glb",
-    "impostorPath" : "/models/impostors/imp_2_floor_aisle_b_sized_v2.glb",
+    "path": "/models/zones/2_floor_aisle_b_sized_v3.glb",
+    "impostorPath" : "/models/impostors/imp_2_floor_aisle_b_sized_v3.glb",
     "physics" : true,
     "type": "corridor",
     "description" : "2ème étage aile b",
@@ -118,8 +118,8 @@
   },
   {
     "name": "floor3",
-    "path": "/models/zones/3_floor_aisle_b_sized_v2.glb",
-    "impostorPath" : "/models/impostors/imp_3_floor_aisle_b_sized_v2.glb",
+    "path": "/models/zones/3_floor_aisle_b_sized_v3.glb",
+    "impostorPath" : "/models/impostors/imp_3_floor_aisle_b_sized_v3.glb",
     "physics" : true,
     "type": "corridor",
     "description" : "3ème étage aile b",
