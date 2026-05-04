@@ -22,7 +22,7 @@ const DEBUG_BBOX_COLOR = true;
 // ================= CONFIG =================
 const CONFIG = {
     startZone: 'floor0',
-    spawnPoint: new THREE.Vector3(75, 5.5, -32),
+    spawnPoint: new THREE.Vector3(75, 5.4, -32),
     playerRadius: 0.4,
     playerHeight: 1.3,
     moveSpeed: 8,
