@@ -93,6 +93,20 @@ export class ZoneManager {
     _detectZoneChange(playerPosition) {
         if (!this.currentZone) return;
 
+        for (const adjName of this.currentZone.adjacentZoneNames) {
+            const adjZone = this.zones.get(adjName);
+            if (adjZone && !adjZone.isLoaded && !adjZone.isLoading) {
+
+                // Calcul de distance entre le joueur et la boîte de la zone adjacente
+                const distance = adjZone.triggerBox.distanceToPoint(playerPosition);
+
+                if (distance < 5.0) { // Seuil de 3 mètres avant l'entrée réelle
+                    console.log(`Anticipation : Chargement de ${adjName}`);
+                    this._loadZone(adjZone);
+                }
+            }
+        }
+
         // Calcule le volume d'une Box3
         const boxVolume = (box) => {
             const s = new THREE.Vector3();

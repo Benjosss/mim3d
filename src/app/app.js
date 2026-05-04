@@ -228,11 +228,29 @@ function animate(timestamp) {
             fpsPlayer.model.userData.walkAction.paused = !isMoving;
         }
         // ZoneManager : détection de transition à chaque frame
-        zoneManager.update(camera.position);
-        zoneManager.checkImpostorsVisibility();
 
-        bvhPysicsUtils.updatePlayerYVelocity(deltaTime);
-        bvhPysicsUtils.playerCollisionsSubStepping(8, deltaTime);
+        // Dans app.js, fonction animate()
+        if (controls.isLocked) {
+            zoneManager.update(camera.position);
+            zoneManager.checkImpostorsVisibility();
+
+            // SÉCURITÉ CRITIQUE : Si le manager charge une zone, on fige la physique
+            if (zoneManager._transitioning) {
+                playerVelocity.set(0, 0, 0); // On annule la gravité et l'élan
+                // On ne va pas plus loin dans cette frame
+            } else {
+                bvhPysicsUtils.updatePlayerYVelocity(deltaTime);
+                bvhPysicsUtils.playerCollisionsSubStepping(8, deltaTime);
+            }
+
+            // Le reste du code (cameraFollow, etc.)
+        }
+
+        // zoneManager.update(camera.position);
+        // zoneManager.checkImpostorsVisibility();
+
+        // bvhPysicsUtils.updatePlayerYVelocity(deltaTime);
+        // bvhPysicsUtils.playerCollisionsSubStepping(8, deltaTime);
 
         // Limite le regard vertical
         fpsPlayer.playerPitchLimit();
