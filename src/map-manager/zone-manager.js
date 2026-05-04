@@ -173,24 +173,19 @@ export class ZoneManager {
 
 
     async _triggerTransition(newZone) {
-
-        if (this._transitioning) return; // Transition déjà en cours
-        if (newZone === this.currentZone) return; // Zone actuelle
-        this._transitioning = true; // Début de la transition
+        if (this._transitioning) return;
+        this._transitioning = true;
 
         try {
             const previousZone = this.currentZone;
-            console.log(`Transition : "${previousZone?.name}" → "${newZone.name}"`);
 
-            // Zone pas encore chargée, attente sans blocage
-            if (!newZone.isLoaded) {
-                console.warn(`Zone "${newZone.name}" pas encore prête...`);
-                await this._loadZone(newZone);
-            }
+            // Attente réelle du chargement (moteur de la correction)
+            await this._loadZone(newZone);
 
-            // Affichage de la nouvelle zone
+            // On force l'affichage
             this._showZone(newZone);
-            // Affichage de toutes les zones adjacentes à la nouvelle zone
+
+            // On vérifie que les adjacentes déjà chargées sont affichées
             for (const adjName of newZone.adjacentZoneNames) {
                 const adjZone = this.zones.get(adjName);
                 if (adjZone?.isLoaded) this._showZone(adjZone);
@@ -198,20 +193,17 @@ export class ZoneManager {
 
             this.currentZone = newZone;
 
-            // Mise à jour différée du tableau de colliders
-            // this._scheduleColliderRebuild();
+            // Rebuild immédiat et synchrone
             this._rebuildColliders();
 
-            // Déchargement des zones trop éloignées (non bloquant)
             this._scheduleUnloadFarZones(previousZone);
-
-            // Préchargement des nouvelles zones adjacentes en arrière-plan
             this._queueAdjacentZones(newZone);
 
         } catch (e) {
             console.error('Erreur lors de la transition :', e);
         } finally {
-            this._transitioning = false; // Fin de la transition
+            // TRÈS IMPORTANT : On ne libère la physique que quand TOUT est prêt
+            this._transitioning = false;
         }
     }
 
@@ -293,7 +285,17 @@ export class ZoneManager {
     }
 
     async _loadZone(zone) {
-        if (zone.isLoaded || zone.isLoading) return;
+        if (zone.isLoaded) return;
+
+        // Si la zone est déjà en train de charger (via l'anticipation),
+        // on attend activement qu'elle ait fini avant de continuer.
+        if (zone.isLoading) {
+            while (zone.isLoading) {
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            return;
+        }
+
         await zone.load(this.loader);
         this.managedZones.add(zone.name);
     }

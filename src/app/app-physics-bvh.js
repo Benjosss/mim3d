@@ -178,27 +178,24 @@ export default class AppPhysicsBvh {
     }
 
     playerCollisionsSubStepping(steps, deltaTime) {
-        if (this.colliderMeshes.length === 0) {
-            this.playerVelocity.y = 0;
-            return;
-        }
-
         const subDelta = deltaTime / steps;
 
         for (let i = 0; i < steps; i++) {
-
-            // appliquer gravité
             if (!this.playerOnFloor) {
                 this.playerVelocity.y -= this.config.gravity * subDelta;
             }
 
-            // déplacement
             const deltaMove = this.playerVelocity.clone().multiplyScalar(subDelta);
             this.playerPos.add(deltaMove);
 
-            // collisions
             this.playerCollisions();
 
+            // SÉCURITÉ SERVEUR : Si après résolution, on tombe toujours très vite
+            // et qu'on n'a pas touché le sol (playerOnFloor est géré dans playerCollisions)
+            // c'est qu'on est probablement dans le vide technique.
+            if (this.playerVelocity.y < -10 && !this.playerOnFloor) {
+                // Optionnel : on pourrait repositionner le joueur ou ralentir sa chute
+            }
         }
     }
 }
