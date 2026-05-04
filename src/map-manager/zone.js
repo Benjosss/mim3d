@@ -50,7 +50,7 @@ export class Zone {
                 if (child.isMesh) {
 
                     // Affichage des assets sans collisions
-                    if (child.name.includes("NOCOL")) {
+                    if (!this.physics || child.name.includes("NOCOL")) {
                         child.visible = true;
                         // Ombrages
                         child.castShadow = true;
