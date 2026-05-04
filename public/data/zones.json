@@ -66,7 +66,7 @@
   },
   {
     "name": "floor1",
-    "path": "/models/zones/1_floor_aisle_b_sized_v3.glb",
+    "path": "/models/zones/1_floor_aisle_b_sized_v4.glb",
     "impostorPath" : "/models/impostors/imp_1_floor_aisle_b_sized_v3.glb",
     "physics" : true,
     "type": "corridor",

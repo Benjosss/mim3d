@@ -54,13 +54,16 @@ export class Zone {
                     if (child.material.map) {
                         child.material.map.anisotropy = 16;
                     }
-
-                    if(this.physics && !child.name.includes("NOCOL_")) {
+                    console.log(child.name);
+                    if(this.physics && child.name.includes("ZONE_COLLIDER_ONLY")) {
                         if (!child.geometry.boundsTree) {
+                            child.visible = false;
                             child.geometry.computeBoundsTree();
+                            child.updateMatrixWorld(true);
+                            this.colliderMeshes.push(child);
                         }
-                        child.updateMatrixWorld(true);
-                        this.colliderMeshes.push(child);
+                    }else if(child.name.includes("NOCOL")){
+                        child.visible = true;
                     }
                 }
             });
