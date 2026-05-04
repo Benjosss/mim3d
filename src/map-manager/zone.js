@@ -55,9 +55,10 @@ export class Zone {
                         child.material.map.anisotropy = 16;
                     }
 
-                    if(this.physics) {
-                        // Calcul du BVH en arrière-plan après le chargement.
-                        child.geometry.computeBoundsTree();
+                    if(this.physics && !child.name.includes("NOCOL_")) {
+                        if (!child.geometry.boundsTree) {
+                            child.geometry.computeBoundsTree();
+                        }
                         child.updateMatrixWorld(true);
                         this.colliderMeshes.push(child);
                     }
