@@ -6,10 +6,23 @@
     "physics" : true,
     "type": "corridor",
     "description" : "Rez de jardin aile b",
-    "adjacentZoneNames": ["floor0", "stairs0to-1_1", "floor0ground", "allstairs_2", "allstairs_3", "floor-1hall"],
+    "adjacentZoneNames": ["floor0", "stairs0to-1_1",  "allstairs_2", "allstairs_3", "floor-1hall"],
     "triggerBox": {
       "min": [56.320, -0.200, -69.797],
       "max": [87.549, 4.006, -9.059]
+    }
+  },
+  {
+    "name": "floor-1a",
+    "path": "/models/zones/-1_floor_aisle_a_sized.glb",
+    "impostorPath" : "/models/impostors/imp_-1_floor_aisle_a_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Rez de jardin aile a",
+    "adjacentZoneNames": ["stairs0to-1_1",  "allstairs_2", "allstairs_3", "floor-1hall"],
+    "triggerBox": {
+      "min": [-0.067, -0.200, -76.342],
+      "max": [56.431, 5.961, -11.398]
     }
   },
   {
@@ -19,7 +32,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "Hall rez de jardin",
-    "adjacentZoneNames": ["floor-1"],
+    "adjacentZoneNames": ["floor-1", "floor-1a"],
     "triggerBox": {
       "min": [55.875, -0.200, -35.782],
       "max": [71.525, 4.006, -27.852]
@@ -32,7 +45,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "Rez de chaussé aile b",
-    "adjacentZoneNames": ["stairs1to0_1", "floor1", "floor-1", "floor0ground", "stairs0to-1_1", "allstairs_2", "allstairs_3", "floor0hall"],
+    "adjacentZoneNames": ["stairs1to0_1", "floor1", "floor-1",  "stairs0to-1_1", "allstairs_2", "allstairs_3", "floor0hall"],
     "triggerBox": {
       "min": [70.925, 2.651, -75.214],
       "max": [89.943, 7.642, -0.082]
@@ -58,7 +71,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "Hall rez de chaussé",
-    "adjacentZoneNames": ["floor0", "floor0ground", "floor0_a"],
+    "adjacentZoneNames": ["floor0",  "floor0_a"],
     "triggerBox": {
       "min": [56.119, -0.100, -35.378],
       "max": [71.158, 6.943, -27.871]
@@ -71,7 +84,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "1er étage aile b",
-    "adjacentZoneNames": ["stairs2to1_1", "floor2", "floor0", "floor0ground", "stairs1to0_1", "allstairs_2", "allstairs_3", "floor1hall"],
+    "adjacentZoneNames": ["stairs2to1_1", "floor2", "floor0",  "stairs1to0_1", "allstairs_2", "allstairs_3", "floor1hall"],
     "triggerBox": {
       "min": [71.049, 6.443, -75.211],
       "max": [89.923, 11, -0.106]
@@ -130,6 +143,19 @@
     }
   },
   {
+    "name": "roofb",
+    "path": "/models/zones/roof_aisle_b_sized.glb",
+    "impostorPath" : "/models/impostors/imp_roof_aisle_b_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Toit de l'aile b",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [0,0,0],
+      "max": [0,0,0]
+    }
+  },
+  {
     "name": "stairs3to2_1",
     "path": "/models/zones/3_to_2_stair_1_sized.glb",
     "impostorPath" : "/models/impostors/3_to_2_stair_1_sized.glb",
@@ -175,7 +201,7 @@
     "physics" : true,
     "type": "stairs",
     "description" : "Escalier 1",
-    "adjacentZoneNames": ["floor0", "floor-1"],
+    "adjacentZoneNames": ["floor0", "floor-1", "floor-1a"],
     "triggerBox": {
       "min": [83.508, -0.180, -34.614],
       "max": [87.142, 5.309, -24.841]
@@ -188,7 +214,7 @@
     "physics" : true,
     "type": "stairs",
     "description" : "Escalier 2",
-    "adjacentZoneNames": ["floor0", "floor0ground", "floor-1", "floor1", "floor2", "floor3"],
+    "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3", "floor-1a"],
     "triggerBox": {
       "min": [71.247, -0.008, -40.233],
       "max": [78.236, 16.038, -34.325]
@@ -201,7 +227,7 @@
     "physics" : true,
     "type": "stairs",
     "description" : "Escalier 3",
-    "adjacentZoneNames": ["floor0", "floor0ground", "floor-1", "floor1", "floor2", "floor3"],
+    "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3", "floor-1a"],
     "triggerBox": {
       "min": [71.524, -0.100, -69.277],
       "max": [78.196, 15.816, -63.900]
