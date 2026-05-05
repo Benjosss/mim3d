@@ -2,14 +2,27 @@
   {
     "name": "floor-1",
     "path": "/models/zones/-1_floor_aisle_b_sized.glb",
-    "impostorPath" : "/models/impostors/-1_floor_aisle_b_sized.glb",
+    "impostorPath" : "/models/impostors/imp_-1_floor_aisle_b_sized.glb",
     "physics" : true,
     "type": "corridor",
     "description" : "Rez de jardin aile b",
-    "adjacentZoneNames": ["floor0", "stairs0to-1_1", "floor0ground", "allstairs_2", "allstairs_3"],
+    "adjacentZoneNames": ["floor0", "stairs0to-1_1", "floor0ground", "allstairs_2", "allstairs_3", "floor-1hall"],
     "triggerBox": {
       "min": [56.320, -0.200, -69.797],
       "max": [87.549, 4.006, -9.059]
+    }
+  },
+  {
+    "name": "floor-1hall",
+    "path": "/models/zones/-1_floor_hall_sized.glb",
+    "impostorPath" : "/models/impostors/imp_-1_floor_hall_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Hall rez de jardin",
+    "adjacentZoneNames": ["floor-1"],
+    "triggerBox": {
+      "min": [55.875, -0.200, -35.782],
+      "max": [71.525, 4.006, -27.852]
     }
   },
   {
