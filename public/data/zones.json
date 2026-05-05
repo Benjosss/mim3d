@@ -52,19 +52,6 @@
     }
   },
   {
-    "name": "floor0ground",
-    "path": "/models/zones/0_floor_aisle_b_ground_sized.glb",
-    "impostorPath" : "/models/impostors/imp_0_floor_aisle_b_ground_sized.glb",
-    "physics" : true,
-    "type": "corridor",
-    "description" : "Sol rez de chaussé",
-    "adjacentZoneNames": ["floor0", "allstairs_2", "floor1", "floor-1", "allstairs_3", "floor0hall"],
-    "triggerBox": {
-      "min": [0,0,0],
-      "max": [0,0,0]
-    }
-  },
-  {
     "name": "floor0hall",
     "path": "/models/zones/0_floor_hall_sized.glb",
     "impostorPath" : "/models/impostors/imp_0_floor_hall_sized.glb",
@@ -184,7 +171,7 @@
   {
     "name": "stairs0to-1_1",
     "path": "/models/zones/0_to_-1_stair_1_sized.glb",
-    "impostorPath" : "/models/impostors/0_to_-1_stair_1_sized.glb",
+    "impostorPath" : "/models/impostors/imp_0_to_-1_stair_1_sized.glb",
     "physics" : true,
     "type": "stairs",
     "description" : "Escalier 1",
