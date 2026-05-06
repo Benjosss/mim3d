@@ -129,7 +129,8 @@ export default class AppPathfinding {
             const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
             if (path && path.length > 0) {
                 // Création de la courbe Catmull-Rom
-                const points = [this.playerGroup.position.clone(), ...path];
+                const smooth = this.smoothPath(path);
+                const points = [this.playerGroup.position.clone(), ...smooth];
                 this.splineCurve = new THREE.CatmullRomCurve3(points, false, 'chordal');
                 this.splineTotalLength = this.splineCurve.getLength();
                 this.splineProgress = 0;
@@ -149,6 +150,22 @@ export default class AppPathfinding {
                 this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
             }
         }
+    }
+
+    smoothPath(path) {
+        const smoothed = [];
+        for (let i = 0; i < path.length - 1; i++) {
+            const current = path[i];
+            const next = path[i + 1];
+
+            smoothed.push(current);
+
+            // point intermédiaire
+            const mid = new THREE.Vector3().addVectors(current, next).multiplyScalar(0.5);
+            smoothed.push(mid);
+        }
+        smoothed.push(path[path.length - 1]);
+        return smoothed;
     }
 
 
