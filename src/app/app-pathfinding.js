@@ -69,6 +69,28 @@ export default class AppPathfinding {
             // Initialisation de la zone de navigation
             this.pathfinding.setZoneData(this.zone, Pathfinding.createZone(geometry));
 
+            // Décommenter pour voir les nodes du navmesh, LES PERFORMANCES SERONT FORTEMENT AFFECTEES
+            // const zoneData = this.pathfinding.zones[this.zone];
+            //
+            // if (!zoneData || !zoneData.groups) {
+            //     console.error("Zone navmesh invalide");
+            //     return;
+            // }
+            //
+            // zoneData.groups.forEach((group) => {
+            //     group.forEach((node) => {
+            //         const centroid = node.centroid;
+            //
+            //         const sphere = new THREE.Mesh(
+            //             new THREE.SphereGeometry(0.1, 8, 8),
+            //             new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            //         );
+            //
+            //         sphere.position.copy(centroid);
+            //         this.scene.add(sphere);
+            //     });
+            // });
+
             this.navmesh = navMeshObject;
             this.isNavMeshLoaded = true;
 
