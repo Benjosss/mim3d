@@ -16,6 +16,7 @@ export class Zone {
         this.description = config.description;                      // Description de la zone
         this.adjacentZoneNames = config.adjacentZoneNames ?? [];    // Tableau des noms des zones adjacentes
         this.triggerBox = config.triggerBox;                        // Trigger Box de la zone
+        this.pathCoords = config.pathCoords;                        // Coordonnées d'arrivée du pathfinding
 
         this.content = null;                                        // THREE.Group
         this.impostorContent = null;

@@ -11,7 +11,7 @@ export default class AppPathfinding {
         this.pathfindingHelper = new PathfindingHelper();
 
         this.speed = 5;
-        this.zone = "floor2"
+        this.zone = "fac"
         this.groupID = null;
 
         this.navmesh = null;
@@ -47,7 +47,7 @@ export default class AppPathfinding {
                     child.material = new THREE.MeshBasicMaterial({
                         color: 0x00ff00,
                         transparent: true,
-                        opacity: 0,
+                        opacity: 1,
                         wireframe: true,
                         depthTest: true // Garde true pour voir où il s'enfonce dans le décor
                     });
@@ -91,12 +91,11 @@ export default class AppPathfinding {
 
     // NAVIGATION AVEC COURBE ET AFFICHAGE
     findPathTo(name, zones) {
-        let targetBox = null;
+        let target = null;
         zones.forEach(zone => {
-            if (zone.name === name) return targetBox = zone.triggerBox;
+            if(zone.name === name) return target = zone.pathCoords;
         })
-        let target = new THREE.Vector3();
-        targetBox.getCenter(target);
+
 
         if (!this.isNavMeshLoaded) return;
 

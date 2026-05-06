@@ -41,21 +41,24 @@ export default class JsonParser {
             console.log("Impossible de charger les zones");
         } else {
             jsonData.forEach((zone) => {
-                ZONES.push(
-                    new Zone({
-                        name: zone.name,
-                        path: zone.path,
-                        impostorPath: zone.impostorPath,
-                        physics: zone.physics,
-                        type: zone.type,
-                        description: zone.description,
-                        adjacentZoneNames: zone.adjacentZoneNames || [],
-                        triggerBox: new THREE.Box3(
-                            new THREE.Vector3(...zone.triggerBox.min),
-                            new THREE.Vector3(...zone.triggerBox.max)
-                        ),
-                    })
-                );
+                const newZone = {
+                    name: zone.name,
+                    path: zone.path,
+                    impostorPath: zone.impostorPath,
+                    physics: zone.physics,
+                    type: zone.type,
+                    description: zone.description,
+                    adjacentZoneNames: zone.adjacentZoneNames || [],
+                    triggerBox: new THREE.Box3(
+                        new THREE.Vector3(...zone.triggerBox.min),
+                        new THREE.Vector3(...zone.triggerBox.max)
+                    ),
+                };
+
+                if (zone.type !== "corridor" && zone.type !== "stairs" && zone.pathCoords) {
+                    newZone.pathCoords = new THREE.Vector3(...zone.pathCoords);
+                }
+                ZONES.push(new Zone(newZone));
             });
         }
         return ZONES;
