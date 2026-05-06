@@ -47,7 +47,7 @@ export default class AppPathfinding {
                     child.material = new THREE.MeshBasicMaterial({
                         color: 0x00ff00,
                         transparent: true,
-                        opacity: 1,
+                        opacity: 0,
                         wireframe: true,
                         depthTest: true // Garde true pour voir où il s'enfonce dans le décor
                     });
