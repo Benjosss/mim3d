@@ -185,6 +185,10 @@ document.addEventListener('keydown', e => {
         e.preventDefault();
         pathfinding.findPathTo("ARJ-015", ZONES)
     }
+    if (e.code === 'F9') {
+        e.preventDefault();
+        pathfinding.findPathTo("Petit-Amphi", ZONES)
+    }
 });
 
 // --- Fin du chrono ---
