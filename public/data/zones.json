@@ -91,16 +91,29 @@
     }
   },
   {
+    "name": "floor1_a",
+    "path": "/models/zones/1_floor_aisle_a_sized.glb",
+    "impostorPath" : "/models/impostors/imp_1_floor_aisle_a_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "1er étage aile a",
+    "adjacentZoneNames": ["floor1hall"],
+    "triggerBox": {
+      "min": [5.963, 3.460, -76.234],
+      "max": [56.385, 7.649, -11.819]
+    }
+  },
+  {
     "name": "floor1hall",
     "path": "/models/zones/1_floor_hall_sized.glb",
     "impostorPath" : "/models/impostors/imp_1_floor_hall_sized.glb",
     "physics" : true,
     "type": "corridor",
     "description" : "Passerelle 1er étage",
-    "adjacentZoneNames": ["floor1"],
+    "adjacentZoneNames": ["floor1", "floor1_a"],
     "triggerBox": {
-      "min": [56.119, 7.020, -35.378],
-      "max": [71.158, 10.088, -27.871]
+      "min": [5.963, 7.640, -76.251],
+      "max": [57.093, 11.090, -11.821]
     }
   },
   {
@@ -117,13 +130,26 @@
     }
   },
   {
+    "name": "floor2_a",
+    "path": "/models/zones/2_floor_aisle_a_sized.glb",
+    "impostorPath" : "/models/impostors/imp_2_floor_aisle_a_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "2eme étage aile a",
+    "adjacentZoneNames": ["floor2hall"],
+    "triggerBox": {
+      "min": [5.920, 10.575, -76.257],
+      "max": [57.096, 17.588, -16.588]
+    }
+  },
+  {
     "name": "floor2hall",
     "path": "/models/zones/2_floor_hall_sized.glb",
     "impostorPath" : "/models/impostors/imp_2_floor_hall_sized.glb",
     "physics" : true,
     "type": "corridor",
     "description" : "Passerelle 2ème étage",
-    "adjacentZoneNames": ["floor2"],
+    "adjacentZoneNames": ["floor2", "floor2_a"],
     "triggerBox": {
       "min": [56.119, 10.560, -35.378],
       "max": [71.158, 14.528, -27.871]
@@ -245,6 +271,20 @@
       "min": [79.581, 11.075, -38.413],
       "max": [87.786, 14.752, -31.479]
     }
+  },
+  {
+    "name": "ARJ-015",
+    "path": "/models/furnitures/fur_arj_015_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - Méca fluide",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [44.799, -0.316, -35.339],
+      "max": [56.118, 3.421, -11.563]
+    },
+    "pathCoords" : [54.34, 1.3, -16.2]
   }
 
 ]
