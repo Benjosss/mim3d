@@ -17,7 +17,7 @@ THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 const DEBUG_STATS = true;
-const DEBUG_BBOX_COLOR = true;
+const DEBUG_BBOX_COLOR = false;
 
 // ================= CONFIG =================
 const CONFIG = {
