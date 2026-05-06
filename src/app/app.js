@@ -127,7 +127,7 @@ setTimeout(() => loadingScreen.remove(), 500);
 
 const pathfinding = new AppPathfinding(scene, camera, player);
 pathfinding.showHelper();
-pathfinding.loadNavMesh("/models/navmeshes/navmesh.glb", gltfLoader);
+pathfinding.loadNavMesh("/models/navmeshes/navmesh_mesh.glb", gltfLoader);
 
 // ================= PHYSIQUE =================
 const timer = new THREE.Timer();
@@ -180,6 +180,10 @@ document.addEventListener('keydown', e => {
     if (e.code === 'F7') {
         e.preventDefault();
         pathfinding.findPathTo("BN2-005", ZONES)
+    }
+    if (e.code === 'F8') {
+        e.preventDefault();
+        pathfinding.findPathTo("ARJ-015", ZONES)
     }
 });
 
