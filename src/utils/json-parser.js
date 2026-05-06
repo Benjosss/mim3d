@@ -55,8 +55,12 @@ export default class JsonParser {
                     ),
                 };
 
-                if (zone.type !== "corridor" && zone.type !== "stairs" && zone.pathCoords) {
-                    newZone.pathCoords = new THREE.Vector3(...zone.pathCoords);
+                if (zone.type !== "corridor" && zone.type !== "stairs") {
+                    try{
+                        newZone.pathCoords = new THREE.Vector3(...zone.pathCoords);
+                    }catch(e){
+                        console.error(`Impossible de récupérer les coordonées d'arrivée pour la zone ${zone.name}`, e);
+                    }
                 }
                 ZONES.push(new Zone(newZone));
             });
