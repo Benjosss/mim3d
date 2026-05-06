@@ -19,7 +19,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "Rez de jardin aile a",
-    "adjacentZoneNames": ["stairs0to-1_1",  "allstairs_2", "allstairs_3", "floor-1hall"],
+    "adjacentZoneNames": ["stairs0to-1_1",  "allstairs_2", "allstairs_3", "floor-1hall", "allstairs_4"],
     "triggerBox": {
       "min": [-0.067, -0.200, -76.342],
       "max": [56.431, 5.961, -11.398]
@@ -58,7 +58,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "Rez de chaussé aile a",
-    "adjacentZoneNames": ["floor0hall"],
+    "adjacentZoneNames": ["floor0hall", "allstairs_4"],
     "triggerBox": {
       "min": [5.963, 3.460, -76.234],
       "max": [56.385, 7.649, -11.819]
@@ -97,7 +97,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "1er étage aile a",
-    "adjacentZoneNames": ["floor1hall"],
+    "adjacentZoneNames": ["floor1hall", "allstairs_4"],
     "triggerBox": {
       "min": [5.963, 3.460, -76.234],
       "max": [56.385, 7.649, -11.819]
@@ -136,7 +136,7 @@
     "physics" : true,
     "type": "corridor",
     "description" : "2eme étage aile a",
-    "adjacentZoneNames": ["floor2hall"],
+    "adjacentZoneNames": ["floor2hall", "allstairs_4"],
     "triggerBox": {
       "min": [5.920, 10.575, -76.257],
       "max": [57.096, 17.588, -16.588]
@@ -188,7 +188,7 @@
     "physics" : true,
     "type": "stairs",
     "description" : "Escalier 1",
-    "adjacentZoneNames": ["floor3", "floor2", "stairs2to1_1"],
+    "adjacentZoneNames": ["floor3", "floor2", "stairs2to1_1", "stairs1to0_1"],
     "triggerBox": {
       "min": [74.375, 11.078, -25.835],
       "max": [78.636, 16.021, -20.382]
@@ -214,7 +214,7 @@
     "physics" : true,
     "type": "stairs",
     "description" : "Escalier 1",
-    "adjacentZoneNames": ["floor0", "floor1", "stairs2to1_1"],
+    "adjacentZoneNames": ["floor0", "floor1", "stairs2to1_1", "stairs3to2_1"],
     "triggerBox": {
       "min": [76.168, 4.240, -27.784],
       "max": [78.607, 7.854, -21.202]
