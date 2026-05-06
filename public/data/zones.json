@@ -286,6 +286,20 @@
       "max": [56.118, 3.421, -11.563]
     },
     "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "Petit-Amphi",
+    "path": "/models/furnitures/fur_petit_amphi_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "CM",
+    "description" : "x places - Petit Amphithéâtre",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [67.976, 3.477, -51.547],
+      "max": [84.736, 7.415, -38.561]
+    },
+    "pathCoords" : [80.58, 5.54, -41.76]
   }
 
 ]
