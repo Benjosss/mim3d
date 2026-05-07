@@ -260,8 +260,120 @@
     }
   },
   {
+    "name": "BN2-013",
+    "path": "/models/furnitures/fur_bn2_013_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [71.131, 11.270, -47.763],
+      "max": [79.853, 14.619, -40.474]
+    },
+    "pathCoords" : [75.77, 12.75, -46.51]
+  },
+  {
+    "name": "BN2-012",
+    "path": "/models/furnitures/fur_bn2_012_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [70.877, 11.273, -55.154],
+      "max": [79.479, 14.255, -47.533]
+    },
+    "pathCoords" : [76.03, 12.75, -53.30]
+  },
+  {
+    "name": "BN2-011",
+    "path": "/models/furnitures/fur_bn2_011_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [71.409, 10.627, -63.816],
+      "max": [80.173, 14.425, -54.806]
+    },
+    "pathCoords" : [75.90, 12.75, -62.60]
+  },
+  {
+    "name": "BN2-010",
+    "path": "/models/furnitures/fur_bn2_010_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [71.330, 10.973, -75.248],
+      "max": [79.756, 14.491, -67.401]
+    },
+    "pathCoords" : [76.04, 12.75, -68.32]
+  },
+  {
+    "name": "BN2-009",
+    "path": "/models/furnitures/fur_bn2_009_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [78.225, 10.939, -75.553],
+      "max": [87.432, 14.408, -67.340]
+    },
+    "pathCoords" : [81.62, 12.75, -70.33]
+  },
+  {
+    "name": "BN2-008",
+    "path": "/models/furnitures/fur_bn2_008_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [78.649, 11.185, -68.994],
+      "max": [86.989, 14.673, -61.726]
+    },
+    "pathCoords" : [82.56, 12.75, -63.05]
+  },
+  {
+    "name": "BN2-007",
+    "path": "/models/furnitures/fur_bn2_007_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [78.357, 10.866, -61.720],
+      "max": [87.327, 14.372, -54.791]
+    },
+    "pathCoords" : [83.02, 12.75, -60.58]
+  },
+  {
+    "name": "BN2-006",
+    "path": "/models/furnitures/fur_bn2_006_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [78.841, 11.085, -47.739],
+      "max": [87.562, 14.437, -39.166]
+    },
+    "pathCoords" : [82.28, 12.75, -40.20]
+  },
+  {
     "name": "BN2-005",
-    "path": "/models/furnitures/fur_test_salle_sized.glb",
+    "path": "/models/furnitures/fur_bn2_005_sized.glb",
     "impostorPath" : "",
     "physics" : false,
     "type": "TD",
@@ -271,7 +383,77 @@
       "min": [79.581, 11.075, -38.413],
       "max": [87.786, 14.752, -31.479]
     },
-    "pathCoords" : [83.59, 12.75, -32.54]
+    "pathCoords" : [82.72, 12.75, -33.30]
+  },
+  {
+    "name": "BN2-004",
+    "path": "/models/furnitures/fur_bn2_004_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [79.171, 10.683, -32.074],
+      "max": [87.278, 14.389, -24.448]
+    },
+    "pathCoords" : [82.43, 12.75, -25.96]
+  },
+  {
+    "name": "BN2-003",
+    "path": "/models/furnitures/fur_bn2_003_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [79.184, 11.182, -24.471],
+      "max": [87.716, 14.146, -16.910]
+    },
+    "pathCoords" : [83.28, 12.75, -18.45]
+  },
+  {
+    "name": "BN2-002",
+    "path": "/models/furnitures/fur_bn2_002_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [79.431, 11.007, -17.230],
+      "max": [88.885, 14.744, -7.622]
+    },
+    "pathCoords" : [83.99, 12.75, -8.80]
+  },
+  {
+    "name": "BN2-001",
+    "path": "/models/furnitures/fur_bn2_001_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [78.963, 11.052, -12.120],
+      "max": [89.578, 14.830, -0.373]
+    },
+    "pathCoords" : [80.94, 12.75, -5.81]
+  },
+  {
+    "name": "BN2-WC-H",
+    "path": "/models/furnitures/fur_bn2_t_h_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "toilets",
+    "description" : "Toilettes Hommes",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [69.826, 11.354, -31.234],
+      "max": [74.552, 14.527, -25.266]
+    },
+    "pathCoords" : [72.30, 12.75, -29.33]
   },
   {
     "name": "ARJ-015",
@@ -298,6 +480,20 @@
     "triggerBox": {
       "min": [67.976, 3.477, -51.547],
       "max": [84.736, 7.415, -38.561]
+    },
+    "pathCoords" : [80.58, 5.54, -41.76]
+  },
+  {
+    "name": "Grand-Amphi",
+    "path": "/models/furnitures/fur_grand_amphi_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "CM",
+    "description" : "x places - Grand Amphithéâtre",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [71.789, 2.783, -63.470],
+      "max": [84.310, 7.476, -48.525]
     },
     "pathCoords" : [80.58, 5.54, -41.76]
   }
