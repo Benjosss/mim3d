@@ -50,6 +50,20 @@ export default class SceneSetup {
         return camera;
     }
 
+    buildCrossHair(camera) {
+        const geometry = new THREE.CircleGeometry(0.005, 32);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            depthTest: false,
+            transparent: true,
+            opacity: 0.8
+        });
+
+        const crossHair = new THREE.Mesh(geometry, material);
+        crossHair.position.set(0, 0, -1);
+        camera.add(crossHair);
+    }
+
     buildRenderer(){
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);

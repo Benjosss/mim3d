@@ -62,6 +62,7 @@ const scene = sceneSetup.getScene();
 sceneSetup.buildSky();
 sceneSetup.buildLights();
 const camera = sceneSetup.buildCamera();
+sceneSetup.buildCrossHair(camera);
 const renderer = sceneSetup.buildRenderer();
 sceneSetup.initResize(camera, renderer);
 
