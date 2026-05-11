@@ -147,6 +147,8 @@ export default class AppPathfinding {
                 this.scene.add(this.visualPathLine);
                 // ------------------------------------
 
+                document.getElementById("walkPanel").style.display = "flex";
+                document.getElementById("walkPanel-p").innerHTML = "Marche auto..."
                 this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
             }
         }
@@ -213,6 +215,9 @@ export default class AppPathfinding {
             this.splineCurve = null;
             this.isMoving = false;
             this.playerGroup.visible = true;
+
+            document.getElementById("walkPanel").style.display = "none";
+            document.getElementById("walkPanel-p").innerHTML = ""
 
 
             if (this.visualPathLine) {

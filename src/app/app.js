@@ -79,15 +79,23 @@ const capsuleHelper = debugUtil.buildPlayerCapsuleHelper();
 
 // ================= CONTROLS =================
 const menuPanel = document.getElementById('menuPanel');
+const infosPanel = document.getElementById('infosPanel');
+const keyBindPanel = document.getElementById("keyBindPanel");
+const walkPanel = document.getElementById("walkPanel");
 const startButton = document.getElementById('startButton');
 const controls = new PointerLockControls(camera, renderer.domElement);
 
 startButton?.addEventListener('click', () => controls.lock());
 controls.addEventListener('lock', () => {
     if (menuPanel) menuPanel.style.display = 'none';
+    if (infosPanel) infosPanel.style.display = 'flex';
+    if (keyBindPanel) keyBindPanel.style.display = 'flex';
 });
 controls.addEventListener('unlock', () => {
-    if (menuPanel) menuPanel.style.display = 'block';
+    if (menuPanel) menuPanel.style.display = 'flex';
+    if (infosPanel) infosPanel.style.display = 'none';
+    if (keyBindPanel) keyBindPanel.style.display = 'none';
+    if (walkPanel) walkPanel.style.display = 'none';
 });
 
 

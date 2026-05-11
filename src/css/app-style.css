@@ -1,37 +1,299 @@
-body { margin: 0; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #000;
+}
+
+/* Container principal */
 #menuPanel {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Image de fond */
+#menuPanel > .bg-img{
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Cadre en verre agrandi */
+.glassPanel {
+    position: fixed;
+    z-index: 1000;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 800px;
+    min-height: 520px;
+    padding: 60px;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+
+    user-select: none;
+}
+
+/* Titre */
+.glassPanel h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #111;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 #startButton {
-    height: 80px;
-    width: 200px;
-    margin: -25px -100px;
+    padding: 22px 50px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #5aa9ff 0%, #2f7df0 100%);
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 132, 255, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
     position: relative;
-    top: 50%;
-    left: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#startButton:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 45px rgba(0, 132, 255, 0.5);
+}
+
+#startButton:active {
+    transform: translateY(-1px);
+}
+
+#settingsButton {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
+    color: black;
+    padding: 0;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+#settingsButton:hover {
+    transform: rotate(45deg);
+}
+
+#settingsButton:focus, #settingsButton:active {
+    background: transparent !important;
+    outline: none !important;
+}
+
+#settingsButton .material-symbols-outlined {
     font-size: 32px;
 }
 
+#helpButton {
+    /* Flexbox pour l'alignement */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espace entre l'icône et le texte */
+
+    padding: 12px 25px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+/* Ajustement optionnel de la taille de l'icône */
+#helpButton .material-symbols-outlined {
+    font-size: 24px; /* Ajuste selon tes préférences */
+}
+
+#helpButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Logo */
+.logo-img {
+    width: 400px;
+    height: auto;
+    object-fit: contain;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+ .material-symbols-outlined {
+     font-variation-settings:
+             'FILL' 0,
+             'wght' 400,
+             'GRAD' 0,
+             'opsz' 24
+ }
+
 #infosPanel {
-    position: absolute;
-    display: flex;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
-    width: 30%;
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 10px;
+    /* Positionnement en haut à droite */
+    position: fixed; /* 'fixed' pour qu'il ne bouge pas avec Three.js */
+    top: 20px;
+    right: 20px;
+    left: auto;      /* On annule tes anciens réglages de centrage */
+    transform: none; /* On annule le translateX */
+
+    /* Dimensions plus compactes */
+    min-width: 180px;
+    padding: 12px 20px;
+
+    /* Effet Glassmorphism */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px; /* Arrondi sur tous les coins pour un look "badge" */
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    /* Alignement interne */
+    display: none;  /* none le temps que PointersLock soit activé */
     justify-content: center;
     align-items: center;
-    border-radius: 0 0 15px 15px;
+    z-index: 1001; /* Pour passer devant tout le reste */
 }
+
+#keyBindPanel {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: none; /* none le temps que PointersLock soit activé */
+    flex-direction: column;
+    gap: 15px; /
+
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.key-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.key-item .material-symbols-outlined {
+    font-size: 28px;
+    opacity: 0.9;
+}
+
+/* Style des touches de clavier */
+kbd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 35px;
+    height: 35px;
+    padding: 0 8px;
+
+    border: 2px solid white;
+    border-radius: 10px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.key-item:last-child kbd {
+    min-width: 50px;
+    font-size: 12px;
+}
+
+#walkPanel {
+    /* Positionnement en bas à droite */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    left: auto;
+    transform: none;
+
+    /* Dimensions plus compactes */
+    min-width: 180px;
+    padding: 12px 20px;
+
+    /* Effet Glassmorphism */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px; /* Arrondi sur tous les coins pour un look "badge" */
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    /* Alignement interne */
+    display: none;  /* none le temps qu'un guidage soit lancé soit activé */
+    justify-content: center;
+    align-items: center;
+    z-index: 1001; /* Pour passer devant tout le reste */
+}
+
+
 
 #current_zone {
     margin: 0;
+    color: #111;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
