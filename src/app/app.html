@@ -69,11 +69,60 @@
 </div>
 
 <div id="helpPanel">
-    <h2>Aide</h2>
-    <div>
-        <p>tatata</p>
-        <p>tatata</p>
-        <p>tatata</p>
+    <div id="helpTopRow">
+        <div id="topLeftAction">
+            <button id="helpBackBtn">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+            <kbd>H</kbd>
+        </div>
+        <h2>Aide</h2>
+    </div>
+
+    <div id="helpContentGrid">
+        <div id="keyBindHelp">
+            <div class="key-item">
+                <span class="material-symbols-outlined">pin_drop</span>
+                <kbd>F</kbd>
+                <p>: Recherche de salle</p>
+            </div>
+            <div class="key-item">
+                <span class="material-symbols-outlined">person_search</span>
+                <kbd>A</kbd>
+                <p>: Recherche de personne</p>
+            </div>
+            <div class="key-item">
+                <span class="material-symbols-outlined">help</span>
+                <kbd>H</kbd>
+                <p>: Aide</p>
+            </div>
+            <div class="key-item">
+                <span class="material-symbols-outlined">settings</span>
+                <kbd>P</kbd>
+                <p>: Paramètres</p>
+            </div>
+            <div class="key-item">
+                <span class="material-symbols-outlined">logout</span>
+                <kbd>ESC</kbd>
+                <p>: Revenir au Menu</p>
+            </div>
+        </div>
+
+        <div id="helpDescription">
+            <p>
+                Pour garantir une immersion totale et une navigation fluide dans l’UFR MIM, cette visite virtuelle adopte le point de vue d’une personne se déplaçant librement dans le bâtiment.
+            </p>
+            <p>
+                La souris permet d’orienter le regard afin d’explorer les différents espaces de manière naturelle, tandis que les touches [Z][Q][S][D] (ou les flèches directionnelles) servent à se déplacer.
+            </p>
+            <p>
+                Vous pouvez ainsi parcourir les couloirs, entrer dans les salles, monter ou descendre les escaliers et découvrir l’UFR comme si vous y étiez réellement.
+            </p>
+
+            <div id="navigationVisualizer">
+                <img src="/images/nav_visualizer.png" alt="Navigation Visualizer">
+            </div>
+        </div>
     </div>
 </div>
 

@@ -259,6 +259,15 @@ document.addEventListener('keydown', e => {
     }
 });
 
+const helpBackBtn = document.getElementById('helpBackBtn');
+helpBackBtn?.addEventListener('click', e => {
+    e.preventDefault();
+    if(currentOverlay === "help") {
+        controls.lock();
+        currentOverlay = "menu";
+    }
+})
+
 // --- Fin du chrono ---
 const t1 = performance.now();
 console.log(`⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`);
