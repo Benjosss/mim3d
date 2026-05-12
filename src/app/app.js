@@ -37,24 +37,6 @@ let ZONES = [];
 const parser = new jsonParser();
 ZONES = await parser.fillZonesTab(ZONES, "/data/zones.json")
 
-
-// ================= LOADING SCREEN UI =================
-const loadingScreen = document.createElement('div');
-loadingScreen.style.cssText = `
-    position: fixed; inset: 0; background: #1a1a2e;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    z-index: 100; color: white; font-family: sans-serif;
-`;
-loadingScreen.innerHTML = `
-    <p style="margin-bottom: 12px; font-size: 1rem; opacity: 0.8;">Chargement...</p>
-    <div style="width: 300px; height: 6px; background: #333; border-radius: 3px; overflow: hidden;">
-        <div id="loading-bar" style="height:100%; width:0; background:#4466ff; transition:width 0.3s;"></div>
-    </div>
-    <p id="loading-percent" style="margin-top: 8px; font-size: 0.85rem; opacity: 0.6;">0%</p>
-`;
-document.body.appendChild(loadingScreen);
-
 // ================= SCENE SETUP =================
 const sceneSetup = new SceneSetup(CONFIG);
 
@@ -118,19 +100,7 @@ if (DEBUG_BBOX_COLOR) {
         scene.add(helper);
     });
 }
-
-// Chargement initial — seule la zone de départ est bloquante
-document.getElementById('loading-bar').style.width = '30%';
-document.getElementById('loading-percent').textContent = 'Zone initiale...';
-
 await zoneManager.init(CONFIG.startZone);
-
-document.getElementById('loading-bar').style.width = '100%';
-document.getElementById('loading-percent').textContent = '100%';
-
-loadingScreen.style.transition = 'opacity 0.5s';
-loadingScreen.style.opacity = '0';
-setTimeout(() => loadingScreen.remove(), 500);
 
 // ================= PATHFINDING =================
 
