@@ -345,7 +345,7 @@ function animate(timestamp) {
     if (DEBUG_STATS) {
         stats.update();
     }
-    document.getElementById('current_zone').innerHTML = "Salle actuelle : " + (zoneManager.currentRoom?.name ?? 'aucune') + "<br>" + "Type : " + (zoneManager.currentRoom?.type ?? "Empty") + "<br>" + "Description : " + (zoneManager.currentRoom?.description ?? "Empty");
+    document.getElementById('current_zone').innerHTML = "Salle actuelle : " + (zoneManager.currentRoom?.name ?? 'aucune');
 
     // console.log(renderer.info.render.calls);
     renderer.render(scene, camera);
