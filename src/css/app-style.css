@@ -38,7 +38,7 @@ body {
 
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    /*transform: translate(-50%, -50%);*/
 
     width: 800px;
     min-height: 520px;
@@ -57,6 +57,12 @@ body {
     gap: 35px;
 
     user-select: none;
+
+    will-change: transform, backdrop-filter;
+    transform: translate(-50%, -50%) perspective(1px) translateZ(0);
+
+    /* Suppression de tout masque qui pourrait annuler le flou */
+    isolation: isolate;
 }
 
 /* Titre */
