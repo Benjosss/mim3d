@@ -38,7 +38,7 @@ body {
 
     top: 50%;
     left: 50%;
-    /*transform: translate(-50%, -50%);*/
+    transform: translate(-50%, -50%);
 
     width: 800px;
     min-height: 520px;
@@ -58,11 +58,11 @@ body {
 
     user-select: none;
 
-    will-change: transform, backdrop-filter;
-    transform: translate(-50%, -50%) perspective(1px) translateZ(0);
+    /*will-change: transform, backdrop-filter;*/
+    /*transform: translate(-50%, -50%) perspective(1px) translateZ(0);*/
 
-    /* Suppression de tout masque qui pourrait annuler le flou */
-    isolation: isolate;
+    /*!* Suppression de tout masque qui pourrait annuler le flou *!*/
+    /*isolation: isolate;*/
 }
 
 /* Titre */
@@ -292,6 +292,42 @@ kbd {
     justify-content: center;
     align-items: center;
     z-index: 1001; /* Pour passer devant tout le reste */
+}
+
+#helpPanel, #settingsPanel, #roomFindPanel, #personFindPanel{
+    position: fixed;
+    z-index: 1000;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 800px;
+    min-height: 520px;
+    padding: 60px;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+
+    user-select: none;
+}
+
+/* Titre */
+#helpPanel h2, #settingsPanel h2, #roomFindPanel h2, #personFindPanel h2{
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #111;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 

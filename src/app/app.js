@@ -59,26 +59,67 @@ if (DEBUG_STATS) {
 // Debug capsule
 const capsuleHelper = debugUtil.buildPlayerCapsuleHelper();
 
+let currentOverlay = "menu";
+
 // ================= CONTROLS =================
 const menuPanel = document.getElementById('menuPanel');
 const infosPanel = document.getElementById('infosPanel');
 const keyBindPanel = document.getElementById("keyBindPanel");
 const walkPanel = document.getElementById("walkPanel");
+const helpPanel = document.getElementById("helpPanel");
+const settingsPanel = document.getElementById("settingsPanel");
+const roomFindPanel = document.getElementById("roomFindPanel");
+const personFindPanel = document.getElementById("personFindPanel");
 const startButton = document.getElementById('startButton');
+const helpButton = document.getElementById('helpButton');
+const settingsButton = document.getElementById('settingsButton');
 const controls = new PointerLockControls(camera, renderer.domElement);
 
 startButton?.addEventListener('click', () => controls.lock());
 controls.addEventListener('lock', () => {
     if (menuPanel) menuPanel.style.display = 'none';
+    if (helpPanel) helpPanel.style.display = 'none';
+    if (settingsPanel) settingsPanel.style.display = 'none';
+    if (roomFindPanel) roomFindPanel.style.display = 'none';
+    if (personFindPanel) personFindPanel.style.display = 'none';
     if (infosPanel) infosPanel.style.display = 'flex';
     if (keyBindPanel) keyBindPanel.style.display = 'flex';
 });
 controls.addEventListener('unlock', () => {
-    if (menuPanel) menuPanel.style.display = 'flex';
+    if (menuPanel) menuPanel.style.display = 'none';
     if (infosPanel) infosPanel.style.display = 'none';
     if (keyBindPanel) keyBindPanel.style.display = 'none';
     if (walkPanel) walkPanel.style.display = 'none';
+
+
+    switch (currentOverlay) {
+        case 'room':
+            if (roomFindPanel) roomFindPanel.style.display = 'flex';
+            break;
+        case 'person':
+            if (personFindPanel) personFindPanel.style.display = 'flex';
+            break;
+        case 'help':
+            if (helpPanel) helpPanel.style.display = 'flex';
+            break;
+        case 'settings' :
+            if (settingsPanel) settingsPanel.style.display = 'flex';
+            break;
+        default:
+            if (menuPanel) menuPanel.style.display = 'flex';
+    }
 });
+
+helpButton?.addEventListener('click', () => {
+    controls.lock();
+    currentOverlay = "help";
+    controls.unlock();
+});
+settingsButton?.addEventListener('click', () => {
+    controls.lock();
+    currentOverlay = "settings";
+    controls.unlock();
+})
 
 
 // ================= LOAD ASSETS =================
@@ -123,7 +164,7 @@ const _capsuleTop = new THREE.Vector3();
 const _normal = new THREE.Vector3();
 const _matrix = new THREE.Matrix4();
 
-const bvhPysicsUtils = new AppPhysicsBvh(CONFIG, camera, colliderMeshes,
+const bvhPhysicsUtils = new AppPhysicsBvh(CONFIG, camera, colliderMeshes,
     playerPos, playerVelocity, playerDirection,
     playerOnFloor, _capsuleTop, _capsuleBottom, _normal, _matrix);
 
@@ -168,6 +209,54 @@ document.addEventListener('keydown', e => {
         e.preventDefault();
         pathfinding.findPathTo("Petit-Amphi", ZONES)
     }
+    if (e.code === 'KeyF') {
+        e.preventDefault();
+        if (currentOverlay === "room") {
+            controls.lock();
+            currentOverlay = "menu";
+        } else {
+            if (controls.isLocked) {
+                currentOverlay = "room";
+                controls.unlock();
+            }
+        }
+    }
+    if (e.code === 'KeyQ') {
+        e.preventDefault();
+        if (currentOverlay === "person") {
+            controls.lock();
+            currentOverlay = "menu";
+        } else {
+            if (controls.isLocked) {
+                currentOverlay = "person";
+                controls.unlock();
+            }
+        }
+    }
+    if (e.code === 'KeyH') {
+        e.preventDefault();
+        if (currentOverlay === "help") {
+            controls.lock();
+            currentOverlay = "menu";
+        } else {
+            if (controls.isLocked) {
+                currentOverlay = "help";
+                controls.unlock();
+            }
+        }
+    }
+    if (e.code === 'KeyP') {
+        e.preventDefault();
+        if (currentOverlay === "settings") {
+            controls.lock();
+            currentOverlay = "menu";
+        } else {
+            if (controls.isLocked) {
+                currentOverlay = "settings";
+                controls.unlock();
+            }
+        }
+    }
 });
 
 // --- Fin du chrono ---
@@ -206,10 +295,10 @@ function animate(timestamp) {
             CONFIG.playerRadius = 0.4;
         }
 
-        if (keyMap['KeyW'] || keyMap['ArrowUp']) playerVelocity.add(bvhPysicsUtils.getForwardVector().multiplyScalar(speed));
-        if (keyMap['KeyS'] || keyMap['ArrowDown']) playerVelocity.add(bvhPysicsUtils.getForwardVector().multiplyScalar(-speed));
-        if (keyMap['KeyA'] || keyMap['ArrowLeft']) playerVelocity.add(bvhPysicsUtils.getSideVector().multiplyScalar(-speed));
-        if (keyMap['KeyD'] || keyMap['ArrowRight']) playerVelocity.add(bvhPysicsUtils.getSideVector().multiplyScalar(speed));
+        if (keyMap['KeyW'] || keyMap['ArrowUp']) playerVelocity.add(bvhPhysicsUtils.getForwardVector().multiplyScalar(speed));
+        if (keyMap['KeyS'] || keyMap['ArrowDown']) playerVelocity.add(bvhPhysicsUtils.getForwardVector().multiplyScalar(-speed));
+        if (keyMap['KeyA'] || keyMap['ArrowLeft']) playerVelocity.add(bvhPhysicsUtils.getSideVector().multiplyScalar(-speed));
+        if (keyMap['KeyD'] || keyMap['ArrowRight']) playerVelocity.add(bvhPhysicsUtils.getSideVector().multiplyScalar(speed));
 
         if (fpsPlayer.model?.userData.walkAction) {
             fpsPlayer.model.userData.walkAction.paused = !isMoving;
@@ -225,8 +314,8 @@ function animate(timestamp) {
                 playerVelocity.set(0, 0, 0); // On annule la gravité et l'élan
                 // On ne va pas plus loin dans cette frame
             } else {
-                bvhPysicsUtils.updatePlayerYVelocity(deltaTime);
-                bvhPysicsUtils.playerCollisionsSubStepping(8, deltaTime);
+                bvhPhysicsUtils.updatePlayerYVelocity(deltaTime);
+                bvhPhysicsUtils.playerCollisionsSubStepping(8, deltaTime);
             }
         }
 
@@ -248,7 +337,7 @@ function animate(timestamp) {
     }
 
     // P : log position + zone courante
-    if (keyMap['KeyP']) {
+    if (keyMap['KeyG']) {
         console.log("📍 Position :", camera.position.clone());
         console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
     }
