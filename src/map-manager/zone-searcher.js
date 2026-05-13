@@ -50,4 +50,29 @@ export class ZoneSearcher {
         })
         console.table(sort);
     }
+
+    // ================= RESEARCH =================
+
+    zoneSearchByString(str){
+        str = str.toLowerCase();
+        const filteredZones = this.zones.filter(zone => zone.displayName.toLowerCase().includes(str));
+        return filteredZones.sort((a,b) => a.displayName.localeCompare(b.displayName, "fr"));
+    }
+
+    zonesFilterByType(types, zones){
+        let filteredZones = [];
+        zones.forEach((zone) => {
+            types.forEach((type) => {
+                if(zone.type === type) {
+                    filteredZones.push(zone);
+                }
+            })
+        })
+        return filteredZones;
+    }
+
+    zoneSearchAndFilter(str, types){
+        return this.zonesFilterByType(types, this.zoneSearchByString(str));
+    }
+
 }
