@@ -101,6 +101,9 @@ export class ZoneSearcher {
             if(zone.type === "office"){
                 icon = "person";
             }
+            if(zone.type === "toilets"){
+                icon = "wc";
+            }
 
             const item = document.createElement('div');
             item.className = 'result-item';
