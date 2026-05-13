@@ -497,7 +497,7 @@
     "physics" : false,
     "type": "office",
     "description" : "x places - Méca fluide",
-    "persons" : ["LANUEL Yann", "Marion Machin"],
+    "persons" : ["LANUEL Yann"],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [44.799, -0.316, -35.339],
