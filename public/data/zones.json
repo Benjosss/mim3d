@@ -495,9 +495,8 @@
     "path": "/models/furnitures/fur_arj_015_sized.glb",
     "impostorPath" : "",
     "physics" : false,
-    "type": "office",
+    "type": "TP",
     "description" : "x places - Méca fluide",
-    "persons" : ["LANUEL Yann"],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [44.799, -0.316, -35.339],
@@ -534,6 +533,21 @@
       "max": [84.310, 7.476, -48.525]
     },
     "pathCoords" : [80.58, 5.54, -41.76]
+  },
+  {
+    "name": "LCOMS",
+    "displayName":  "LCOMS",
+    "path": "/models/furnitures/fur_lcoms_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "office",
+    "description" : "Laboratoire du LCOMS - Zone réglementée",
+    "persons" : ["LANUEL Yann", "MINICH Sarah", "LUCARELLI Giorgio", "ABDELSADEK Youssef", "MARTIN Benoît"],
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [49.226, 11.008, -34.390],
+      "max": [56.113, 14.490, -31.602]
+    },
+    "pathCoords" : [52.50, 12.75, -32.91]
   }
-
 ]
