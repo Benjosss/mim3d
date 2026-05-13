@@ -105,6 +105,11 @@ export class ZoneSearcher {
                 icon = "wc";
             }
 
+            let des = zone.description;
+            if(zone.type === "office"){
+                des = zone.description + " - " + zone.persons.join(", ");
+            }
+
             const item = document.createElement('div');
             item.className = 'result-item';
             item.innerHTML = `
@@ -112,7 +117,7 @@ export class ZoneSearcher {
                 <span class="material-symbols-outlined icon-main">${icon}</span>
                 <div>
                     <span class="room-name">${zone.displayName}</span>
-                    <span class="room-details">${zone.description || 'x places'}</span>
+                    <span class="room-details">${des}</span>
                 </div>
             </div>
             <div class="result-actions">

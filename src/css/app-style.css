@@ -10,208 +10,17 @@ body {
     background-color: #000;
 }
 
-/* ===== MENU ===== */
-#menuPanel {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ===== MATERIAL ICONS ===== */
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
 }
 
-/* Image de fond */
-#menuPanel > .bg-img{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-}
+/* ===== KBD ===== */
 
-/* Titre */
-.glassPanel h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: #111;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-#startButton {
-    padding: 22px 50px;
-    border: none;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #5aa9ff 0%, #2f7df0 100%);
-    color: white;
-    font-size: 1.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    text-align: center;
-    box-shadow: 0 12px 35px rgba(0, 132, 255, 0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#startButton:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 16px 45px rgba(0, 132, 255, 0.5);
-}
-
-#startButton:active {
-    transform: translateY(-1px);
-}
-
-#settingsButton, #leaveButton {
-    position: absolute;
-    top: 30px;
-
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-
-    color: black;
-    padding: 0;
-
-    width: 50px;
-    height: 50px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-}
-
-#settingsButton{
-    right: 30px;
-}
-
-#leaveButton {
-    left: 30px;
-}
-
-.home_link{
-    text-decoration: none;
-    color: black;
-}
-
-#settingsButton:hover {
-    transform: rotate(45deg);
-}
-
-#leaveButton:hover {
-    transform: translateX(-5px);
-}
-
-#settingsButton:focus, #settingsButton:active {
-    background: transparent !important;
-    outline: none !important;
-}
-
-#settingsButton .material-symbols-outlined, #leaveButton .material-symbols-outlined, #topRightAction .material-symbols-outlined {
-    font-size: 32px;
-}
-
-#helpButton {
-    /* Flexbox pour l'alignement */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    padding: 12px 25px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.2rem;
-    cursor: pointer;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
-}
-
-/* Ajustement optionnel de la taille de l'icône */
-#helpButton .material-symbols-outlined {
-    font-size: 24px;
-}
-
-#helpButton:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.8);
-}
-
-/* Logo */
-.logo-img {
-    width: 400px;
-    height: auto;
-    object-fit: contain;
-    margin-top: 10px;
-    border-radius: 10px;
-}
-
- .material-symbols-outlined {
-     font-variation-settings:
-             'FILL' 0,
-             'wght' 400,
-             'GRAD' 0,
-             'opsz' 24
- }
-
-/* ===== INFOS ===== */
-
-#infosPanel {
-    top: 20px;
-}
-
-#current_zone {
-    margin: 0;
-    color: #111;
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-/* ===== KEYBIND ===== */
-
-#keyBindPanel {
-    position: fixed;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    display: none; /* none le temps que PointersLock soit activé */
-    flex-direction: column;
-    gap: 15px;
-
-    z-index: 1000;
-    pointer-events: none;
-}
-
-.key-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: white;
-}
-
-.key-item .material-symbols-outlined {
-    font-size: 28px;
-    opacity: 0.9;
-}
-
-/* Style des touches de clavier */
 kbd {
     display: flex;
     justify-content: center;
@@ -233,46 +42,236 @@ kbd {
     backdrop-filter: blur(5px);
 }
 
+/* ===== MENU ===== */
+
+#menuPanel {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menuPanel > .bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.glassPanel h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #111;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo-img {
+    width: 400px;
+    height: auto;
+    object-fit: contain;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.home_link {
+    text-decoration: none;
+    color: black;
+}
+
+#startButton {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 22px 50px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #5aa9ff 0%, #2f7df0 100%);
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 132, 255, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#startButton:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 45px rgba(0, 132, 255, 0.5);
+}
+
+#startButton:active {
+    transform: translateY(-1px);
+}
+
+#settingsButton,
+#leaveButton {
+    position: absolute;
+    top: 30px;
+
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
+    color: black;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#settingsButton {
+    right: 30px;
+}
+
+#leaveButton {
+    left: 30px;
+}
+
+#settingsButton:hover {
+    transform: rotate(45deg);
+}
+
+#leaveButton:hover {
+    transform: translateX(-5px);
+}
+
+#settingsButton:focus,
+#settingsButton:active {
+    background: transparent !important;
+    outline: none !important;
+}
+
+#settingsButton .material-symbols-outlined,
+#leaveButton .material-symbols-outlined,
+.panel-top-row__right .material-symbols-outlined {
+    font-size: 32px;
+}
+
+#helpButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 25px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+#helpButton .material-symbols-outlined {
+    font-size: 24px;
+}
+
+#helpButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== KEYBIND PANEL ===== */
+
+#keyBindPanel {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.key-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+.key-item .material-symbols-outlined {
+    font-size: 28px;
+    opacity: 0.9;
+}
+
 .key-item:last-child kbd {
     min-width: 50px;
     font-size: 12px;
 }
 
-/* ===== WALK ===== */
+/* ===== FLOATING PANELS (walkPanel + infosPanel) ===== */
 
-#walkPanel {
-    bottom: 20px;
-}
-
-/* ===== PANELS ===== */
-
-#walkPanel, #infosPanel {
+#walkPanel,
+#infosPanel {
     position: fixed;
     right: 20px;
     left: auto;
     transform: none;
 
-    /* Dimensions plus compactes */
     min-width: 180px;
     padding: 12px 20px;
 
-    /* Effet Glassmorphism */
     background: rgba(255, 255, 255, 0.15);
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px; /* Arrondi sur tous les coins pour un look "badge" */
-
+    border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
-    /* Alignement interne */
-    display: none;  /* none le temps qu'un guidage soit lancé soit activé */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1001;
 }
 
-#helpPanel, #settingsPanel, #roomFindPanel, #personFindPanel, .glassPanel {
+#walkPanel {
+    bottom: 20px;
+}
+
+#infosPanel {
+    top: 20px;
+}
+
+#current_zone {
+    margin: 0;
+    color: #111;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== OVERLAY PANELS (glass) ===== */
+
+#helpPanel,
+#settingsPanel,
+#roomFindPanel,
+#personFindPanel,
+.glassPanel {
     position: fixed;
     z-index: 1000;
 
@@ -303,8 +302,10 @@ kbd {
     display: flex;
 }
 
-/* Titres */
-#helpPanel h2, #settingsPanel h2, #roomFindPanel h2, #personFindPanel h2{
+#helpPanel h2,
+#settingsPanel h2,
+#roomFindPanel h2,
+#personFindPanel h2 {
     font-size: 2.5rem;
     font-weight: 800;
     color: #111;
@@ -312,7 +313,54 @@ kbd {
     margin-bottom: 10px;
 }
 
-/* ===== HELP ===== */
+/* ===== PANEL TOP ROW (shared by helpPanel, roomFindPanel, personFindPanel) ===== */
+
+.panel-top-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.panel-top-row__left {
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+
+.panel-top-row__left .material-symbols-outlined {
+    font-size: 32px;
+}
+
+.panel-top-row__left kbd {
+    font-size: 10px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    background: rgba(0, 0, 0, 0.1);
+    color: black;
+    border-color: black;
+    border-radius: 5px;
+}
+
+.panel-top-row__left .panel-back-btn,
+.panel-top-row__right .panel-help-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.panel-top-row__right {
+    position: absolute;
+    right: 0;
+}
+
+/* ===== HELP PANEL ===== */
 
 #helpPanel {
     display: none;
@@ -324,61 +372,20 @@ kbd {
     font-weight: bolder;
 }
 
-/* Ligne supérieure */
-#helpTopRow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%;
-}
-
-.topLeftAction {
-    position: absolute;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: black;
-}
-
-.topLeftAction .material-symbols-outlined {
-    font-size: 32px;
-}
-
-.topLeftAction kbd {
-    font-size: 10px;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 4px;
-    background: rgba(0,0,0,0.1);
-    color: black;
-    border-color: black;
-    border-radius: 5px;
-}
-
-.topLeftAction #helpBackBtn, .topLeftAction #findRoomBackBtn, #topRightAction #findRoomHelpBtn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
 #helpContentGrid {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 40px;
     width: 100%;
     margin-top: 20px;
-    align-items: stretch; /* Force les colonnes à avoir la même hauteur */
+    align-items: stretch;
 }
-
-/* Colonne gauche */
 
 #keyBindHelp {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Étend les items de haut en bas */
-    padding-bottom: 20px; /* Optionnel : petit espace en bas */
+    justify-content: space-between;
+    padding-bottom: 20px;
 }
 
 #keyBindHelp .key-item {
@@ -402,7 +409,7 @@ kbd {
 
 #keyBindHelp kbd {
     color: black;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-color: black;
     backdrop-filter: blur(5px);
     font-size: 16px;
@@ -412,8 +419,6 @@ kbd {
     font-size: 1rem;
     color: black;
 }
-
-/* Colonne droite */
 
 #helpDescription {
     display: flex;
@@ -428,47 +433,33 @@ kbd {
     text-align: justify;
 }
 
-/* Conteneur navigation */
 #navigationVisualizer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.05); /* Fond léger comme sur la photo */
+    background: rgba(0, 0, 0, 0.05);
     padding: 20px;
     border-radius: 25px;
-    width: 100%; /* Prend toute la largeur de la colonne droite */
-    margin-top: auto; /* Pousse le visuel vers le bas du texte */
+    width: 100%;
+    margin-top: auto;
 }
 
 #navigationVisualizer img {
-    width: 100%;    /* L'image s'adapte au conteneur */
-    max-width: 300px; /* Taille maximale pour ne pas être trop envahissante */
+    width: 100%;
+    max-width: 300px;
     height: 200px;
     object-fit: contain;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); /* Optionnel : petite ombre sous l'image */
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
 }
 
-/* ===== ROOM FIND PANEL SPECIFIC ===== */
+/* ===== ROOM & PERSON FIND PANELS ===== */
 
-#roomFindPanel {
+#roomFindPanel,
+#personFindPanel {
     flex-direction: column;
     justify-content: flex-start !important;
     padding: 30px 50px !important;
     width: 1000px !important;
-}
-
-#roomTopRow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    position: relative;
-    margin-bottom: 20px;
-}
-
-#topRightAction {
-    position: absolute;
-    right: 0;
 }
 
 /* Chips / Filtres */
@@ -485,7 +476,7 @@ kbd {
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -502,7 +493,9 @@ kbd {
     transform: translateY(-2px);
 }
 
-.chip input { display: none; }
+.chip input {
+    display: none;
+}
 
 .chip.selected {
     background: #333;
@@ -515,28 +508,27 @@ kbd {
     font-size: 0.8rem;
 }
 
-/* Conteneur Blanc */
-#roomSearchContainer {
+/* Conteneur de recherche */
+.search-container {
     background: rgba(214, 214, 214, 0.82);
     width: 100%;
     border-radius: 30px;
     padding: 0;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
 }
 
-/* Barre de recherche interne */
-#searchBar {
+.search-bar {
     display: flex;
     align-items: center;
     padding: 15px 25px;
     border-bottom: 1px solid #eee;
 }
 
-#searchBar input {
-    background: rgba(255, 255, 255, 0);
+.search-bar input {
+    background: transparent;
     border: none;
     outline: none;
     font-size: 1.1rem;
@@ -545,12 +537,12 @@ kbd {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Liste des résultats */
-#resultsList {
+.results-list {
     max-height: 350px;
     overflow-y: auto;
 }
 
+/* Items de résultat */
 .result-item {
     display: flex;
     justify-content: space-between;
@@ -565,7 +557,10 @@ kbd {
     gap: 15px;
 }
 
-.icon-main { font-size: 30px; color: #000000; }
+.icon-main {
+    font-size: 30px;
+    color: #000;
+}
 
 .room-name {
     display: block;
@@ -604,5 +599,5 @@ kbd {
     font-size: 1rem;
     text-align: center;
     font-weight: 500;
-    color: #000000;
+    color: #000;
 }

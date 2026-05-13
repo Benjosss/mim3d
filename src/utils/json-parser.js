@@ -63,6 +63,15 @@ export default class JsonParser {
                         console.error(`Impossible de récupérer les coordonées d'arrivée pour la zone ${zone.name}`, e);
                     }
                 }
+
+                if (zone.type === "office"){
+                    try{
+                        newZone.persons = [...zone.persons];
+                    }catch(e){
+                        console.error(`Impossible de récupérer les personnes occupants la zone ${zone.name}`, e)
+                    }
+                }
+
                 ZONES.push(new Zone(newZone));
             });
         }

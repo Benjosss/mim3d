@@ -69,9 +69,9 @@
 </div>
 
 <div id="helpPanel">
-    <div id="helpTopRow">
-        <div class="topLeftAction">
-            <button id="helpBackBtn">
+    <div class="panel-top-row">
+        <div class="panel-top-row__left">
+            <button id="helpBackBtn" class="panel-back-btn">
                 <span class="material-symbols-outlined">logout</span>
             </button>
             <kbd>H</kbd>
@@ -110,13 +110,13 @@
 
         <div id="helpDescription">
             <p>
-                Pour garantir une immersion totale et une navigation fluide dans l’UFR MIM, cette visite virtuelle adopte le point de vue d’une personne se déplaçant librement dans le bâtiment.
+                Pour garantir une immersion totale et une navigation fluide dans l'UFR MIM, cette visite virtuelle adopte le point de vue d'une personne se déplaçant librement dans le bâtiment.
             </p>
             <p>
-                La souris permet d’orienter le regard afin d’explorer les différents espaces de manière naturelle, tandis que les touches [Z][Q][S][D] (ou les flèches directionnelles) servent à se déplacer.
+                La souris permet d'orienter le regard afin d'explorer les différents espaces de manière naturelle, tandis que les touches [Z][Q][S][D] (ou les flèches directionnelles) servent à se déplacer.
             </p>
             <p>
-                Vous pouvez ainsi parcourir les couloirs, entrer dans les salles, monter ou descendre les escaliers et découvrir l’UFR comme si vous y étiez réellement.
+                Vous pouvez ainsi parcourir les couloirs, entrer dans les salles, monter ou descendre les escaliers et découvrir l'UFR comme si vous y étiez réellement.
             </p>
 
             <div id="navigationVisualizer">
@@ -136,19 +136,18 @@
 </div>
 
 <div id="roomFindPanel">
-    <div id="roomTopRow">
-        <div class="topLeftAction">
-            <button id="findRoomBackBtn">
+    <div class="panel-top-row">
+        <div class="panel-top-row__left">
+            <button id="findRoomBackBtn" class="panel-back-btn">
                 <span class="material-symbols-outlined">logout</span>
             </button>
             <kbd>F</kbd>
         </div>
-        <h2>Recherche d’une salle</h2>
-        <div id="topRightAction">
-            <button id="findRoomHelpBtn">
+        <h2>Recherche d'une salle</h2>
+        <div class="panel-top-row__right">
+            <button id="findRoomHelpBtn" class="panel-help-btn">
                 <span class="material-symbols-outlined">help</span>
             </button>
-
         </div>
     </div>
 
@@ -160,13 +159,13 @@
         <label class="chip" data-type="toilets"><input type="checkbox"> Toilettes</label>
     </div>
 
-    <div id="roomSearchContainer">
-        <div id="searchBar">
+    <div id="roomSearchContainer" class="search-container">
+        <div id="searchBar" class="search-bar">
             <span class="material-symbols-outlined">search</span>
             <input type="text" placeholder="Entrez une salle">
         </div>
 
-        <div id="resultsList">
+        <div id="resultsList" class="results-list">
         </div>
     </div>
 
@@ -174,12 +173,32 @@
 </div>
 
 <div id="personFindPanel">
-    <h2>Recherche d'une personne</h2>
-    <div>
-        <p>tatata</p>
-        <p>tatata</p>
-        <p>tatata</p>
+    <div class="panel-top-row">
+        <div class="panel-top-row__left">
+            <button id="findPersonBackBtn" class="panel-back-btn">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+            <kbd>A</kbd>
+        </div>
+        <h2>Recherche d'une personne</h2>
+        <div class="panel-top-row__right">
+            <button id="findPersonHelpBtn" class="panel-help-btn">
+                <span class="material-symbols-outlined">help</span>
+            </button>
+        </div>
     </div>
+
+    <div id="personSearchContainer" class="search-container">
+        <div id="searchBar-p" class="search-bar">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="Entrez un nom">
+        </div>
+
+        <div id="personResultsList" class="results-list">
+        </div>
+    </div>
+
+    <p class="footer-hint">Choisissez la manière de vous rendre dans ce bureau, déplacement automatique, ou trajet guidé !</p>
 </div>
 
 

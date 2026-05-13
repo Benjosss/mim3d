@@ -10,7 +10,9 @@ import AppFpsPlayer from "./app-fps-player.js";
 import AppDebugUtils from "./app-debug-utils.js";
 import AppPhysicsBvh from "./app-physics-bvh.js";
 import AppPathfinding from "./app-pathfinding.js";
-import {ZoneSearcher} from "../map-manager/zone-searcher.js";
+import {ZoneSearcher} from "./panels/zone-searcher.js";
+import {PersonSearcher} from "./panels/person-searcher.js";
+import {PanelUtils} from "./panels/panel-utils.js";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
@@ -63,6 +65,8 @@ const capsuleHelper = debugUtil.buildPlayerCapsuleHelper();
 let currentOverlay = "menu";
 
 // ================= CONTROLS =================
+const panelUtils = new PanelUtils();
+
 const menuPanel = document.getElementById('menuPanel');
 const infosPanel = document.getElementById('infosPanel');
 const keyBindPanel = document.getElementById("keyBindPanel");
@@ -71,12 +75,22 @@ const helpPanel = document.getElementById("helpPanel");
 const settingsPanel = document.getElementById("settingsPanel");
 const roomFindPanel = document.getElementById("roomFindPanel");
 const personFindPanel = document.getElementById("personFindPanel");
-const startButton = document.getElementById('startButton');
-const helpButton = document.getElementById('helpButton');
-const settingsButton = document.getElementById('settingsButton');
+
+panelUtils.onPanelBtnClick("startButton", () => controls.lock());
+panelUtils.onPanelBtnClick("helpButton", () => {
+    controls.lock();
+    currentOverlay = "help";
+    controls.unlock();
+});
+panelUtils.onPanelBtnClick("settingsButton", () => {
+    controls.lock();
+    currentOverlay = "settings";
+    controls.unlock();
+});
+
 const controls = new PointerLockControls(camera, renderer.domElement);
 
-startButton?.addEventListener('click', () => controls.lock());
+// startButton?.addEventListener('click', () => controls.lock());
 controls.addEventListener('lock', () => {
     if (menuPanel) menuPanel.style.display = 'none';
     if (helpPanel) helpPanel.style.display = 'none';
@@ -110,18 +124,6 @@ controls.addEventListener('unlock', () => {
             if (menuPanel) menuPanel.style.display = 'flex';
     }
 });
-
-helpButton?.addEventListener('click', () => {
-    controls.lock();
-    currentOverlay = "help";
-    controls.unlock();
-});
-settingsButton?.addEventListener('click', () => {
-    controls.lock();
-    currentOverlay = "settings";
-    controls.unlock();
-})
-
 
 // ================= LOAD ASSETS =================
 const gltfLoader = new InitLoader().initGltfLoader();
@@ -159,6 +161,14 @@ const zoneSearcher = new ZoneSearcher(ZONES, pathfinding, () => {
     currentOverlay = "menu";
 });
 
+const personSearcher = new PersonSearcher(ZONES, pathfinding, () => {
+    // CallBack pour lock et lancer la marche auto
+    if (personFindPanel) personFindPanel.style.display = 'none';
+    controls.lock();
+    currentOverlay = "menu";
+});
+
+
 // Écouteur sur la barre de recherche
 const input = document.querySelector('#searchBar input');
 if (input) input.addEventListener('input', () => zoneSearcher.updateRoomSearch());
@@ -176,6 +186,8 @@ document.querySelectorAll('#roomFilters .chip').forEach(chip => {
     });
 });
 
+const input_p = document.querySelector('#searchBar-p input');
+if (input_p) input_p.addEventListener('input', () => personSearcher.updateRoomSearch());
 
 // ================= PHYSIQUE =================
 const timer = new THREE.Timer();
@@ -202,6 +214,20 @@ const keyMap = {};
 document.addEventListener('keydown', e => keyMap[e.code] = true);
 document.addEventListener('keyup', e => keyMap[e.code] = false);
 
+
+function onTogglePanel(e, overlay){
+    e.preventDefault();
+    if (currentOverlay === overlay){
+        controls.lock();
+        currentOverlay = "menu";
+    } else {
+        if (controls.isLocked) {
+            currentOverlay = overlay;
+            controls.unlock();
+        }
+    }
+}
+
 document.addEventListener('keydown', e => {
     // Permet de taper les touches de raccourcis dans les barres de recherche
     const tag = document.activeElement.tagName;
@@ -222,103 +248,56 @@ document.addEventListener('keydown', e => {
         debugUtil.buildColliderMeshesHelper(colliderMeshes);
     }
     if (e.code === 'F4') {
-        e.preventDefault();
-        zoneSearcher.printHierarchy();
+        console.log("📍 Position :", camera.position.clone());
+        console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
     }
-    if (e.code === 'F6') {
-        e.preventDefault();
-        zoneSearcher.printHierarchyByType("TD");
-    }
-    if (e.code === 'F7') {
-        e.preventDefault();
-        pathfinding.findPathTo("BN2-005", ZONES)
-    }
-    if (e.code === 'F8') {
-        e.preventDefault();
-        pathfinding.findPathTo("ARJ-015", ZONES)
-    }
-    if (e.code === 'F9') {
-        e.preventDefault();
-        pathfinding.findPathTo("Petit-Amphi", ZONES)
-    }
+
     if (e.code === 'KeyF') {
-        e.preventDefault();
-        if (currentOverlay === "room") {
-            controls.lock();
-            currentOverlay = "menu";
-        } else {
-            if (controls.isLocked) {
-                currentOverlay = "room";
-                controls.unlock();
-            }
-        }
+        onTogglePanel(e, "room");
     }
     if (e.code === 'KeyQ') {
-        e.preventDefault();
-        if (currentOverlay === "person") {
-            controls.lock();
-            currentOverlay = "menu";
-        } else {
-            if (controls.isLocked) {
-                currentOverlay = "person";
-                controls.unlock();
-            }
-        }
+        onTogglePanel(e, "person");
+
     }
     if (e.code === 'KeyH') {
-        e.preventDefault();
-        if (currentOverlay === "help") {
-            controls.lock();
-            currentOverlay = "menu";
-        } else {
-            if (controls.isLocked) {
-                currentOverlay = "help";
-                controls.unlock();
-            }
-        }
+        onTogglePanel(e, "help");
+
     }
     if (e.code === 'KeyP') {
-        e.preventDefault();
-        if (currentOverlay === "settings") {
-            controls.lock();
-            currentOverlay = "menu";
-        } else {
-            if (controls.isLocked) {
-                currentOverlay = "settings";
-                controls.unlock();
-            }
-        }
+        onTogglePanel(e, "settings");
     }
 });
 
-const helpBackBtn = document.getElementById('helpBackBtn');
-helpBackBtn?.addEventListener('click', e => {
-    e.preventDefault();
-    if(currentOverlay === "help") {
-        controls.lock();
-        currentOverlay = "menu";
-    }
-})
+function onBackToGame(id, overlay){
+    panelUtils.onPanelBtnClick(id, () =>{
+        if (currentOverlay === overlay) {
+            controls.lock();
+            currentOverlay = "menu";
+        }
+    })
+}
 
-const findRoomBackBtn = document.getElementById('findRoomBackBtn');
-findRoomBackBtn?.addEventListener('click', e => {
-    e.preventDefault();
-    if(currentOverlay === "room") {
-        controls.lock();
-        currentOverlay = "menu";
-    }
-})
+onBackToGame("helpBackBtn", "help");
+onBackToGame("findRoomBackBtn", "room");
+onBackToGame("findPersonBackBtn", "person");
 
-const findRoomHelpBtn = document.getElementById('findRoomHelpBtn');
-findRoomHelpBtn?.addEventListener('click', e => {
-    e.preventDefault();
-    if(currentOverlay === "room") {
-        if (roomFindPanel) roomFindPanel.style.display = 'none';
-        controls.lock();
-        currentOverlay = "help";
-        controls.unlock();
-    }
-})
+panelUtils.onPanelBtnClick("findRoomHelpBtn", () =>{
+        if(currentOverlay === "room") {
+            if (roomFindPanel) roomFindPanel.style.display = 'none';
+            controls.lock();
+            currentOverlay = "help";
+            controls.unlock();
+        }
+});
+panelUtils.onPanelBtnClick("findPersonHelpBtn", () =>{
+        if(currentOverlay === "person") {
+            if (personFindPanel) personFindPanel.style.display = 'none';
+            controls.lock();
+            currentOverlay = "help";
+            controls.unlock();
+        }
+});
+
 
 // --- Fin du chrono ---
 const t1 = performance.now();
@@ -380,7 +359,6 @@ function animate(timestamp) {
             }
         }
 
-
         // Limite le regard vertical
         fpsPlayer.playerPitchLimit();
 
@@ -395,12 +373,6 @@ function animate(timestamp) {
 
         //Pathfinding
         pathfinding.move(deltaTime);
-    }
-
-    // P : log position + zone courante
-    if (keyMap['KeyG']) {
-        console.log("📍 Position :", camera.position.clone());
-        console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
     }
 
     if (DEBUG_STATS) {
