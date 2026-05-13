@@ -43,6 +43,7 @@ export default class JsonParser {
             jsonData.forEach((zone) => {
                 const newZone = {
                     name: zone.name,
+                    displayName: zone.displayName,
                     path: zone.path,
                     impostorPath: zone.impostorPath,
                     physics: zone.physics,

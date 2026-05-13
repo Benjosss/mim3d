@@ -1,6 +1,7 @@
 [
   {
     "name": "floor-1",
+    "displayName": "blabla",
     "path": "/models/zones/-1_floor_aisle_b_sized.glb",
     "impostorPath" : "/models/impostors/imp_-1_floor_aisle_b_sized.glb",
     "physics" : true,
@@ -14,6 +15,7 @@
   },
   {
     "name": "floor-1a",
+    "displayName":  "blabla",
     "path": "/models/zones/-1_floor_aisle_a_sized.glb",
     "impostorPath" : "/models/impostors/imp_-1_floor_aisle_a_sized.glb",
     "physics" : true,
@@ -27,6 +29,7 @@
   },
   {
     "name": "floor-1hall",
+    "displayName":  "blabla",
     "path": "/models/zones/-1_floor_hall_sized.glb",
     "impostorPath" : "/models/impostors/imp_-1_floor_hall_sized.glb",
     "physics" : true,
@@ -40,6 +43,7 @@
   },
   {
     "name": "floor0",
+    "displayName":  "blabla",
     "path": "/models/zones/0_floor_aisle_b_sized.glb",
     "impostorPath" : "/models/impostors/imp_0_floor_aisle_b_sized.glb",
     "physics" : true,
@@ -53,6 +57,7 @@
   },
   {
     "name": "floor0_a",
+    "displayName":  "blabla",
     "path": "/models/zones/0_floor_aisle_a_sized.glb",
     "impostorPath" : "/models/impostors/imp_0_floor_aisle_a_sized.glb",
     "physics" : true,
@@ -66,6 +71,7 @@
   },
   {
     "name": "floor0hall",
+    "displayName":  "blabla",
     "path": "/models/zones/0_floor_hall_sized.glb",
     "impostorPath" : "/models/impostors/imp_0_floor_hall_sized.glb",
     "physics" : true,
@@ -79,6 +85,7 @@
   },
   {
     "name": "floor1",
+    "displayName":  "blabla",
     "path": "/models/zones/1_floor_aisle_b_sized.glb",
     "impostorPath" : "/models/impostors/imp_1_floor_aisle_b_sized.glb",
     "physics" : true,
@@ -92,6 +99,7 @@
   },
   {
     "name": "floor1_a",
+    "displayName":  "blabla",
     "path": "/models/zones/1_floor_aisle_a_sized.glb",
     "impostorPath" : "/models/impostors/imp_1_floor_aisle_a_sized.glb",
     "physics" : true,
@@ -105,6 +113,7 @@
   },
   {
     "name": "floor1hall",
+    "displayName":  "blabla",
     "path": "/models/zones/1_floor_hall_sized.glb",
     "impostorPath" : "/models/impostors/imp_1_floor_hall_sized.glb",
     "physics" : true,
@@ -118,6 +127,7 @@
   },
   {
     "name": "floor2",
+    "displayName":  "blabla",
     "path": "/models/zones/2_floor_aisle_b_sized.glb",
     "impostorPath" : "/models/impostors/imp_2_floor_aisle_b_sized.glb",
     "physics" : true,
@@ -131,6 +141,7 @@
   },
   {
     "name": "floor2_a",
+    "displayName":  "blabla",
     "path": "/models/zones/2_floor_aisle_a_sized.glb",
     "impostorPath" : "/models/impostors/imp_2_floor_aisle_a_sized.glb",
     "physics" : true,
@@ -144,6 +155,7 @@
   },
   {
     "name": "floor2hall",
+    "displayName":  "blabla",
     "path": "/models/zones/2_floor_hall_sized.glb",
     "impostorPath" : "/models/impostors/imp_2_floor_hall_sized.glb",
     "physics" : true,
@@ -157,6 +169,7 @@
   },
   {
     "name": "floor3",
+    "displayName":  "blabla",
     "path": "/models/zones/3_floor_aisle_b_sized.glb",
     "impostorPath" : "/models/impostors/imp_3_floor_aisle_b_sized.glb",
     "physics" : true,
@@ -170,6 +183,7 @@
   },
   {
     "name": "roofb",
+    "displayName":  "blabla",
     "path": "/models/zones/roof_aisle_b_sized.glb",
     "impostorPath" : "/models/impostors/imp_roof_aisle_b_sized.glb",
     "physics" : true,
@@ -183,6 +197,7 @@
   },
   {
     "name": "stairs3to2_1",
+    "displayName":  "blabla",
     "path": "/models/zones/3_to_2_stair_1_sized.glb",
     "impostorPath" : "/models/impostors/3_to_2_stair_1_sized.glb",
     "physics" : true,
@@ -196,6 +211,7 @@
   },
   {
     "name": "stairs2to1_1",
+    "displayName":  "blabla",
     "path": "/models/zones/2_to_1_stair_1_sized.glb",
     "impostorPath" : "/models/impostors/2_to_1_stair_1_sized.glb",
     "physics" : true,
@@ -209,6 +225,7 @@
   },
   {
     "name": "stairs1to0_1",
+    "displayName":  "blabla",
     "path": "/models/zones/1_to_0_stair_1_sized.glb",
     "impostorPath" : "/models/impostors/1_to_0_stair_1_sized.glb",
     "physics" : true,
@@ -222,6 +239,7 @@
   },
   {
     "name": "stairs0to-1_1",
+    "displayName":  "blabla",
     "path": "/models/zones/0_to_-1_stair_1_sized.glb",
     "impostorPath" : "/models/impostors/imp_0_to_-1_stair_1_sized.glb",
     "physics" : true,
@@ -235,6 +253,7 @@
   },
   {
     "name": "allstairs_2",
+    "displayName":  "blabla",
     "path": "/models/zones/all_stair_2_sized.glb",
     "impostorPath" : "/models/impostors/imp_all_stair_2_sized.glb",
     "physics" : true,
@@ -248,6 +267,7 @@
   },
   {
     "name": "allstairs_3",
+    "displayName":  "blabla",
     "path": "/models/zones/all_stair_3_sized.glb",
     "impostorPath" : "/models/impostors/imp_all_stair_3_sized.glb",
     "physics" : true,
@@ -261,6 +281,7 @@
   },
   {
     "name": "BN2-013",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_013_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -275,6 +296,7 @@
   },
   {
     "name": "BN2-012",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_012_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -289,6 +311,7 @@
   },
   {
     "name": "BN2-011",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_011_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -303,6 +326,7 @@
   },
   {
     "name": "BN2-010",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_010_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -317,6 +341,7 @@
   },
   {
     "name": "BN2-009",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_009_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -331,6 +356,7 @@
   },
   {
     "name": "BN2-008",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_008_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -345,6 +371,7 @@
   },
   {
     "name": "BN2-007",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_007_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -359,6 +386,7 @@
   },
   {
     "name": "BN2-006",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_006_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -373,6 +401,7 @@
   },
   {
     "name": "BN2-005",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_005_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -387,6 +416,7 @@
   },
   {
     "name": "BN2-004",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_004_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -401,6 +431,7 @@
   },
   {
     "name": "BN2-003",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_003_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -415,6 +446,7 @@
   },
   {
     "name": "BN2-002",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_002_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -429,6 +461,7 @@
   },
   {
     "name": "BN2-001",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_001_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -443,6 +476,7 @@
   },
   {
     "name": "BN2-WC-H",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_bn2_t_h_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -457,6 +491,7 @@
   },
   {
     "name": "ARJ-015",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_arj_015_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -471,6 +506,7 @@
   },
   {
     "name": "Petit-Amphi",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_petit_amphi_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -485,6 +521,7 @@
   },
   {
     "name": "Grand-Amphi",
+    "displayName":  "blabla",
     "path": "/models/furnitures/fur_grand_amphi_sized.glb",
     "impostorPath" : "",
     "physics" : false,
