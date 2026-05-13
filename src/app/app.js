@@ -10,6 +10,7 @@ import AppFpsPlayer from "./app-fps-player.js";
 import AppDebugUtils from "./app-debug-utils.js";
 import AppPhysicsBvh from "./app-physics-bvh.js";
 import AppPathfinding from "./app-pathfinding.js";
+import {ZoneSearcher} from "../map-manager/zone-searcher.js";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
@@ -143,6 +144,8 @@ if (DEBUG_BBOX_COLOR) {
 }
 await zoneManager.init(CONFIG.startZone);
 
+const zoneSearcher = new ZoneSearcher(ZONES);
+
 // ================= PATHFINDING =================
 
 const pathfinding = new AppPathfinding(scene, camera, player);
@@ -191,11 +194,11 @@ document.addEventListener('keydown', e => {
     }
     if (e.code === 'F4') {
         e.preventDefault();
-        zoneManager.printHierarchy();
+        zoneSearcher.printHierarchy();
     }
     if (e.code === 'F6') {
         e.preventDefault();
-        zoneManager.printHierarchyByType("TD");
+        zoneSearcher.printHierarchyByType("TD");
     }
     if (e.code === 'F7') {
         e.preventDefault();
@@ -354,7 +357,7 @@ function animate(timestamp) {
     if (DEBUG_STATS) {
         stats.update();
     }
-    document.getElementById('current_zone').innerHTML = "Salle actuelle : " + (zoneManager.currentRoom?.name ?? 'aucune');
+    document.getElementById('current_zone').innerHTML = (zoneManager.currentRoom?.displayName ?? 'aucune');
 
     // console.log(renderer.info.render.calls);
     renderer.render(scene, camera);
