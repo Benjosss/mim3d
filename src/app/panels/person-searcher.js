@@ -39,37 +39,36 @@ export class PersonSearcher {
         // On vide et on remplit
         resultsList.innerHTML = "";
         results.forEach(zone => {
-            const searchText = document.querySelector('#searchBar-p input').value.toLowerCase();
-            const matched = zone.persons.filter(p => p.toLowerCase().includes(searchText));
-            const others  = zone.persons.filter(p => !p.toLowerCase().includes(searchText));
-            const display = [...matched, ...others].join(", ");
+            const str = searchText.toLowerCase();
+            const matched = zone.persons.filter(p => p.toLowerCase().includes(str));
 
-            const item = document.createElement('div');
-            item.className = 'result-item';
-            item.innerHTML = `
-            <div class="result-info">
-                <span class="material-symbols-outlined icon-main">person</span>
-                <div>
-                    <span class="room-name">${display}</span>
-                    <span class="room-details">${zone.displayName} - ${zone.description}</span>
+            matched.forEach(person => {
+                const item = document.createElement('div');
+                item.className = 'result-item';
+                item.innerHTML = `
+                <div class="result-info">
+                    <span class="material-symbols-outlined icon-main">person</span>
+                    <div>
+                        <span class="room-name">${person}</span>
+                        <span class="room-details">${zone.displayName} - ${zone.description}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="result-actions">
-                <span class="material-symbols-outlined">directions_walk</span>
-                <button class="btn-action guided-btn">Guidé</button>
-                <button class="btn-action auto-btn">Automatique</button>
-            </div>
-            `;
+                <div class="result-actions">
+                    <span class="material-symbols-outlined">directions_walk</span>
+                    <button class="btn-action guided-btn">Guidé</button>
+                    <button class="btn-action auto-btn">Automatique</button>
+                </div>
+                `;
 
-            item.querySelector('.guided-btn').addEventListener('click', () => {
-                alert('Cette fonctionnalité sera bientôt disponible !');
+                item.querySelector('.guided-btn').addEventListener('click', () => {
+                    alert('Cette fonctionnalité sera bientôt disponible !');
+                });
+                item.querySelector('.auto-btn').addEventListener('click', () => {
+                    if (this.onNavigate) this.onNavigate();
+                    this.pathfinding.findPathTo(zone.name, this.zones);
+                });
+                resultsList.appendChild(item);
             });
-            // Bouton Automatique
-            item.querySelector('.auto-btn').addEventListener('click', () => {
-                if (this.onNavigate) this.onNavigate();
-                this.pathfinding.findPathTo(zone.name, this.zones);
-            });
-            resultsList.appendChild(item);
         });
     }
 
