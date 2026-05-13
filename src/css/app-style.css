@@ -117,7 +117,7 @@ body {
     outline: none !important;
 }
 
-#settingsButton .material-symbols-outlined, #leaveButton .material-symbols-outlined {
+#settingsButton .material-symbols-outlined, #leaveButton .material-symbols-outlined, #topRightAction .material-symbols-outlined {
     font-size: 32px;
 }
 
@@ -333,7 +333,7 @@ kbd {
     width: 100%;
 }
 
-#topLeftAction {
+.topLeftAction {
     position: absolute;
     left: 0;
     display: flex;
@@ -342,11 +342,11 @@ kbd {
     color: black;
 }
 
-#topLeftAction .material-symbols-outlined {
+.topLeftAction .material-symbols-outlined {
     font-size: 32px;
 }
 
-#topLeftAction kbd {
+.topLeftAction kbd {
     font-size: 10px;
     min-width: 20px;
     height: 20px;
@@ -357,7 +357,7 @@ kbd {
     border-radius: 5px;
 }
 
-#topLeftAction #helpBackBtn {
+.topLeftAction #helpBackBtn, .topLeftAction #findRoomBackBtn, #topRightAction #findRoomHelpBtn {
     background: transparent;
     border: none;
     cursor: pointer;
@@ -448,3 +448,161 @@ kbd {
     filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); /* Optionnel : petite ombre sous l'image */
 }
 
+/* ===== ROOM FIND PANEL SPECIFIC ===== */
+
+#roomFindPanel {
+    flex-direction: column;
+    justify-content: flex-start !important;
+    padding: 30px 50px !important;
+    width: 1000px !important;
+}
+
+#roomTopRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#topRightAction {
+    position: absolute;
+    right: 0;
+}
+
+/* Chips / Filtres */
+#roomFilters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.chip {
+    padding: 8px 18px;
+    background: white;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    user-select: none;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.chip:active {
+    transform: scale(0.95);
+}
+
+.chip:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+.chip input { display: none; }
+
+.chip.selected {
+    background: #333;
+    color: white;
+    border-color: #333;
+}
+
+.chip.selected::before {
+    content: "\2713";
+    font-size: 0.8rem;
+}
+
+/* Conteneur Blanc */
+#roomSearchContainer {
+    background: rgba(214, 214, 214, 0.82);
+    width: 100%;
+    border-radius: 30px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Barre de recherche interne */
+#searchBar {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    border-bottom: 1px solid #eee;
+}
+
+#searchBar input {
+    background: rgba(255, 255, 255, 0);
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    padding-left: 15px;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Liste des résultats */
+#resultsList {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.result-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-main { font-size: 30px; color: #000000; }
+
+.room-name {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.room-details {
+    font-size: 0.85rem;
+    color: #404040;
+}
+
+.result-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-action {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-action:hover {
+    background: #f0f0f0;
+}
+
+.footer-hint {
+    margin-top: 20px;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 500;
+    color: #000000;
+}

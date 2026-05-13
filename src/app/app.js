@@ -144,13 +144,38 @@ if (DEBUG_BBOX_COLOR) {
 }
 await zoneManager.init(CONFIG.startZone);
 
-const zoneSearcher = new ZoneSearcher(ZONES);
-
 // ================= PATHFINDING =================
 
 const pathfinding = new AppPathfinding(scene, camera, player);
 pathfinding.showHelper();
 pathfinding.loadNavMesh("/models/navmeshes/navmesh_mesh.glb", gltfLoader);
+
+// ================= ZONE SEARCHER =================
+
+const zoneSearcher = new ZoneSearcher(ZONES, pathfinding, () => {
+    // CallBack pour lock et lancer la marche auto
+    if (roomFindPanel) roomFindPanel.style.display = 'none';
+    controls.lock();
+    currentOverlay = "menu";
+});
+
+// Écouteur sur la barre de recherche
+const input = document.querySelector('#searchBar input');
+if (input) input.addEventListener('input', () => zoneSearcher.updateRoomSearch());
+
+// Écouteur sur les filtres (Chips)
+document.querySelectorAll('#roomFilters .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+        // Toggle de la sélection
+        const checkbox = chip.querySelector('input');
+        checkbox.checked = !checkbox.checked;
+        chip.classList.toggle('selected', checkbox.checked);
+
+        // Relancer la recherche
+        zoneSearcher.updateRoomSearch();
+    });
+});
+
 
 // ================= PHYSIQUE =================
 const timer = new THREE.Timer();
@@ -178,6 +203,10 @@ document.addEventListener('keydown', e => keyMap[e.code] = true);
 document.addEventListener('keyup', e => keyMap[e.code] = false);
 
 document.addEventListener('keydown', e => {
+    // Permet de taper les touches de raccourcis dans les barres de recherche
+    const tag = document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
     if (e.code === 'F1') {
         e.preventDefault();
         CONFIG.debugCapsule = !CONFIG.debugCapsule;
@@ -268,6 +297,26 @@ helpBackBtn?.addEventListener('click', e => {
     if(currentOverlay === "help") {
         controls.lock();
         currentOverlay = "menu";
+    }
+})
+
+const findRoomBackBtn = document.getElementById('findRoomBackBtn');
+findRoomBackBtn?.addEventListener('click', e => {
+    e.preventDefault();
+    if(currentOverlay === "room") {
+        controls.lock();
+        currentOverlay = "menu";
+    }
+})
+
+const findRoomHelpBtn = document.getElementById('findRoomHelpBtn');
+findRoomHelpBtn?.addEventListener('click', e => {
+    e.preventDefault();
+    if(currentOverlay === "room") {
+        if (roomFindPanel) roomFindPanel.style.display = 'none';
+        controls.lock();
+        currentOverlay = "help";
+        controls.unlock();
     }
 })
 
