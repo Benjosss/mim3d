@@ -193,6 +193,8 @@ export class ZoneManager {
 
             this.currentZone = newZone;
 
+            this._showZoneWarning(newZone.name);
+
             // Rebuild immédiat et synchrone
             this._rebuildColliders();
 
@@ -379,6 +381,35 @@ export class ZoneManager {
         }
 
         console.log(`Colliders BVH mis à jour : ${totalMeshes} mesh(es) actifs.`);
+    }
+
+    // =====================================================
+    // WARNINGS
+    // =====================================================
+
+    _showZoneWarning(zoneName) {
+        const warningMsg = document.getElementById("warningMsg");
+        if (!warningMsg) return;
+
+        const messages = {
+            "floor2_a": "⚠️ Zone réglementée — sonnez à l'interphone, émargez et attendez qu'on vous ouvre. Uniquement sur RDV !",
+            "floor1_a": "⚠️ Zone réglementée — sonnez à l'interphone et attendez qu'on vous ouvre. Uniquement sur RDV !",
+            "floor0_a": "⚠️ Zone réglementée — sonnez à l'interphone et attendez qu'on vous ouvre. Uniquement sur RDV !",
+        };
+
+        const msg = messages[zoneName];
+        if (msg) {
+            warningMsg.textContent = msg;
+            warningMsg.style.display = 'flex';
+
+            // Disparaît après 5 secondes
+            clearTimeout(this._warningTimeout);
+            this._warningTimeout = setTimeout(() => {
+                warningMsg.style.display = 'none';
+            }, 5000);
+        } else {
+            warningMsg.style.display = 'none';
+        }
     }
 
     // =====================================================

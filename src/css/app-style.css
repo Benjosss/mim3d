@@ -601,3 +601,14 @@ kbd {
     font-weight: 500;
     color: #000;
 }
+
+#warningMsg{
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    justify-content: center;
+    color: red;
+    font-weight: bold;
+    font-size: 2rem;
+}
