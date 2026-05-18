@@ -190,9 +190,15 @@ export default class AppPhysicsBvh {
 
             this.playerCollisions();
 
-            if (this.playerVelocity.y < -10 && !this.playerOnFloor) {
-                // TODO : Repositionner le joueur
+            if (this.playerVelocity.y < -30 && !this.playerOnFloor || this.playerPos.y < -1) {
+                this.backToSpawnPoint();
             }
         }
+    }
+
+    backToSpawnPoint(){
+            const spawn = this.config.spawnPoint.clone();
+            this.playerPos.copy(spawn);
+            this.playerVelocity.set(0, 0, 0);
     }
 }

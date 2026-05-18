@@ -259,6 +259,10 @@ document.addEventListener('keydown', e => {
         console.log("📍 Position :", camera.position.clone());
         console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
     }
+    if (e.code === 'F6') {
+        e.preventDefault();
+        bvhPhysicsUtils.backToSpawnPoint();
+    }
 
     if (e.code === 'KeyF') {
         onTogglePanel(e, "room");
