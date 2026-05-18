@@ -128,7 +128,8 @@ export class ZoneSearcher {
             `;
 
             item.querySelector('.guided-btn').addEventListener('click', () => {
-                alert('Cette fonctionnalité sera bientôt disponible !');
+                if (this.onNavigate) this.onNavigate();
+                this.pathfinding.findGuidedPathTo(zone.name, this.zones);
             });
             // Bouton Automatique
             item.querySelector('.auto-btn').addEventListener('click', () => {

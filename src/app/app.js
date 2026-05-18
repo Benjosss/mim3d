@@ -378,6 +378,7 @@ function animate(timestamp) {
 
         //Pathfinding
         pathfinding.move(deltaTime);
+        pathfinding.guide(ZONES);
     }
 
     if (DEBUG_STATS) {

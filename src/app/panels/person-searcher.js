@@ -61,7 +61,8 @@ export class PersonSearcher {
                 `;
 
                 item.querySelector('.guided-btn').addEventListener('click', () => {
-                    alert('Cette fonctionnalité sera bientôt disponible !');
+                    if (this.onNavigate) this.onNavigate();
+                    this.pathfinding.findGuidedPathTo(zone.name, this.zones);
                 });
                 item.querySelector('.auto-btn').addEventListener('click', () => {
                     if (this.onNavigate) this.onNavigate();

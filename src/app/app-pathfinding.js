@@ -22,6 +22,9 @@ export default class AppPathfinding {
         this.splineProgress = 0;
         this.splineTotalLength = 0;
         this.visualPathLine = null; // Pour afficher la courbe
+
+        this.guidingPath = null;
+        this.guideDestinationName = null;
     }
 
     /**
@@ -227,6 +230,114 @@ export default class AppPathfinding {
                 this.visualPathLine = null;
             }
         }
+    }
+
+    findGuidedPathTo(name, zones) {
+        let target = null;
+        this.guideDestinationName = name;
+        zones.forEach(zone => {
+            if (zone.name === name) return target = zone.pathCoords;
+        });
+
+        if (!this.isNavMeshLoaded || !target) return;
+
+        this.groupID = this.pathfinding.getGroup(this.zone, this.playerGroup.position);
+        const start = this.snapToNavMesh(this.playerGroup.position);
+        const end   = this.snapToNavMesh(target);
+
+        if (this.groupID !== null && start && end) {
+            const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
+
+            if (path && path.length > 0) {
+                // Construit la spline sur le chemin brut
+                const spline = new THREE.CatmullRomCurve3(
+                    [this.playerGroup.position.clone(), ...path],
+                    false, 'chordal'
+                );
+
+                // Densité constante : 1 point tous les 0.5 unités
+                const nbPoints = Math.ceil(spline.getLength() / 0.5);
+                this.guidingPath = spline.getPoints(nbPoints);
+
+
+                document.getElementById("walkPanel").style.display = "flex";
+                document.getElementById("walkPanel-p").innerHTML = "Marche guidée...";
+                this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
+            }
+        }
+    }
+
+    guide(zones) {
+        if (!this.guidingPath) return;
+
+        const crossedZones = this.getCrossedZones(zones);
+
+        const INSTRUCTION_RULES = {
+            stairs: (zone, prev, next) => {
+                const goingUp = next?.triggerBox.min.y > zone.triggerBox.min.y;
+                let deltaAlt = Math.abs(next?.triggerBox.min.y - prev?.triggerBox.min.y);
+                console.log(deltaAlt);
+                let floors = 0;
+                // TODO : Régler le seuil et uniformiser les bbox (min y) des étages
+                while(deltaAlt >= 2){
+                    floors++;
+                    deltaAlt -= 2;
+                }
+                const direction = goingUp ? "Montez" : "Descendez";
+                const etages     = floors <= 1 ? "étage" : "étages";
+                const etagesText = floors !== 0 ? "de " + floors + " " + etages : "";
+                return `=> ${direction} l'escalier ${zone.displayName ?? ""} ${etagesText}`.trim();
+            },
+            corridor: (zone, prev, next) => `=> Dirigez-vous vers ${next?.displayName ?? this?.guideDestinationName ?? ""}`,
+        };
+
+        crossedZones.forEach((zone, index) => {
+            const prev = crossedZones[index - 1] ?? null;
+            const next = crossedZones[index + 1] ?? null;
+
+            const rule = INSTRUCTION_RULES[zone.type] ?? (() => "Continuez");
+            const text = rule(zone, prev, next);
+
+            console.log(text);
+        });
+
+        this.guidingPath = null;
+        this.guideDestinationName = null;
+    }
+
+    getCrossedZones(zones){
+        const crossedZones = [];
+
+        this.guidingPath.forEach(node => {
+            const zone = this.getZoneAtPoint(node, zones);
+            if (!zone) return;
+
+            const last = crossedZones.at(-1);
+            if (!last || last.name !== zone.name) {
+                crossedZones.push(zone);
+            }
+        });
+
+        return crossedZones;
+    }
+
+    getZoneAtPoint(point, zones) {
+        const furnitures = ["CM", "TD", "TP", "toilets", "office"]
+        const candidates = zones.filter(z => z.triggerBox.containsPoint(point) && !furnitures.includes(z.type));
+
+        if (candidates.length === 0) return null;
+        if (candidates.length === 1) return candidates[0];
+
+        // En cas de superposition, prend la plus petite box (la plus précise)
+        return candidates.reduce((smallest, zone) => {
+            const sizeA = new THREE.Vector3();
+            const sizeB = new THREE.Vector3();
+            smallest.triggerBox.getSize(sizeA);
+            zone.triggerBox.getSize(sizeB);
+            const volA = sizeA.x * sizeA.y * sizeA.z;
+            const volB = sizeB.x * sizeB.y * sizeB.z;
+            return volB < volA ? zone : smallest;
+        });
     }
 
 }
