@@ -76,6 +76,9 @@ const settingsPanel = document.getElementById("settingsPanel");
 const roomFindPanel = document.getElementById("roomFindPanel");
 const personFindPanel = document.getElementById("personFindPanel");
 
+const roomFindPanelInput = document.getElementById("searchBar-input");
+const personFindPanelInput = document.getElementById("searchBar-p-input");
+
 panelUtils.onPanelBtnClick("startButton", () => controls.lock());
 panelUtils.onPanelBtnClick("helpButton", () => {
     controls.lock();
@@ -110,9 +113,11 @@ controls.addEventListener('unlock', () => {
     switch (currentOverlay) {
         case 'room':
             if (roomFindPanel) roomFindPanel.style.display = 'flex';
+            if (roomFindPanelInput) roomFindPanelInput.focus();
             break;
         case 'person':
             if (personFindPanel) personFindPanel.style.display = 'flex';
+            if (personFindPanelInput) personFindPanelInput.focus();
             break;
         case 'help':
             if (helpPanel) helpPanel.style.display = 'flex';
