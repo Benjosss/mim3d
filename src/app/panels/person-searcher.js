@@ -65,7 +65,7 @@ export class PersonSearcher {
                 });
                 item.querySelector('.auto-btn').addEventListener('click', () => {
                     if (this.onNavigate) this.onNavigate();
-                    this.pathfinding.findPathTo(zone.name, this.zones);
+                    this.pathfinding.findAutoPathTo(zone.name, this.zones);
                 });
                 resultsList.appendChild(item);
             });

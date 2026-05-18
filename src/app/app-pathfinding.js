@@ -111,8 +111,8 @@ export default class AppPathfinding {
         return node ? node.centroid.clone() : null;
     }
 
-    // NAVIGATION AVEC COURBE ET AFFICHAGE
-    findPathTo(name, zones) {
+    // NAVIGATION AUTOMATIQUE AVEC COURBE ET AFFICHAGE
+    findAutoPathTo(name, zones) {
         let target = null;
         zones.forEach(zone => {
             if(zone.name === name) return target = zone.pathCoords;
