@@ -69,6 +69,7 @@ const panelUtils = new PanelUtils();
 
 const menuPanel = document.getElementById('menuPanel');
 const infosPanel = document.getElementById('infosPanel');
+const guidedNavPanel = document.getElementById('guidedNavPanel');
 const keyBindPanel = document.getElementById("keyBindPanel");
 const walkPanel = document.getElementById("walkPanel");
 const helpPanel = document.getElementById("helpPanel");
@@ -100,12 +101,14 @@ controls.addEventListener('lock', () => {
     if (settingsPanel) settingsPanel.style.display = 'none';
     if (roomFindPanel) roomFindPanel.style.display = 'none';
     if (personFindPanel) personFindPanel.style.display = 'none';
+    if (guidedNavPanel) guidedNavPanel.style.display = 'none';
     if (infosPanel) infosPanel.style.display = 'flex';
     if (keyBindPanel) keyBindPanel.style.display = 'flex';
 });
 controls.addEventListener('unlock', () => {
     if (menuPanel) menuPanel.style.display = 'none';
     if (infosPanel) infosPanel.style.display = 'none';
+    if (guidedNavPanel) guidedNavPanel.style.display = 'none';
     if (keyBindPanel) keyBindPanel.style.display = 'none';
     if (walkPanel) walkPanel.style.display = 'none';
 
@@ -271,7 +274,50 @@ document.addEventListener('keydown', e => {
     if (e.code === 'KeyP') {
         onTogglePanel(e, "settings");
     }
+
+    if (e.code === 'KeyC') {
+        if (pathfinding.isGuiding){
+            const kbdElement = document.getElementById("copy_kbd");
+
+            navigator.clipboard.writeText(pathfinding.getInstructionsText(zoneManager.currentRoom)).then(
+                () => {
+                    kbdElement.style.backgroundColor = "rgba(40,167,69,0.56)";
+                    kbdElement.style.color = "white";
+
+                    setTimeout(() => {
+                        kbdElement.style.backgroundColor = "";
+                        kbdElement.style.color = "";
+                    }, 500);
+                }
+            );
+        }
+    }
+
+    if (e.code === 'KeyT') {
+        if (pathfinding.isGuiding){
+            const kbdElement = document.getElementById("download_kbd");
+
+
+            const element = document.createElement("a");
+            const file = new Blob([pathfinding.getInstructionsText(zoneManager.currentRoom)], {
+                type: "text/plain"
+            });
+            element.href = URL.createObjectURL(file);
+            element.download = pathfinding.getInstructionsTitle(zoneManager.currentRoom);
+            document.body.appendChild(element);
+            element.click();
+
+            kbdElement.style.backgroundColor = "rgba(40,167,69,0.56)";
+            kbdElement.style.color = "white";
+
+            setTimeout(() => {
+                kbdElement.style.backgroundColor = "";
+                kbdElement.style.color = "";
+            }, 500);
+        }
+    }
 });
+
 
 function onBackToGame(id, overlay){
     panelUtils.onPanelBtnClick(id, () =>{
@@ -378,7 +424,7 @@ function animate(timestamp) {
 
         //Pathfinding
         pathfinding.move(deltaTime);
-        pathfinding.guide(ZONES);
+        pathfinding.guide(ZONES, zoneManager.currentRoom);
     }
 
     if (DEBUG_STATS) {

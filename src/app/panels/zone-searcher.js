@@ -129,7 +129,7 @@ export class ZoneSearcher {
 
             item.querySelector('.guided-btn').addEventListener('click', () => {
                 if (this.onNavigate) this.onNavigate();
-                this.pathfinding.findGuidedPathTo(zone.name, this.zones);
+                this.pathfinding.findGuidedPathTo(zone.name, zone.displayName, this.zones);
             });
             // Bouton Automatique
             item.querySelector('.auto-btn').addEventListener('click', () => {

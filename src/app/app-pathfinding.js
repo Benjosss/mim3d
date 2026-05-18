@@ -23,8 +23,10 @@ export default class AppPathfinding {
         this.splineTotalLength = 0;
         this.visualPathLine = null; // Pour afficher la courbe
 
+        this.isGuiding = false;
         this.guidingPath = null;
         this.guideDestinationName = null;
+        this.guideDestinationDiplayName = null;
     }
 
     /**
@@ -174,6 +176,7 @@ export default class AppPathfinding {
     }
 
 
+    // TODO : Pouvoir annuler mouvement automatique
     move(delta) {
         if (!this.splineCurve || this.splineTotalLength <= 0) {
             this.isMoving = false;
@@ -213,6 +216,12 @@ export default class AppPathfinding {
         this.playerGroup.position.copy(newPos);
 
 
+        if (this.isMoving &&  document.getElementById("walkPanel").style.display === "none") {
+            document.getElementById("walkPanel").style.display = "flex";
+            document.getElementById("walkPanel-p").innerHTML = "Marche auto..."
+        }
+
+
         // Fin du déplacement
         if (this.splineProgress >= 1) {
             this.splineCurve = null;
@@ -232,9 +241,10 @@ export default class AppPathfinding {
         }
     }
 
-    findGuidedPathTo(name, zones) {
+    findGuidedPathTo(name, displayName, zones) {
         let target = null;
         this.guideDestinationName = name;
+        this.guideDestinationDiplayName = displayName;
         zones.forEach(zone => {
             if (zone.name === name) return target = zone.pathCoords;
         });
@@ -267,42 +277,72 @@ export default class AppPathfinding {
         }
     }
 
-    guide(zones) {
-        if (!this.guidingPath) return;
+    // TODO : Pouvoir annuler guidage
+    guide(zones, current_room) {
+        const guidedNavPanel = document.getElementById("guidedNavPanel");
 
-        const crossedZones = this.getCrossedZones(zones);
+        if (!this.guidingPath) return
 
-        const INSTRUCTION_RULES = {
-            stairs: (zone, prev, next) => {
-                const goingUp = next?.triggerBox.min.y > zone.triggerBox.min.y;
-                let deltaAlt = Math.abs(next?.triggerBox.min.y - prev?.triggerBox.min.y);
-                console.log(deltaAlt);
-                let floors = 0;
-                // TODO : Régler le seuil et uniformiser les bbox (min y) des étages
-                while(deltaAlt >= 2){
-                    floors++;
-                    deltaAlt -= 2;
-                }
-                const direction = goingUp ? "Montez" : "Descendez";
-                const etages     = floors <= 1 ? "étage" : "étages";
-                const etagesText = floors !== 0 ? "de " + floors + " " + etages : "";
-                return `=> ${direction} l'escalier ${zone.displayName ?? ""} ${etagesText}`.trim();
-            },
-            corridor: (zone, prev, next) => `=> Dirigez-vous vers ${next?.displayName ?? this?.guideDestinationName ?? ""}`,
-        };
+        if(!this.isGuiding){
+            const crossedZones = this.getCrossedZones(zones);
 
-        crossedZones.forEach((zone, index) => {
-            const prev = crossedZones[index - 1] ?? null;
-            const next = crossedZones[index + 1] ?? null;
+            const INSTRUCTION_RULES = {
+                stairs: (zone, prev, next) => {
+                    const goingUp = next?.triggerBox.min.y > zone.triggerBox.min.y;
+                    let deltaAlt = Math.abs(next?.triggerBox.min.y - prev?.triggerBox.min.y);
+                    console.log(deltaAlt);
+                    let floors = 0;
+                    // TODO : Régler le seuil et uniformiser les bbox (min y) des étages
+                    while(deltaAlt >= 2){
+                        floors++;
+                        deltaAlt -= 2;
+                    }
+                    const direction = goingUp ? "Montez" : "Descendez";
+                    const etages     = floors <= 1 ? "étage" : "étages";
+                    const etagesText = floors !== 0 ? "de " + floors + " " + etages : "";
+                    return `${direction} l'escalier ${zone.displayName ?? ""} ${etagesText}`.trim();
+                },
+                corridor: (zone, prev, next) => `Dirigez-vous vers ${next?.displayName ?? this?.guideDestinationDiplayName ?? ""}`,
+            };
 
-            const rule = INSTRUCTION_RULES[zone.type] ?? (() => "Continuez");
-            const text = rule(zone, prev, next);
+            const navInstructions = document.getElementById("navInstructions");
+            crossedZones.forEach((zone, index) => {
+                const prev = crossedZones[index - 1] ?? null;
+                const next = crossedZones[index + 1] ?? null;
 
-            console.log(text);
-        });
+                const rule = INSTRUCTION_RULES[zone.type] ?? (() => "Continuez");
+                const text = rule(zone, prev, next);
 
-        this.guidingPath = null;
-        this.guideDestinationName = null;
+                const item = document.createElement('p');
+                item.innerHTML = text;
+
+                navInstructions.appendChild(item);
+
+                this.isGuiding = true;
+                guidedNavPanel.style.display = "flex";
+            });
+        }
+
+        if(this.isGuiding){
+            if (guidedNavPanel.style.display === "none"){
+                guidedNavPanel.style.display = "flex";
+            }
+
+            if (document.getElementById("walkPanel").style.display === "none") {
+                document.getElementById("walkPanel").style.display = "flex";
+                document.getElementById("walkPanel-p").innerHTML = "Marche guidée...";
+            }
+
+            if(current_room.name === this.guideDestinationName){
+                this.guidingPath = null;
+                this.guideDestinationName = null;
+                this.guideDestinationDiplayName = null;
+                this.isMoving = false;
+                document.getElementById("guidedNavPanel").style.display = "none";
+                document.getElementById("walkPanel").style.display = "none";
+                document.getElementById("walkPanel-p").innerHTML = "";
+            }
+        }
     }
 
     getCrossedZones(zones){
@@ -340,4 +380,13 @@ export default class AppPathfinding {
         });
     }
 
+    getInstructionsText(current_room){
+        const title = current_room.displayName + " vers " + this.guideDestinationDiplayName;
+        const texte = document.getElementById("navInstructions").innerText;
+        return title + "\n\r" + texte;
+    }
+
+    getInstructionsTitle(current_room){
+        return current_room.displayName + " vers " + this.guideDestinationDiplayName;
+    }
 }
