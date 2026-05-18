@@ -337,8 +337,9 @@ export default class AppPathfinding {
                 this.guidingPath = null;
                 this.guideDestinationName = null;
                 this.guideDestinationDiplayName = null;
-                this.isMoving = false;
+                this.isGuiding = false;
                 document.getElementById("guidedNavPanel").style.display = "none";
+                document.getElementById("navInstructions").innerHTML = "";
                 document.getElementById("walkPanel").style.display = "none";
                 document.getElementById("walkPanel-p").innerHTML = "";
             }
