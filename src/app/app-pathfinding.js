@@ -153,8 +153,8 @@ export default class AppPathfinding {
                     this.scene.add(this.visualPathLine);
                     // ------------------------------------
 
-                    document.getElementById("walkPanel").style.display = "flex";
-                    document.getElementById("walkPanel-p").innerHTML = "Marche auto..."
+                    // document.getElementById("walkPanel").style.display = "flex";
+                    // document.getElementById("walkPanel-p").innerHTML = "Marche auto... <br> [Entrée] pour arrêter"
                     this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
                 }
             }
@@ -220,28 +220,32 @@ export default class AppPathfinding {
         this.playerGroup.position.copy(newPos);
 
 
-        if (this.isMoving &&  document.getElementById("walkPanel").style.display === "none") {
+        if (this.isMoving && document.getElementById("walkPanel").style.display === "none") {
             document.getElementById("walkPanel").style.display = "flex";
-            document.getElementById("walkPanel-p").innerHTML = "Marche auto..."
+            document.getElementById("walkPanel-p").innerHTML = "Marche auto... <br> [Entrée] pour arrêter"
         }
 
 
         // Fin du déplacement
         if (this.splineProgress >= 1) {
-            this.splineCurve = null;
-            this.isMoving = false;
-            this.playerGroup.visible = true;
+            this.endMove();
+        }
+    }
 
-            document.getElementById("walkPanel").style.display = "none";
-            document.getElementById("walkPanel-p").innerHTML = ""
+    endMove(){
+        this.splineCurve = null;
+        this.isMoving = false;
+        this.playerGroup.visible = true;
+
+        document.getElementById("walkPanel").style.display = "none";
+        document.getElementById("walkPanel-p").innerHTML = ""
 
 
-            if (this.visualPathLine) {
-                // this.scene.remove(this.visualPathLine); // Retire la ligne de la scène
-                // this.visualPathLine.geometry.dispose(); // Libère la mémoire
-                // this.visualPathLine.material.dispose();
-                this.visualPathLine = null;
-            }
+        if (this.visualPathLine) {
+            // this.scene.remove(this.visualPathLine); // Retire la ligne de la scène
+            // this.visualPathLine.geometry.dispose(); // Libère la mémoire
+            // this.visualPathLine.material.dispose();
+            this.visualPathLine = null;
         }
     }
 
@@ -275,8 +279,8 @@ export default class AppPathfinding {
                     this.guidingPath = spline.getPoints(nbPoints);
 
 
-                    document.getElementById("walkPanel").style.display = "flex";
-                    document.getElementById("walkPanel-p").innerHTML = "Marche guidée...";
+                    // document.getElementById("walkPanel").style.display = "flex";
+                    // document.getElementById("walkPanel-p").innerHTML = "Marche guidée... <br> [Entrée] pour arrêter";
                     this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
                 }
             }
@@ -285,28 +289,32 @@ export default class AppPathfinding {
         }
     }
 
-    // TODO : Pouvoir annuler guidage
     guide(zones, current_room) {
         const guidedNavPanel = document.getElementById("guidedNavPanel");
 
         if (!this.guidingPath) return
 
-        if(!this.isGuiding){
+        if (!this.isGuiding) {
             const crossedZones = this.getCrossedZones(zones);
 
             const INSTRUCTION_RULES = {
                 stairs: (zone, prev, next) => {
-                    const goingUp = next?.triggerBox.min.y > prev.triggerBox.min.y;
+                    let goingUp;
+                    if(zone.type === "stairs"){
+                        goingUp = next?.triggerBox.min.y > zone?.triggerBox.min.y;
+                    }else{
+                        goingUp = next?.triggerBox.min.y > prev?.triggerBox.min.y;
+                    }
                     let deltaAlt = Math.abs(next?.triggerBox.min.y - prev?.triggerBox.min.y);
                     console.log(deltaAlt);
                     let floors = 0;
                     // TODO : Régler le seuil et uniformiser les bbox (min y) des étages
-                    while(deltaAlt >= 2){
+                    while (deltaAlt >= 2) {
                         floors++;
                         deltaAlt -= 2;
                     }
                     const direction = goingUp ? "Montez" : "Descendez";
-                    const etages     = floors <= 1 ? "étage" : "étages";
+                    const etages = floors <= 1 ? "étage" : "étages";
                     const etagesText = floors !== 0 ? "de " + floors + " " + etages : "";
                     return `${direction} l'escalier ${zone.displayName ?? ""} ${etagesText}`.trim();
                 },
@@ -331,27 +339,31 @@ export default class AppPathfinding {
             });
         }
 
-        if(this.isGuiding){
-            if (guidedNavPanel.style.display === "none"){
+        if (this.isGuiding) {
+            if (guidedNavPanel.style.display === "none") {
                 guidedNavPanel.style.display = "flex";
             }
 
             if (document.getElementById("walkPanel").style.display === "none") {
                 document.getElementById("walkPanel").style.display = "flex";
-                document.getElementById("walkPanel-p").innerHTML = "Marche guidée...";
+                document.getElementById("walkPanel-p").innerHTML = "Marche guidée... <br> [Entrée] pour arrêter";
             }
 
-            if(current_room.name === this.guideDestinationName){
-                this.guidingPath = null;
-                this.guideDestinationName = null;
-                this.guideDestinationDiplayName = null;
-                this.isGuiding = false;
-                document.getElementById("guidedNavPanel").style.display = "none";
-                document.getElementById("navInstructions").innerHTML = "";
-                document.getElementById("walkPanel").style.display = "none";
-                document.getElementById("walkPanel-p").innerHTML = "";
+            if (current_room.name === this.guideDestinationName) {
+                this.endGuide();
             }
         }
+    }
+
+    endGuide(){
+        this.guidingPath = null;
+        this.guideDestinationName = null;
+        this.guideDestinationDiplayName = null;
+        this.isGuiding = false;
+        document.getElementById("guidedNavPanel").style.display = "none";
+        document.getElementById("navInstructions").innerHTML = "";
+        document.getElementById("walkPanel").style.display = "none";
+        document.getElementById("walkPanel-p").innerHTML = "";
     }
 
     getCrossedZones(zones){

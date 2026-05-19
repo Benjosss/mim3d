@@ -320,6 +320,16 @@ document.addEventListener('keydown', e => {
             }, 500);
         }
     }
+
+    if (e.code === 'Enter'){
+        e.preventDefault();
+        if (pathfinding.isGuiding){
+            pathfinding.endGuide();
+        }
+        if (pathfinding.isMoving){
+            pathfinding.endMove();
+        }
+    }
 });
 
 
