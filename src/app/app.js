@@ -134,7 +134,7 @@ controls.addEventListener('unlock', () => {
 });
 
 // ================= LOAD ASSETS =================
-const gltfLoader = new InitLoader().initGltfLoader();
+const gltfLoader = new InitLoader().initGltfLoader(renderer);
 
 // ================= CHARGEMENT DU PERSONNAGE =================
 const fpsPlayer = new AppFpsPlayer(scene, gltfLoader, camera, CONFIG);
@@ -446,7 +446,7 @@ function animate(timestamp) {
     }
     document.getElementById('current_zone').innerHTML = (zoneManager.currentRoom?.displayName ?? 'aucune');
 
-    // console.log(renderer.info.render.calls);
+    console.log(renderer.info.render.calls);
     renderer.render(scene, camera);
 }
 

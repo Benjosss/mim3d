@@ -68,7 +68,7 @@ scene.add(pivot);
 
 // ── Chargement et Centrage ───────────────────────────────
 let modelLoaded = false;
-const gltfLoader = new InitLoader().initGltfLoader();
+const gltfLoader = new InitLoader().initGltfLoader(renderer);
 
 gltfLoader.load('models/landing-page/ufr_mim.glb', (gltf) => {
     const model = gltf.scene;
