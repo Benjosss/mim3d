@@ -118,44 +118,48 @@ export default class AppPathfinding {
 
     // NAVIGATION AUTOMATIQUE AVEC COURBE ET AFFICHAGE
     findAutoPathTo(name, zones) {
-        let target = null;
-        zones.forEach(zone => {
-            if(zone.name === name) return target = zone.pathCoords;
-        })
+        if(!this.isGuiding && !this.isMoving) {
+            let target = null;
+            zones.forEach(zone => {
+                if (zone.name === name) return target = zone.pathCoords;
+            })
 
 
-        if (!this.isNavMeshLoaded) return;
+            if (!this.isNavMeshLoaded) return;
 
-        this.groupID = this.pathfinding.getGroup(this.zone, this.playerGroup.position);
-        const start = this.snapToNavMesh(this.playerGroup.position);
-        const end = this.snapToNavMesh(target);
+            this.groupID = this.pathfinding.getGroup(this.zone, this.playerGroup.position);
+            const start = this.snapToNavMesh(this.playerGroup.position);
+            const end = this.snapToNavMesh(target);
 
-        if (this.groupID !== null && start && end) {
-            const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
-            if (path && path.length > 0) {
-                // Création de la courbe Catmull-Rom
-                const smooth = this.smoothPath(path);
-                const points = [this.playerGroup.position.clone(), ...smooth];
-                this.splineCurve = new THREE.CatmullRomCurve3(points, false, 'chordal');
-                this.splineTotalLength = this.splineCurve.getLength();
-                this.splineProgress = 0;
+            if (this.groupID !== null && start && end) {
+                const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
+                if (path && path.length > 0) {
+                    // Création de la courbe Catmull-Rom
+                    const smooth = this.smoothPath(path);
+                    const points = [this.playerGroup.position.clone(), ...smooth];
+                    this.splineCurve = new THREE.CatmullRomCurve3(points, false, 'chordal');
+                    this.splineTotalLength = this.splineCurve.getLength();
+                    this.splineProgress = 0;
 
-                // --- AFFICHAGE DE LA VRAIE COURBE ---
-                if (this.visualPathLine) {
-                    this.scene.remove(this.visualPathLine);
-                    this.visualPathLine.geometry.dispose();
+                    // --- AFFICHAGE DE LA VRAIE COURBE ---
+                    if (this.visualPathLine) {
+                        this.scene.remove(this.visualPathLine);
+                        this.visualPathLine.geometry.dispose();
+                    }
+                    const curvePoints = this.splineCurve.getPoints(50); // 50 points pour un lissage propre
+                    const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
+                    const material = new THREE.LineBasicMaterial({color: 0x00ffff, linewidth: 2});
+                    this.visualPathLine = new THREE.Line(geometry, material);
+                    this.scene.add(this.visualPathLine);
+                    // ------------------------------------
+
+                    document.getElementById("walkPanel").style.display = "flex";
+                    document.getElementById("walkPanel-p").innerHTML = "Marche auto..."
+                    this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
                 }
-                const curvePoints = this.splineCurve.getPoints(50); // 50 points pour un lissage propre
-                const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
-                const material = new THREE.LineBasicMaterial({color: 0x00ffff, linewidth: 2});
-                this.visualPathLine = new THREE.Line(geometry, material);
-                this.scene.add(this.visualPathLine);
-                // ------------------------------------
-
-                document.getElementById("walkPanel").style.display = "flex";
-                document.getElementById("walkPanel-p").innerHTML = "Marche auto..."
-                this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
             }
+        } else {
+            alert("Un guidage est déjà en cours !");
         }
     }
 
@@ -242,38 +246,42 @@ export default class AppPathfinding {
     }
 
     findGuidedPathTo(name, displayName, zones) {
-        let target = null;
-        this.guideDestinationName = name;
-        this.guideDestinationDiplayName = displayName;
-        zones.forEach(zone => {
-            if (zone.name === name) return target = zone.pathCoords;
-        });
+        if(!this.isGuiding && !this.isMoving) {
+            let target = null;
+            this.guideDestinationName = name;
+            this.guideDestinationDiplayName = displayName;
+            zones.forEach(zone => {
+                if (zone.name === name) return target = zone.pathCoords;
+            });
 
-        if (!this.isNavMeshLoaded || !target) return;
+            if (!this.isNavMeshLoaded || !target) return;
 
-        this.groupID = this.pathfinding.getGroup(this.zone, this.playerGroup.position);
-        const start = this.snapToNavMesh(this.playerGroup.position);
-        const end   = this.snapToNavMesh(target);
+            this.groupID = this.pathfinding.getGroup(this.zone, this.playerGroup.position);
+            const start = this.snapToNavMesh(this.playerGroup.position);
+            const end   = this.snapToNavMesh(target);
 
-        if (this.groupID !== null && start && end) {
-            const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
+            if (this.groupID !== null && start && end) {
+                const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
 
-            if (path && path.length > 0) {
-                // Construit la spline sur le chemin brut
-                const spline = new THREE.CatmullRomCurve3(
-                    [this.playerGroup.position.clone(), ...path],
-                    false, 'chordal'
-                );
+                if (path && path.length > 0) {
+                    // Construit la spline sur le chemin brut
+                    const spline = new THREE.CatmullRomCurve3(
+                        [this.playerGroup.position.clone(), ...path],
+                        false, 'chordal'
+                    );
 
-                // Densité constante : 1 point tous les 0.5 unités
-                const nbPoints = Math.ceil(spline.getLength() / 0.5);
-                this.guidingPath = spline.getPoints(nbPoints);
+                    // Densité constante : 1 point tous les 0.5 unités
+                    const nbPoints = Math.ceil(spline.getLength() / 0.5);
+                    this.guidingPath = spline.getPoints(nbPoints);
 
 
-                document.getElementById("walkPanel").style.display = "flex";
-                document.getElementById("walkPanel-p").innerHTML = "Marche guidée...";
-                this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
+                    document.getElementById("walkPanel").style.display = "flex";
+                    document.getElementById("walkPanel-p").innerHTML = "Marche guidée...";
+                    this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(path);
+                }
             }
+        } else{
+            alert("Un guidage est déjà en cours !");
         }
     }
 
