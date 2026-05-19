@@ -296,7 +296,7 @@ export default class AppPathfinding {
 
             const INSTRUCTION_RULES = {
                 stairs: (zone, prev, next) => {
-                    const goingUp = next?.triggerBox.min.y > zone.triggerBox.min.y;
+                    const goingUp = next?.triggerBox.min.y > prev.triggerBox.min.y;
                     let deltaAlt = Math.abs(next?.triggerBox.min.y - prev?.triggerBox.min.y);
                     console.log(deltaAlt);
                     let floors = 0;
