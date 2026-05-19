@@ -180,7 +180,6 @@ export default class AppPathfinding {
     }
 
 
-    // TODO : Pouvoir annuler mouvement automatique
     move(delta) {
         if (!this.splineCurve || this.splineTotalLength <= 0) {
             this.isMoving = false;
