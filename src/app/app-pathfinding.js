@@ -299,7 +299,7 @@ export default class AppPathfinding {
             const INSTRUCTION_RULES = {
                 stairs: (zone, prev, next) => {
                     let goingUp;
-                    if(zone.type === "stairs"){
+                    if(!prev){
                         goingUp = next?.triggerBox.min.y > zone?.triggerBox.min.y;
                     }else{
                         goingUp = next?.triggerBox.min.y > prev?.triggerBox.min.y;
