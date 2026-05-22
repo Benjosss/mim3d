@@ -521,5 +521,19 @@
       "max": [56.113, 14.490, -31.602]
     },
     "pathCoords" : [52.50, 12.75, -32.91]
+  },
+  {
+    "name": "landscape",
+    "displayName":  "Terrain",
+    "path": "/models/zones/landscape_sized.glb",
+    "impostorPath" : "/models/impostors/imp_landscape_sized.glb",
+    "physics" : true,
+    "type": "corridor",
+    "description" : "Terrain",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [0,0,0],
+      "max": [0,0,0]
+    }
   }
 ]
