@@ -28,6 +28,7 @@ export default class AppPathfinding {
         this.guidingPath = null;
         this.guideDestinationName = null;
         this.guideDestinationDiplayName = null;
+        this.currentSegment = null;
     }
 
     /**
@@ -492,6 +493,22 @@ export default class AppPathfinding {
         }
 
         if (this.isGuiding) {
+            const nearestNode = this.getNearestGuidedPathPointFromPlayer(this.playerPos)
+            const angle = this.getRelativeAngleToTarget(nearestNode);
+            const angleDeg = angle * (180 / Math.PI);
+
+            const dirInst = document.getElementById("directionInstructions");
+            if (angleDeg > -30 && angleDeg <= 30) {
+                dirInst.innerHTML = "<p>Continuez tout droit</p>";
+            } else if (angleDeg > 30 && angleDeg <= 150) {
+                dirInst.innerHTML = "<p>Tournez à droite</p>";
+            } else if (angleDeg < -30 && angleDeg >= -150) {
+                dirInst.innerHTML = "<p>Tournez à gauche</p>";
+            } else {
+                dirInst.innerHTML = "<p>Retournez-vous</p>";
+            }
+
+
             if (guidedNavPanel.style.display === "none") {
                 guidedNavPanel.style.display = "flex";
             }
@@ -505,6 +522,38 @@ export default class AppPathfinding {
                 this.endGuide();
             }
         }
+    }
+
+    getRelativeAngleToTarget(targetPos) {
+        const playerPos = this.camera.position;
+
+        // 1. Direction de la cible par rapport au joueur
+        const dx = targetPos.x - playerPos.x;
+        const dz = targetPos.z - playerPos.z;
+
+        // Calcul de l'angle du monde vers la cible
+        // On utilise -dz car dans Three.js, l'avant est vers -Z
+        const worldTargetAngle = Math.atan2(-dz, dx);
+
+        // 2. Direction du regard (Forward)
+        const forward = new THREE.Vector3();
+        this.camera.getWorldDirection(forward);
+
+        // Calcul de l'angle du monde du regard
+        const worldLookAngle = Math.atan2(-forward.z, forward.x);
+
+        // 3. Calcul de la différence
+        let relativeAngle = worldTargetAngle - worldLookAngle;
+
+        // 4. Normalisation stricte entre -PI et PI
+        // C'est ici qu'on s'assure que "tourner à gauche" reste une valeur négative
+        // et "tourner à droite" une valeur positive (ou l'inverse selon ton choix)
+        while (relativeAngle > Math.PI) relativeAngle -= Math.PI * 2;
+        while (relativeAngle < -Math.PI) relativeAngle += Math.PI * 2;
+
+        // Si c'est encore inversé par rapport à ton ressenti :
+        // On multiplie par -1 pour inverser le sens horaire/anti-horaire
+        return -relativeAngle;
     }
 
     endGuide() {
@@ -561,5 +610,47 @@ export default class AppPathfinding {
 
     getInstructionsTitle(current_room) {
         return current_room.displayName + " vers " + this.guideDestinationDiplayName;
+    }
+
+    getNearestGuidedPathPointFromPlayer(){
+        if(!this.isGuiding || !this.guidingPath || this.guidingPath.length === 0) return null;
+
+        let closestIndex = -1
+        let closestDist = Number.MAX_SAFE_INTEGER;
+
+        this.guidingPath.forEach((node, index) => {
+            const dist = node.distanceToSquared(this.playerPos);
+            if (dist < closestDist) {
+                closestDist = dist;
+                closestIndex = index;
+            }
+        })
+
+        // TODO : Nombre magique = 12 ! A ajuster
+        const aheadIndex = Math.min(closestIndex + 12, this.guidingPath.length - 1);
+
+        return this.guidingPath[aheadIndex];
+    }
+
+    showNearestPointSegment() {
+        if (this.currentSegment) {
+            this.scene.remove(this.currentSegment);
+            this.currentSegment.geometry.dispose();  // Libère la mémoire de la géométrie
+            this.currentSegment.material.dispose();  // Libère la mémoire du matériau
+            this.currentSegment = null;
+        }
+
+        if (!this.isGuiding || !this.guidingPath || this.guidingPath.length === 0) return;
+
+        const closestNode = this.getNearestGuidedPathPointFromPlayer(this.playerPos);
+        if (!closestNode) return;
+
+        const points = [this.playerPos, closestNode];
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({ color: 0xFF0000, linewidth: 10 });
+
+        // 2. Assigner le nouveau segment à notre variable de classe
+        this.currentSegment = new THREE.Line(geometry, material);
+        this.scene.add(this.currentSegment);
     }
 }

@@ -439,6 +439,8 @@ function animate(timestamp) {
         //Pathfinding
         pathfinding.move(deltaTime);
         pathfinding.guide(ZONES, zoneManager.currentRoom);
+
+        pathfinding.showNearestPointSegment();
     }
 
     if (DEBUG_STATS) {

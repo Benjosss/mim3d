@@ -279,18 +279,22 @@ kbd {
 }
 
 /* Zone des instructions (Scrollable si trop longue) */
-#navInstructions {
+#navInstructions, #directionInstructions {
     border-radius: 20px;
     padding: 15px;
 }
 
-#navInstructions p {
+#navInstructions p, #directionInstructions p {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+#directionInstructions p{
+    color: rgb(0, 63, 255);
 }
 
 #navInstructions p:last-child {
