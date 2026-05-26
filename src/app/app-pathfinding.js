@@ -499,17 +499,26 @@ export default class AppPathfinding {
             const angle = this.getRelativeAngleToTarget(nearestNode);
             const angleDeg = angle * (180 / Math.PI);
 
+            const currentZone = this.getZoneAtPoint(this.playerPos, zones);
+            const nextZone = this.getZoneAtPoint(nearestNode, zones);
+
+            let displayName = false;
+
+            if(currentZone !== nextZone) {
+                displayName = true;
+            }
+
             const dirInst = document.getElementById("directionInstructions");
             if(nearestNode.y < this.playerPos.y) {
                 dirInst.innerHTML = "<p>Descendez l'escalier</p>";
             } else if (nearestNode.y > this.playerPos.y + 1) {
                 dirInst.innerHTML = "<p>Montez l'escalier</p>";
             } else if (angleDeg > -30 && angleDeg <= 30) {
-                dirInst.innerHTML = "<p>Continuez tout droit</p>";
+                 displayName ? dirInst.innerHTML = "<p>Continuez tout droit vers '" + nextZone.displayName + "'</p>" : dirInst.innerHTML = "<p>Continuez tout droit</p>";
             } else if (angleDeg > 30 && angleDeg <= 150) {
-                dirInst.innerHTML = "<p>Tournez à droite</p>";
+                displayName ? dirInst.innerHTML = "<p>Tournez à droite vers '" + nextZone.displayName + "'</p>" : dirInst.innerHTML = "<p>Tournez à droite</p>";
             } else if (angleDeg < -30 && angleDeg >= -150) {
-                dirInst.innerHTML = "<p>Tournez à gauche</p>";
+                displayName ? dirInst.innerHTML = "<p>Tournez à gauche vers '" + nextZone.displayName + "'</p>" : dirInst.innerHTML = "<p>Tournez à gauche</p>";
             } else {
                 dirInst.innerHTML = "<p>Retournez-vous</p>";
             }
