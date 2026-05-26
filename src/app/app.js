@@ -436,7 +436,9 @@ function animate(timestamp) {
     }
     document.getElementById('current_zone').innerHTML = (zoneManager.currentRoom?.displayName ?? 'aucune');
 
-    // console.log(renderer.info.render.calls);
+    if (DEBUG_MODE) {
+        console.log(renderer.info.render.calls);
+    }
     renderer.render(scene, camera);
 }
 
