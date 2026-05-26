@@ -503,9 +503,9 @@ export default class AppPathfinding {
 
             const dirInst = document.getElementById("directionInstructions");
             if(nearestNode.y < this.playerPos.y) {
-                dirInst.innerHTML = "<p>Descendez</p>";
+                dirInst.innerHTML = "<p>Descendez l'escalier</p>";
             } else if (nearestNode.y > this.playerPos.y + 1) {
-                dirInst.innerHTML = "<p>Montez</p>";
+                dirInst.innerHTML = "<p>Montez l'escalier</p>";
             } else if (angleDeg > -30 && angleDeg <= 30) {
                 dirInst.innerHTML = "<p>Continuez tout droit</p>";
             } else if (angleDeg > 30 && angleDeg <= 150) {
