@@ -2,10 +2,9 @@ import * as THREE from 'three';
 
 export class ZoneManager {
 
-    constructor({scene, loader, colliderMeshes, unloadDistance = 3}) {
+    constructor(scene, loader, colliderMeshes, debugMode) {
         this.scene = scene;                     // Scène
         this.loader = loader;                   // GLTF Loader
-        this.unloadDistance = unloadDistance;   // Distance de déchargement en nombre de zones
         this.colliderMeshes = colliderMeshes;   // Tableau partagé avec main.js pour ajouter/retirer les meshs selon les zones visibles
         this.zones = new Map();                 // Zones administrées
         this.currentZone = null;                // Zone courante de l'utilisateur
@@ -15,6 +14,8 @@ export class ZoneManager {
         this._loadQueue = [];                   // File d'attente des chargments
         this._isProcessingQueue = false;        // Status file d'attente
         this._rebuildScheduled = false;         // Rebuild différé
+
+        this.debugMode = debugMode;
     }
 
     // =====================================================
@@ -216,7 +217,7 @@ export class ZoneManager {
     async _manageImpostorVisibility(zone, visible) {
         if (visible) {
             if (!zone.isImpostorLoaded) {
-                await zone.loadImpostor(this.loader);
+                await zone.loadImpostor(this.loader, this.debugMode);
             }
 
             if (zone.impostorContent && !zone.impostorContent.parent) {

@@ -18,7 +18,7 @@ export default class AppDebugUtils{
         sphereTop.position.y = CONFIG.playerHeight / 2;
         sphereBot.position.y = -CONFIG.playerHeight / 2;
         capsuleHelper.add(bodyMesh, sphereTop, sphereBot);
-        capsuleHelper.visible = CONFIG.debugCapsule;
+        capsuleHelper.visible = CONFIG.debugMode;
         scene.add(capsuleHelper);
 
         return capsuleHelper;

@@ -2,10 +2,11 @@ import {Pathfinding, PathfindingHelper} from 'three-pathfinding';
 import * as THREE from "three";
 
 export default class AppPathfinding {
-    constructor(scene, camera, playerGroup) {
+    constructor(scene, camera, playerGroup, debugMode) {
         this.scene = scene;
         this.camera = camera;
         this.playerGroup = playerGroup;
+        this.debugMode = debugMode;
 
         this.pathfinding = new Pathfinding();
         this.pathfindingHelper = new PathfindingHelper();
@@ -40,7 +41,9 @@ export default class AppPathfinding {
     }
 
     showHelper() {
-        this.scene.add(this.pathfindingHelper);
+        if (this.debugMode) {
+            this.scene.add(this.pathfindingHelper);
+        }
     }
 
     loadNavMesh(path, loader) {
@@ -54,10 +57,11 @@ export default class AppPathfinding {
                     child.material = new THREE.MeshBasicMaterial({
                         color: 0x00ff00,
                         transparent: true,
-                        opacity: 0,
                         wireframe: true,
-                        depthTest: true // Garde true pour voir où il s'enfonce dans le décor
+                        depthTest: true
                     });
+
+                    this.debugMode ? child.material.opacity = 0.5 : child.material.opacity = 0;
 
                     child.position.y += 0.05;
                 }
@@ -651,7 +655,7 @@ export default class AppPathfinding {
 
         const points = [this.playerPos, closestNode];
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.LineBasicMaterial({ color: 0xFF0000, linewidth: 10 });
+        const material = new THREE.LineBasicMaterial({ color: 0x0000FF, linewidth: 10 });
 
         // 2. Assigner le nouveau segment à notre variable de classe
         this.currentSegment = new THREE.Line(geometry, material);

@@ -86,7 +86,7 @@ export class Zone {
         }
     }
 
-    async loadImpostor(loader) {
+    async loadImpostor(loader, debugMode) {
         if (this.isImpostorLoaded || !this.impostorPath) return;
 
         const gltf = await loader.loadAsync(this.impostorPath);
@@ -94,7 +94,7 @@ export class Zone {
 
         this.impostorContent.traverse(child => {
             if (child.isMesh) {
-                if (this.DEBUG_IMPOSTORS_OPACITY) {
+                if (debugMode) {
                     child.material.format = THREE.RGBAFormat;
                     child.material.transparent = true;
                     child.material.opacity = 0.5;

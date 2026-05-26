@@ -19,8 +19,8 @@ THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
-const DEBUG_STATS = true;
-const DEBUG_BBOX_COLOR = false;
+
+const DEBUG_MODE = false;
 
 // ================= CONFIG =================
 const CONFIG = {
@@ -30,7 +30,7 @@ const CONFIG = {
     playerHeight: 1.3,
     moveSpeed: 8,
     gravity: 30,
-    debugCapsule: false,
+    debugMode: DEBUG_MODE,
 };
 // --- Chrono ---
 const t0 = performance.now();
@@ -55,7 +55,7 @@ const debugUtil = new AppDebugUtils(scene, CONFIG);
 
 // ================= TOOLS =================
 const stats = new Stats();
-if (DEBUG_STATS) {
+if (DEBUG_MODE) {
     document.body.appendChild(stats.dom);
 }
 
@@ -149,9 +149,9 @@ const player = fpsPlayer.initFpsCharacter("/models/characters/woman_anim.glb");
 // On passe colliderMeshes au ZoneManager
 // Il y ajoute/retire les meshes de collision selon les zones visibles
 const colliderMeshes = [];
-const zoneManager = new ZoneManager({scene, loader: gltfLoader, colliderMeshes});
+const zoneManager = new ZoneManager(scene, gltfLoader, colliderMeshes, DEBUG_MODE);
 zoneManager.registerMultiZones(ZONES);
-if (DEBUG_BBOX_COLOR) {
+if (DEBUG_MODE) {
     ZONES.forEach(zone => {
         const helper = new THREE.Box3Helper(zone.triggerBox, 0xffff00);
         scene.add(helper);
@@ -161,7 +161,7 @@ await zoneManager.init(CONFIG.startZone);
 
 // ================= PATHFINDING =================
 
-const pathfinding = new AppPathfinding(scene, camera, player);
+const pathfinding = new AppPathfinding(scene, camera, player, DEBUG_MODE);
 pathfinding.showHelper();
 pathfinding.loadNavMesh("/models/navmeshes/navmesh_mesh.glb", gltfLoader);
 
@@ -244,20 +244,6 @@ document.addEventListener('keydown', e => {
     const tag = document.activeElement.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
-    if (e.code === 'F1') {
-        e.preventDefault();
-        CONFIG.debugCapsule = !CONFIG.debugCapsule;
-        capsuleHelper.visible = CONFIG.debugCapsule;
-        console.log(`Capsule debug : ${CONFIG.debugCapsule ? 'ON' : 'OFF'}`);
-    }
-    if (e.code === 'F2') {
-        e.preventDefault();
-        zoneManager.getStatus(); // Affiche le tableau des zones dans la console
-    }
-    if (e.code === 'F3') {
-        e.preventDefault();
-        debugUtil.buildColliderMeshesHelper(colliderMeshes);
-    }
     if (e.code === 'F4') {
         console.log("📍 Position :", camera.position.clone());
         console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
@@ -435,18 +421,17 @@ function animate(timestamp) {
         fpsPlayer.playerYawFollow(player, playerPos);
 
 
-        if (CONFIG.debugCapsule) {
-            debugUtil.playerCapsuleHelperFollow(capsuleHelper, playerPos);
-        }
-
         //Pathfinding
         pathfinding.move(deltaTime);
         pathfinding.guide(ZONES, zoneManager.currentRoom);
 
-        pathfinding.showNearestPointSegment();
+        if (DEBUG_MODE) {
+            debugUtil.playerCapsuleHelperFollow(capsuleHelper, playerPos);
+            pathfinding.showNearestPointSegment();
+        }
     }
 
-    if (DEBUG_STATS) {
+    if (DEBUG_MODE) {
         stats.update();
     }
     document.getElementById('current_zone').innerHTML = (zoneManager.currentRoom?.displayName ?? 'aucune');
