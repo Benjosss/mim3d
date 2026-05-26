@@ -95,7 +95,6 @@ panelUtils.onPanelBtnClick("settingsButton", () => {
 
 const controls = new PointerLockControls(camera, renderer.domElement);
 
-// startButton?.addEventListener('click', () => controls.lock());
 controls.addEventListener('lock', () => {
     if (startButton) startButton.innerText = "Continuer la visite";
 
@@ -107,6 +106,9 @@ controls.addEventListener('lock', () => {
     if (guidedNavPanel) guidedNavPanel.style.display = 'none';
     if (infosPanel) infosPanel.style.display = 'flex';
     if (keyBindPanel) keyBindPanel.style.display = 'flex';
+
+    if (roomFindPanelInput) roomFindPanelInput.value = "";
+    if (personFindPanelInput) personFindPanelInput.value = "";
 });
 controls.addEventListener('unlock', () => {
     if (menuPanel) menuPanel.style.display = 'none';
@@ -181,8 +183,7 @@ const personSearcher = new PersonSearcher(ZONES, pathfinding, () => {
 
 
 // Écouteur sur la barre de recherche
-const input = document.querySelector('#searchBar input');
-if (input) input.addEventListener('input', () => zoneSearcher.updateRoomSearch());
+if (roomFindPanelInput) roomFindPanelInput.addEventListener('input', () => zoneSearcher.updateRoomSearch());
 
 // Écouteur sur les filtres (Chips)
 document.querySelectorAll('#roomFilters .chip').forEach(chip => {
@@ -197,8 +198,7 @@ document.querySelectorAll('#roomFilters .chip').forEach(chip => {
     });
 });
 
-const input_p = document.querySelector('#searchBar-p input');
-if (input_p) input_p.addEventListener('input', () => personSearcher.updateRoomSearch());
+if (personFindPanelInput) personFindPanelInput.addEventListener('input', () => personSearcher.updateRoomSearch());
 
 // ================= PHYSIQUE =================
 const timer = new THREE.Timer();
