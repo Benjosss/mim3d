@@ -16,7 +16,7 @@ export default class JsonParser {
         return fetch(filePath)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`Erreur, statut : ${response.status}`);
+                    throw new Error(`Error, status : ${response.status}`);
                 }
                 return response.json();
             })
@@ -24,7 +24,7 @@ export default class JsonParser {
                 return data;
             })
             .catch(error => {
-                console.error('Erreur lors de la récupération :', error);
+                console.error('Error while fetching :', error);
             });
     }
 
@@ -38,7 +38,7 @@ export default class JsonParser {
         const jsonData = await this.fetchJSONData(path);
 
         if (!jsonData) {
-            console.log("Impossible de charger les zones");
+            console.log("Zones loading error");
         } else {
             jsonData.forEach((zone) => {
                 const newZone = {
@@ -60,7 +60,7 @@ export default class JsonParser {
                     try{
                         newZone.pathCoords = new THREE.Vector3(...zone.pathCoords);
                     }catch(e){
-                        console.error(`Impossible de récupérer les coordonées d'arrivée pour la zone ${zone.name}`, e);
+                        console.error(`Unable to fetch target coordinates for zone ${zone.name}`, e);
                     }
                 }
 
@@ -68,7 +68,7 @@ export default class JsonParser {
                     try{
                         newZone.persons = [...zone.persons];
                     }catch(e){
-                        console.error(`Impossible de récupérer les personnes occupants la zone ${zone.name}`, e)
+                        console.error(`Unable to fetch occupants of zone ${zone.name}`, e)
                     }
                 }
 

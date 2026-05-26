@@ -29,7 +29,6 @@ export class ZoneManager {
      */
     registerZone(zone) {
         this.zones.set(zone.name, zone);
-        console.log(`Zone ${zone.name} enregistrée.`);
     }
 
     registerMultiZones(zones) {
@@ -52,16 +51,14 @@ export class ZoneManager {
         const startZone = this.zones.get(startZoneName); // Récupération de la zone
 
         if (!startZone) {
-            console.error(`Zone de départ ${startZoneName} introuvable.`); // Zone non trouvée dans le manager
+            console.error(`Unable to find start zone \"${startZoneName}\"`); // Zone non trouvée dans le manager
             return;
         }
 
         if (!startZone.physics) {
-            console.error("La zone de départ doit gérer les collisions.");
+            console.error("Start zone must handle physics");
             return;
         }
-
-        console.log(`Initialisation sur la zone ${startZoneName}.`);
 
         // Chargement en priorité de la zone de spawn (bloquant)
         await this._loadZone(startZone);
@@ -78,7 +75,7 @@ export class ZoneManager {
             if (name !== this.currentZone.name) {
                 if (zone.impostorPath) {
                     this._manageImpostorVisibility(zone, true).catch((err) => {
-                        console.error(`Impossible d'afficher les imposteurs (${zone.impostorPath}): `, err);
+                        console.error(`Unable to show impostors \"${zone.impostorPath}\" : `, err);
                     });
                 }
             }
@@ -102,7 +99,6 @@ export class ZoneManager {
                 const distance = adjZone.triggerBox.distanceToPoint(playerPosition);
 
                 if (distance < 15.0) { // Seuil de 3 mètres avant l'entrée réelle
-                    console.log(`Anticipation : Chargement de ${adjName}`);
                     this._loadZone(adjZone);
                 }
             }
@@ -203,7 +199,7 @@ export class ZoneManager {
             this._queueAdjacentZones(newZone);
 
         } catch (e) {
-            console.error('Erreur lors de la transition :', e);
+            console.error('Error while transitioning :', e);
         } finally {
             // TRÈS IMPORTANT : On ne libère la physique que quand TOUT est prêt
             this._transitioning = false;
@@ -225,11 +221,9 @@ export class ZoneManager {
             }
 
             zone.impostorContent.visible = true;
-            console.log(`👁️ Imposteur de  ${zone.name} affiché`)
         } else {
             if (zone.impostorContent) {
                 zone.impostorContent.visible = false;
-                console.log(`🌑 Imposteur de  ${zone.name} caché`)
             }
         }
     }
@@ -380,8 +374,6 @@ export class ZoneManager {
                 totalMeshes += zone.colliderMeshes.length;
             }
         }
-
-        console.log(`Colliders BVH mis à jour : ${totalMeshes} mesh(es) actifs.`);
     }
 
     // =====================================================
@@ -426,7 +418,6 @@ export class ZoneManager {
                 name,
                 // Utilisation d'emojis pour simuler la couleur
                 loaded: zone.isLoaded ? "✅" : "❌",
-                loading: zone.isLoading ? "⏳" : "⚪",
                 visible: zone.isVisible ? "👁️" : "🌑",
                 impostor: zone.impostorContent?.visible ? "👁️" : "🌑",
                 colliders: zone.colliderMeshes?.length ?? 0,
@@ -441,10 +432,10 @@ export class ZoneManager {
         for (const [name, zone] of this.zones) {
             if (zone.physics) {
                 if (zone.isVisible && zone.impostorContent?.visible) {
-                    console.error(`Erreur imposteur zone : ${name}`)
+                    console.error(`Error impostor zone : ${name}`)
                 }
                 if (!zone.isVisible && !zone.impostorContent?.visible) {
-                    console.error(`Erreur imposteur zone : ${name}`)
+                    console.error(`Error impostor zone : ${name}`)
                 }
             }
         }

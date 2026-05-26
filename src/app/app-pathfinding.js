@@ -68,7 +68,7 @@ export default class AppPathfinding {
             });
 
             if (!navMeshObject) {
-                console.error("Aucun mesh trouvé dans le fichier NavMesh");
+                console.error("No navMesh object found.");
                 return;
             }
 
@@ -84,7 +84,7 @@ export default class AppPathfinding {
             // const zoneData = this.pathfinding.zones[this.zone];
             //
             // if (!zoneData || !zoneData.groups) {
-            //     console.error("Zone navmesh invalide");
+            //     console.error("Invalid NavMesh");
             //     return;
             // }
             //
@@ -110,8 +110,6 @@ export default class AppPathfinding {
             // Positionnement initial du joueur
             const start = this.snapToNavMesh(new THREE.Vector3(85, 20, -3));
             if (start) this.playerGroup.position.copy(start);
-
-            console.log("NavMesh chargé et affiché.");
         });
     }
 

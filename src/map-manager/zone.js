@@ -84,11 +84,9 @@ export class Zone {
 
             this.isLoaded = true; // Chargé
             this.isLoading = false; // Plus en chargement
-            console.log(`Zone "${this.name}" chargée — ${this.colliderMeshes.length} colliders BVH.`);
 
         } catch (e) {
             this.isLoading = false; // Plus en chargement
-            console.error(`Erreur de chargement de la zone ${this.name} :`, e);
             throw e;
         }
     }
@@ -143,7 +141,6 @@ export class Zone {
         scene.add(this.content); // Ajout du modèle à la scène
         this.content.visible = true; // Visible
         this.isVisible = true; // Status visible
-        console.log(`Zone ${this.name} affichée.`);
     }
 
     /**
@@ -154,7 +151,6 @@ export class Zone {
         if (!this.isVisible) return; // La zone est déjà cachée
         scene.remove(this.content); // Retrait du modèle de la scène
         this.isVisible = false; // Status non visible
-        console.log(`Zone ${this.name} cachée.`);
     }
 
     /**
@@ -186,8 +182,6 @@ export class Zone {
         this.isLoaded = false; // Zone non chargée
         this.isLoading = false; // Zone non en chargement
         this.colliderMeshes = [];
-
-        console.log(`Zone "${this.name}" déchargée de la mémoire`);
     }
 
     /**

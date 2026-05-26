@@ -1,9 +1,11 @@
 import * as THREE from "three";
+import Stats from "three/examples/jsm/libs/stats.module.js";
 
 export default class AppDebugUtils{
-    constructor(scene, config){
+    constructor(scene, config, stats){
         this.scene = scene;
         this.config = config;
+        this.stats = stats;
     }
 
     buildPlayerCapsuleHelper(){
@@ -53,6 +55,50 @@ export default class AppDebugUtils{
 
             scene.add(wireframe);
         });
+    }
+
+    createStatsPanels(){
+        const stats = this.stats;
+
+        const drawCallsPanel = new Stats.Panel("GPU calls", "#FF8000", "#221")
+        stats.addPanel(drawCallsPanel);
+
+        const zoneNumberPanel = new Stats.Panel("Zones", "#fbfbfb", "#3e3e3e")
+        stats.addPanel(zoneNumberPanel);
+
+        const geometriesCountPanel = new Stats.Panel("Geometries", "#ff5454", "#3a1d1d")
+        stats.addPanel(geometriesCountPanel);
+
+        const trianglesCountPanel = new Stats.Panel("Triangles", "#00d7ff", "#003c5a")
+        stats.addPanel(trianglesCountPanel);
+
+        stats.dom.style.display = 'flex';
+        stats.dom.style.flexDirection = 'row';
+        stats.dom.style.gap = '5px';
+
+        // Affiche tous les panels
+        Array.from(stats.dom.children).forEach((child) => {
+            child.style.display = 'block';
+        });
+
+        return [drawCallsPanel, zoneNumberPanel, geometriesCountPanel, trianglesCountPanel];
+    }
+
+    renderDebugMessage(){
+        const div = document.createElement('div');
+        div.className = 'toast-notification';
+        div.innerHTML = "<span style='color: red'>[MODE DEBUG]</span> <span style='color: white'>: 'F1' pour afficher l'état des zones en console</span> <br>" +
+            "<br> <span style='color: green'>NavMesh </span> " +
+            "<br> <span style='color: yellow'>TriggerBoxes </span> " +
+            "<br> <span style='color: red'>Capsule joueur </span> " +
+            "<br> <span style='color: rgba(255,255,255,0.62)'>Imposteurs (transparents)</span> ";
+        div.style.zIndex = "9999";
+        div.style.position = "absolute";
+        div.style.top = "5px";
+        div.style.left = "5px";
+        div.style.fontSize = "20px";
+        div.style.fontWeight = "bold";
+        document.body.appendChild(div);
     }
 
 }

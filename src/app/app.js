@@ -21,6 +21,7 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 
 const DEBUG_MODE = false;
+const DEBUG_MODE_STATS = false;
 
 // ================= CONFIG =================
 const CONFIG = {
@@ -32,8 +33,6 @@ const CONFIG = {
     gravity: 30,
     debugMode: DEBUG_MODE,
 };
-// --- Chrono ---
-const t0 = performance.now();
 
 // ================= DÉFINITION DES ZONES =================
 let ZONES = [];
@@ -51,12 +50,20 @@ sceneSetup.buildCrossHair(camera);
 const renderer = sceneSetup.buildRenderer();
 sceneSetup.initResize(camera, renderer);
 
-const debugUtil = new AppDebugUtils(scene, CONFIG);
 
 // ================= TOOLS =================
 const stats = new Stats();
-if (DEBUG_MODE) {
+const debugUtil = new AppDebugUtils(scene, CONFIG, stats);
+
+
+if(DEBUG_MODE){
+    debugUtil.renderDebugMessage();
+}
+
+let statsPanels = [];
+if(DEBUG_MODE_STATS) {
     document.body.appendChild(stats.dom);
+    statsPanels = debugUtil.createStatsPanels();
 }
 
 // Debug capsule
@@ -110,6 +117,7 @@ controls.addEventListener('lock', () => {
     if (roomFindPanelInput) roomFindPanelInput.value = "";
     if (personFindPanelInput) personFindPanelInput.value = "";
 });
+
 controls.addEventListener('unlock', () => {
     if (menuPanel) menuPanel.style.display = 'none';
     if (infosPanel) infosPanel.style.display = 'none';
@@ -244,6 +252,13 @@ document.addEventListener('keydown', e => {
     const tag = document.activeElement.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
+    if (DEBUG_MODE) {
+        if (e.code === 'F1'){
+            e.preventDefault();
+            zoneManager.getStatus();
+        }
+    }
+
     if (e.code === 'F4') {
         console.log("📍 Position :", camera.position.clone());
         console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
@@ -353,10 +368,6 @@ panelUtils.onPanelBtnClick("findPersonHelpBtn", () =>{
 });
 
 
-// --- Fin du chrono ---
-const t1 = performance.now();
-console.log(`⏱️ Temps de chargement total : ${((t1 - t0) / 1000).toFixed(3)} secondes.`);
-
 // ================= BOUCLE DE RENDU =================
 function animate(timestamp) {
     requestAnimationFrame(animate);
@@ -401,7 +412,6 @@ function animate(timestamp) {
         // ZoneManager : détection de transition à chaque frame
         if (controls.isLocked) {
             zoneManager.update(camera.position);
-            zoneManager.checkImpostorsVisibility();
 
             // SÉCURITÉ CRITIQUE : Si le manager charge une zone, on fige la physique
             if (zoneManager._transitioning) {
@@ -431,14 +441,23 @@ function animate(timestamp) {
         }
     }
 
-    if (DEBUG_MODE) {
+    if (DEBUG_MODE_STATS) {
         stats.update();
+        /**
+         * Attention, les stats sont faussées par l'affichage des composantes de debug, pour obtenir les vraies valeurs :
+         * Mettre DEBUG_MODE = false et DEBUG_MODE_STATS = true;
+         */
+        statsPanels[0].update(renderer.info.render.calls, 1000);
+        // Nombre de zones chargées
+        statsPanels[1].update(zoneManager.managedZones.size, 20);
+        // Nombre de géométries de la scène en VRAM
+        statsPanels[2].update(renderer.info.memory.geometries, 1000);
+        // Nombre de triangles de la scène
+        statsPanels[3].update(renderer.info.render.triangles, 10000000);
+
     }
     document.getElementById('current_zone').innerHTML = (zoneManager.currentRoom?.displayName ?? 'aucune');
 
-    if (DEBUG_MODE) {
-        console.log(renderer.info.render.calls);
-    }
     renderer.render(scene, camera);
 }
 

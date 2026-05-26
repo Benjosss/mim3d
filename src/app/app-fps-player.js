@@ -49,7 +49,7 @@ export default class AppFpsPlayer {
 
             player.add(this.model);
 
-        }, undefined, (error) => console.error("Erreur chargement personnage :", error));
+        }, undefined, (error) => console.error("Character model loading error :", error));
 
         return player
     }
