@@ -13,6 +13,7 @@ export default class AppPhysicsBvh {
         this.capsuleBottom = capsuleBottom;
         this.normal = normal;
         this.matrix = matrix;
+        this._deltaMove = new THREE.Vector3();
     }
 
     /**
@@ -25,16 +26,14 @@ export default class AppPhysicsBvh {
         const colliderMeshes = this.colliderMeshes;
         const playerPos = this.playerPos;
         const playerVelocity = this.playerVelocity;
-        let playerOnFloor = this.playerOnFloor;
+        this.playerOnFloor = false;
         const _capsuleTop = this.capsuleTop;
         const _capsuleBottom = this.capsuleBottom;
         const _matrix = this.matrix;
         const _normal = this.normal;
 
-        playerOnFloor = false;
-
-        const EPS = 0.002;          // seuil anti micro-collisions
-        const MAX_PUSH = 3;         // limite de corrections par mesh
+        const EPS = 0.0001;          // seuil anti micro-collisions
+        const MAX_PUSH = 10;         // limite de corrections par mesh
         let pushCount = 0;
 
         _capsuleBottom.copy(playerPos);
@@ -79,6 +78,8 @@ export default class AppPhysicsBvh {
 
                     if (pushCount >= MAX_PUSH) return false;
 
+                    localBottom.copy(_capsuleBottom).applyMatrix4(invMat);
+                    localTop.copy(_capsuleTop).applyMatrix4(invMat);
                     const capsuleSeg = new THREE.Line3(localBottom, localTop);
 
                     const closestPointOnTriangle = new THREE.Vector3();
@@ -107,13 +108,12 @@ export default class AppPhysicsBvh {
 
                     // --- SOL ---
                     if (worldNormal.y > 0.5) {
-                        playerOnFloor = true;
+                        this.playerOnFloor = true;
 
                         // empêche rebond vertical
                         if (playerVelocity.y < 0) playerVelocity.y = 0;
 
                         // colle légèrement au sol (empêche les micro-sauts)
-                        playerPos.y -= EPS;
                     }
 
                     // --- PLAFOND ---
@@ -131,7 +131,7 @@ export default class AppPhysicsBvh {
                     }
 
                     // correction position avec clamp
-                    const push = depth * scale + 0.003;
+                    const push = depth * scale + EPS;
                     playerPos.addScaledVector(worldNormal, push);
 
                     pushCount++;
@@ -167,10 +167,9 @@ export default class AppPhysicsBvh {
 
     updatePlayerYVelocity(deltaTime) {
         const playerVelocity = this.playerVelocity;
-        const playerOnFloor = this.playerOnFloor;
         const CONFIG = this.config;
 
-        if (!playerOnFloor) {
+        if (!this.playerOnFloor) {
             playerVelocity.y -= CONFIG.gravity * deltaTime;
         } else {
             playerVelocity.y = Math.max(0, playerVelocity.y);
@@ -185,8 +184,8 @@ export default class AppPhysicsBvh {
                 this.playerVelocity.y -= this.config.gravity * subDelta;
             }
 
-            const deltaMove = this.playerVelocity.clone().multiplyScalar(subDelta);
-            this.playerPos.add(deltaMove);
+            this._deltaMove.copy(this.playerVelocity).multiplyScalar(subDelta);
+            this.playerPos.add(this._deltaMove);
 
             this.playerCollisions();
 
