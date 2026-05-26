@@ -52,6 +52,13 @@ export class Zone {
             this.content.traverse(child => {
                 if (child.isMesh) {
 
+                    child.traverse(node => {
+                        if (node.isMesh && node.material.metalness === 1) {
+                            node.material.metalness = 0.3;
+                            node.material.roughness = 0.5;
+                        }
+                    });
+
                     // Affichage des assets sans collisions
                     if (!this.physics || child.name.includes("NOCOL")) {
                         child.visible = true;
@@ -94,6 +101,14 @@ export class Zone {
 
         this.impostorContent.traverse(child => {
             if (child.isMesh) {
+
+                child.traverse(node => {
+                    if (node.isMesh && node.material.metalness === 1) {
+                        node.material.metalness = 0.3;
+                        node.material.roughness = 0.5;
+                    }
+                });
+
                 if (debugMode) {
                     child.material.format = THREE.RGBAFormat;
                     child.material.transparent = true;
