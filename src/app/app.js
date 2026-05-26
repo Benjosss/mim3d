@@ -67,6 +67,7 @@ let currentOverlay = "menu";
 // ================= CONTROLS =================
 const panelUtils = new PanelUtils();
 
+const startButton = document.getElementById("startButton");
 const menuPanel = document.getElementById('menuPanel');
 const infosPanel = document.getElementById('infosPanel');
 const guidedNavPanel = document.getElementById('guidedNavPanel');
@@ -96,6 +97,8 @@ const controls = new PointerLockControls(camera, renderer.domElement);
 
 // startButton?.addEventListener('click', () => controls.lock());
 controls.addEventListener('lock', () => {
+    if (startButton) startButton.innerText = "Continuer la visite";
+
     if (menuPanel) menuPanel.style.display = 'none';
     if (helpPanel) helpPanel.style.display = 'none';
     if (settingsPanel) settingsPanel.style.display = 'none';
