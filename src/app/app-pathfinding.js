@@ -530,10 +530,9 @@ export default class AppPathfinding {
                     let deltaAlt = Math.abs(next?.triggerBox.min.y - prev?.triggerBox.min.y);
                     console.log(deltaAlt);
                     let floors = 0;
-                    // TODO : Régler le seuil et uniformiser les bbox (min y) des étages
-                    while (deltaAlt >= 2) {
+                    while (deltaAlt >= 2.8) {
                         floors++;
-                        deltaAlt -= 2;
+                        deltaAlt -= 2.8;
                     }
                     const direction = goingUp ? "Montez" : "Descendez";
                     const etages = floors <= 1 ? "étage" : "étages";
