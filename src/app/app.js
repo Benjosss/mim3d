@@ -130,10 +130,12 @@ controls.addEventListener('unlock', () => {
         case 'room':
             if (roomFindPanel) roomFindPanel.style.display = 'flex';
             if (roomFindPanelInput) roomFindPanelInput.focus();
+            zoneSearcher.updateRoomSearch();
             break;
         case 'person':
             if (personFindPanel) personFindPanel.style.display = 'flex';
             if (personFindPanelInput) personFindPanelInput.focus();
+            personSearcher.updateRoomSearch();
             break;
         case 'help':
             if (helpPanel) helpPanel.style.display = 'flex';
