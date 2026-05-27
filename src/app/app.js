@@ -21,7 +21,7 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 
 const DEBUG_MODE = false;
-const DEBUG_MODE_STATS = false;
+const DEBUG_MODE_STATS = true;
 
 // ================= CONFIG =================
 const CONFIG = {
@@ -210,6 +210,25 @@ document.querySelectorAll('#roomFilters .chip').forEach(chip => {
 
 if (personFindPanelInput) personFindPanelInput.addEventListener('input', () => personSearcher.updateRoomSearch());
 
+// ================= SETTINGS =================
+
+document.getElementById('settings-speed').addEventListener('change', (e) => {
+    CONFIG.moveSpeed = parseInt(e.target.value);
+})
+
+const settingsShowZoneDesc = document.getElementById('settings-show-zone')
+let showZoneDesc = settingsShowZoneDesc.checked;
+
+document.getElementById('settings-show-zone').addEventListener('change', (e) => {
+    document.getElementById('current_zone_desc').innerHTML = "";
+    showZoneDesc = e.target.checked;
+})
+
+document.getElementById('settings-show-path').addEventListener('change', (e) => {
+    pathfinding.showPath = e.target.checked;
+})
+
+
 // ================= PHYSIQUE =================
 const timer = new THREE.Timer();
 
@@ -351,6 +370,7 @@ function onBackToGame(id, overlay){
 onBackToGame("helpBackBtn", "help");
 onBackToGame("findRoomBackBtn", "room");
 onBackToGame("findPersonBackBtn", "person");
+onBackToGame("settingsBackBtn", "settings");
 
 panelUtils.onPanelBtnClick("findRoomHelpBtn", () =>{
         if(currentOverlay === "room") {
@@ -459,6 +479,7 @@ function animate(timestamp) {
 
     }
     document.getElementById('current_zone').innerHTML = (zoneManager.currentRoom?.displayName ?? 'aucune');
+    if(showZoneDesc) document.getElementById('current_zone_desc').innerHTML = (zoneManager.currentRoom?.description ?? '');
 
     renderer.render(scene, camera);
 }

@@ -7,6 +7,7 @@ export default class AppPathfinding {
         this.camera = camera;
         this.playerGroup = playerGroup;
         this.debugMode = debugMode;
+        this.showPath = document.getElementById('settings-show-path').checked;
 
         this.pathfinding = new Pathfinding();
         this.pathfindingHelper = new PathfindingHelper();
@@ -193,7 +194,39 @@ export default class AppPathfinding {
             .setTargetPosition(end)
             .setPath(this.splineCurve);
 
+        if (this.showPath) {
+            // Supprime l'ancien tracé s'il existe
+            if (this.visualPathLine) {
+                this.scene.remove(this.visualPathLine);
+                this.visualPathLine.geometry.dispose();
+                this.visualPathLine.material.dispose();
+                this.visualPathLine = null;
+            }
 
+            const step = Math.max(1, Math.floor(linearPath.length / 100));
+            const tubePoints = linearPath.filter((_, i) => i % step === 0);
+            if (tubePoints.at(-1) !== linearPath.at(-1)) tubePoints.push(linearPath.at(-1));
+
+            const curve = new THREE.CatmullRomCurve3(tubePoints, false, 'centripetal', 0.5);
+
+            const tubeGeo = new THREE.TubeGeometry(
+                curve,
+                tubePoints.length * 2, // segments le long du tube
+                0.1,                          // rayon du tube
+                10,                     // segments radiaux
+                false
+            );
+
+            const tubeMat = new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.75,
+                depthWrite: false, // évite les artefacts avec le sol
+            });
+
+            this.visualPathLine = new THREE.Mesh(tubeGeo, tubeMat);
+            this.scene.add(this.visualPathLine);
+        }
     }
 
     move(delta) {
@@ -267,9 +300,9 @@ export default class AppPathfinding {
 
 
         if (this.visualPathLine) {
-            // this.scene.remove(this.visualPathLine); // Retire la ligne de la scène
-            // this.visualPathLine.geometry.dispose(); // Libère la mémoire
-            // this.visualPathLine.material.dispose();
+            this.scene.remove(this.visualPathLine);
+            this.visualPathLine.geometry.dispose();
+            this.visualPathLine.material.dispose();
             this.visualPathLine = null;
         }
     }
@@ -372,6 +405,40 @@ export default class AppPathfinding {
             .setPlayerPosition(start)
             .setTargetPosition(end)
             .setPath(this.guidingPath);
+
+        if (this.showPath) {
+            // Supprime l'ancien tracé s'il existe
+            if (this.visualPathLine) {
+                this.scene.remove(this.visualPathLine);
+                this.visualPathLine.geometry.dispose();
+                this.visualPathLine.material.dispose();
+                this.visualPathLine = null;
+            }
+
+            const step = Math.max(1, Math.floor(linearPath.length / 100));
+            const tubePoints = linearPath.filter((_, i) => i % step === 0);
+            if (tubePoints.at(-1) !== linearPath.at(-1)) tubePoints.push(linearPath.at(-1));
+
+            const curve = new THREE.CatmullRomCurve3(tubePoints, false, 'centripetal', 0.5);
+
+            const tubeGeo = new THREE.TubeGeometry(
+                curve,
+                tubePoints.length * 2, // segments le long du tube
+                0.1,                          // rayon du tube
+                10,                     // segments radiaux
+                false
+            );
+
+            const tubeMat = new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.75,
+                depthWrite: false, // évite les artefacts avec le sol
+            });
+
+            this.visualPathLine = new THREE.Mesh(tubeGeo, tubeMat);
+            this.scene.add(this.visualPathLine);
+        }
     }
 
     sampleIntermediatesPoints(group, path, threshold, density = 0.8) {
@@ -580,6 +647,13 @@ export default class AppPathfinding {
         document.getElementById("navInstructions").innerHTML = "";
         document.getElementById("walkPanel").style.display = "none";
         document.getElementById("walkPanel-p").innerHTML = "";
+
+        if (this.visualPathLine) {
+            this.scene.remove(this.visualPathLine);
+            this.visualPathLine.geometry.dispose();
+            this.visualPathLine.material.dispose();
+            this.visualPathLine = null;
+        }
     }
 
     getCrossedZones(zones) {
