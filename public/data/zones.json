@@ -205,7 +205,7 @@
     "description" : "Escalier 1",
     "adjacentZoneNames": ["floor0", "floor-1"],
     "triggerBox": {
-      "min": [83.508, -0.180, -34.614],
+      "min": [83.508, -0.200, -34.614],
       "max": [87.142, 5.309, -24.841]
     }
   },
@@ -219,7 +219,7 @@
     "description" : "Escalier 1",
     "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3"],
     "triggerBox": {
-      "min": [74.374, -0.008, -28.07041],
+      "min": [74.374, -0.200, -28.07041],
       "max": [78.635, 16.242, -20.365]
     }
   },
@@ -233,7 +233,7 @@
     "description" : "Escalier 2",
     "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3"],
     "triggerBox": {
-      "min": [71.247, -0.008, -40.233],
+      "min": [71.247, -0.200, -40.233],
       "max": [78.236, 16.038, -34.325]
     }
   },
@@ -247,9 +247,189 @@
     "description" : "Escalier 3",
     "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3"],
     "triggerBox": {
-      "min": [71.524, -0.100, -69.277],
+      "min": [71.524, -0.200, -69.277],
       "max": [78.196, 15.816, -63.900]
     }
+  },
+  {
+    "name": "ARJ-030",
+    "displayName":  "ARJ-030",
+    "path": "/models/furnitures/fur_arj_030_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - Cellul Génie Civil",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [20.23154, -0.200, -69.40587],
+      "max": [33.08558, 3.61976, -58.30839]
+    },
+    "pathCoords" : [29.19, 1.29, -60.55]
+  },
+  {
+    "name": "ARJ-027",
+    "displayName":  "ARJ-027",
+    "path": "/models/furnitures/fur_arj_027_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - Pierre et Marie CURIE",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [33.01131, -0.200, -58.09857],
+      "max": [41.17522, 3.84931, -50.01027]
+    },
+    "pathCoords" : [40.25, 1.29, -51.92]
+  },
+  {
+    "name": "ARJ-015",
+    "displayName":  "ARJ-015",
+    "path": "/models/furnitures/fur_arj_015_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - Méca fluide",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [44.799, -0.200, -35.339],
+      "max": [56.118, 3.421, -11.563]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "ARJ-013",
+    "displayName":  "ARJ-013",
+    "path": "/models/furnitures/fur_arj_013_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - ESP Mécanique",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [27.4798, -0.200, -43.15797],
+      "max": [46.55103, 4.04219, -24.23701]
+    },
+    "pathCoords" : [42.002, 1.29, -32.74]
+  },
+  {
+    "name": "ARJ-012",
+    "displayName":  "ARJ-012",
+    "path": "/models/furnitures/fur_arj_012_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [22.85528, -0.200, -46.50838],
+      "max": [35.87306, 3.95172, -32.83872]
+    },
+    "pathCoords" : [34.57, 1.29, -42.48]
+  },
+  {
+    "name": "ARJ-010",
+    "displayName":  "ARJ-010",
+    "path": "/models/furnitures/fur_arj_010_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [15.98793, -0.200, -55.75921],
+      "max": [25.54438, 3.52047, -46.05899]
+    },
+    "pathCoords" : [20.89, 1.29, -53.62]
+  },
+  {
+    "name": "ARJ-009",
+    "displayName":  "ARJ-009",
+    "path": "/models/furnitures/fur_arj_009_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [6.73937, -0.200, -61.83537],
+      "max": [21.47306, 3.63424, -46.82599]
+    },
+    "pathCoords" : [17.98, 1.29, -54.85]
+  },
+  {
+    "name": "conseils",
+    "displayName":  "Salle des conseils",
+    "path": "/models/furnitures/fur_conseils_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "Salle des conseils - Katherine JOHNSON",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [32.54482, -0.200, -69.39983],
+      "max": [43.32837, 3.84931, -58.14311]
+    },
+    "pathCoords" : [41.52, 1.29, -61.37]
+  },
+  {
+    "name": "BRJ-006/7/8",
+    "displayName":  "BRJ-006/7/8",
+    "path": "/models/furnitures/fur_brj_6_7_8_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "CM",
+    "description" : "x places - Salle d'examens",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [70.16491, -0.200, -65.2485],
+      "max": [86.10144, 3.77605, -38.44554]
+    },
+    "pathCoords" : [83.101, 1.29, -42.60]
+  },
+  {
+    "name": "BRJ-WC-H",
+    "displayName":  "Toilettes hommes, Rez-de-jardin, aile B",
+    "path": "/models/furnitures/fur_brj_wc_h_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "toilets",
+    "description" : "Toilettes Hommes",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [75.14563, -0.200, -31.63589],
+      "max": [79.29416, 3.8161, -28.06817]
+    },
+    "pathCoords" : [78.01, 12.75, -30.20]
+  },
+  {
+    "name": "Petit-Amphi",
+    "displayName":  "Petit Amphithéâtre",
+    "path": "/models/furnitures/fur_petit_amphi_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "CM",
+    "description" : "x places - Petit Amphithéâtre",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [67.976, 3.477, -51.547],
+      "max": [84.736, 7.415, -38.561]
+    },
+    "pathCoords" : [80.58, 5.54, -41.76]
+  },
+  {
+    "name": "Grand-Amphi",
+    "displayName":  "Grand Amphithéâtre",
+    "path": "/models/furnitures/fur_grand_amphi_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "CM",
+    "description" : "x places - Grand Amphithéâtre",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [71.789, 2.783, -63.470],
+      "max": [84.310, 7.476, -48.525]
+    },
+    "pathCoords" : [81.76, 5.54, -54.91]
   },
   {
     "name": "BN1-019",
@@ -264,7 +444,7 @@
       "min": [70.91314, 7.75693, -74.81104],
       "max": [78.45118, 11.06904, -67.18431]
     },
-    "pathCoords" : [75.77, 12.75, -46.51]
+    "pathCoords" : [76.96, 9.32, -68.30]
   },
   {
     "name": "BN2-013",
@@ -489,7 +669,7 @@
       "min": [71.131, 14.530, -47.763],
       "max": [79.853, 18.038, -40.474]
     },
-    "pathCoords" : [75.77, 16.21, -46.51]
+    "pathCoords" : [75.82, 16.21, -46.60]
   },
   {
     "name": "BN3-012",
@@ -504,7 +684,7 @@
       "min": [70.877, 14.530, -55.154],
       "max": [79.479, 18.038, -47.533]
     },
-    "pathCoords" : [76.03, 16.21, -53.30]
+    "pathCoords" : [75.83, 16.21, -53.24]
   },
   {
     "name": "BN3-011",
@@ -519,7 +699,7 @@
       "min": [71.409, 14.530, -63.816],
       "max": [80.173, 18.038, -54.806]
     },
-    "pathCoords" : [75.90, 16.21, -62.60]
+    "pathCoords" : [74.97, 16.21, -62.40]
   },
   {
     "name": "BN3-010",
@@ -534,7 +714,7 @@
       "min": [71.330, 14.530, -75.248],
       "max": [79.756, 18.038, -67.401]
     },
-    "pathCoords" : [76.04, 16.21, -68.32]
+    "pathCoords" : [75.97, 16.21, -68.53]
   },
   {
     "name": "BN3-009",
@@ -549,7 +729,7 @@
       "min": [78.225, 14.530, -75.553],
       "max": [87.432, 18.038, -67.340]
     },
-    "pathCoords" : [81.62, 16.21, -70.33]
+    "pathCoords" : [81.69, 16.21, -71.01]
   },
   {
     "name": "BN3-008",
@@ -564,7 +744,7 @@
       "min": [78.649, 14.530, -68.994],
       "max": [86.989, 18.038, -61.726]
     },
-    "pathCoords" : [82.56, 16.21, -63.05]
+    "pathCoords" : [83.25, 16.21, -63.11]
   },
   {
     "name": "BN3-007",
@@ -579,7 +759,7 @@
       "min": [78.357, 14.530, -61.720],
       "max": [87.327, 18.038, -54.791]
     },
-    "pathCoords" : [83.02, 16.21, -60.58]
+    "pathCoords" : [83.26, 16.21, -60.89]
   },
   {
     "name": "BN3-006",
@@ -594,7 +774,7 @@
       "min": [78.841, 14.530, -47.739],
       "max": [87.562, 18.038, -39.166]
     },
-    "pathCoords" : [82.28, 16.21, -40.20]
+    "pathCoords" : [83.89, 16.21, -40.36]
   },
   {
     "name": "BN3-005",
@@ -609,7 +789,7 @@
       "min": [79.581, 14.530, -38.413],
       "max": [87.786, 18.038, -31.479]
     },
-    "pathCoords" : [82.72, 16.21, -33.30]
+    "pathCoords" : [83.25, 16.21, -33.18]
   },
   {
     "name": "BN3-004",
@@ -639,7 +819,7 @@
       "min": [79.184, 14.530, -24.471],
       "max": [87.716, 18.038, -16.910]
     },
-    "pathCoords" : [83.28, 16.21, -18.45]
+    "pathCoords" : [84.72, 16.21, -18.11]
   },
   {
     "name": "BN3-002",
@@ -654,7 +834,7 @@
       "min": [79.431, 14.530, -17.230],
       "max": [88.885, 18.038, -7.622]
     },
-    "pathCoords" : [83.99, 16.21, -8.80]
+    "pathCoords" : [84.37, 16.21, -8.97]
   },
   {
     "name": "BN3-001",
@@ -669,7 +849,7 @@
       "min": [78.963, 14.530, -12.120],
       "max": [89.578, 18.038, -0.373]
     },
-    "pathCoords" : [80.94, 16.21, -5.81]
+    "pathCoords" : [81.07, 16.21, -4.94]
   },
   {
     "name": "BN3-WC-H",
@@ -684,187 +864,39 @@
       "min": [70.77495, 14.71936, -31.77047],
       "max": [74.55966, 18.03908, -23.57218]
     },
-    "pathCoords" : [72.30, 12.75, -29.33]
+    "pathCoords" : [72.75, 16.21, -28.46]
   },
   {
-    "name": "ARJ-030",
-    "displayName":  "ARJ-030",
-    "path": "/models/furnitures/fur_arj_030_sized.glb",
+    "name": "IECL",
+    "displayName":  "IECL",
+    "path": "/models/furnitures/fur_iecl_sized.glb",
     "impostorPath" : "",
     "physics" : false,
-    "type": "TP",
-    "description" : "x places - Cellul Génie Civil",
+    "type": "office",
+    "description" : "Institut Elie CARTAN de Lorraine - Zone réglementée",
+    "persons" : [],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [20.23154, -0.79712, -69.40587],
-      "max": [33.08558, 3.61976, -58.30839]
+      "min": [49.60507, 4.06586, -35.13533],
+      "max": [56.11785, 8.35236, -29.86901]
     },
-    "pathCoords" : [54.21, 1.29, -22.08]
+    "pathCoords" : [54.50, 5.54, -32.69]
   },
   {
-    "name": "ARJ-027",
-    "displayName":  "ARJ-027",
-    "path": "/models/furnitures/fur_arj_027_sized.glb",
+    "name": "LGIPM",
+    "displayName":  "LGIPM",
+    "path": "/models/furnitures/fur_lgipm_sized.glb",
     "impostorPath" : "",
     "physics" : false,
-    "type": "TP",
-    "description" : "x places - Pierre et Marie CURIE",
+    "type": "office",
+    "description" : "Laboratoire de Génie Informatique, de Production et de Maintenance - Zone réglementée",
+    "persons" : [],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [33.01131, -0.43867, -58.09857],
-      "max": [41.17522, 3.84931, -50.01027]
+      "min": [47.25213, 7.57228, -34.88866],
+      "max": [55.91292, 10.74428, -30.05124]
     },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "ARJ-015",
-    "displayName":  "ARJ-015",
-    "path": "/models/furnitures/fur_arj_015_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "TP",
-    "description" : "x places - Méca fluide",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [44.799, -0.316, -35.339],
-      "max": [56.118, 3.421, -11.563]
-    },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "ARJ-013",
-    "displayName":  "ARJ-013",
-    "path": "/models/furnitures/fur_arj_013_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "TP",
-    "description" : "x places - ESP Mécanique",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [27.4798, -0.03167, -43.15797],
-      "max": [46.55103, 4.04219, -24.23701]
-    },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "ARJ-012",
-    "displayName":  "ARJ-012",
-    "path": "/models/furnitures/fur_arj_012_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "TP",
-    "description" : "x places",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [22.85528, -0.46517, -46.50838],
-      "max": [35.87306, 3.95172, -32.83872]
-    },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "ARJ-010",
-    "displayName":  "ARJ-010",
-    "path": "/models/furnitures/fur_arj_010_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "TP",
-    "description" : "x places",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [15.98793, -0.39194, -55.75921],
-      "max": [25.54438, 3.52047, -46.05899]
-    },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "ARJ-009",
-    "displayName":  "ARJ-009",
-    "path": "/models/furnitures/fur_arj_009_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "TP",
-    "description" : "x places",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [6.73937, -0.27818, -61.83537],
-      "max": [21.47306, 3.63424, -46.82599]
-    },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "conseils",
-    "displayName":  "Salle des conseils",
-    "path": "/models/furnitures/fur_conseils_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "TP",
-    "description" : "Salle des conseils - Katherine JOHNSON",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [32.54482, -0.43867, -69.39983],
-      "max": [43.32837, 3.84931, -58.14311]
-    },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "BRJ-006/7/8",
-    "displayName":  "BRJ-006/7/8",
-    "path": "/models/furnitures/fur_brj_6_7_8_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "CM",
-    "description" : "x places - Salle d'examens",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [70.16491, -0.09346, -65.2485],
-      "max": [86.10144, 3.77605, -38.44554]
-    },
-    "pathCoords" : [54.21, 1.29, -22.08]
-  },
-  {
-    "name": "BRJ-WC-H",
-    "displayName":  "Toilettes hommes, Rez-de-jardin, aile B",
-    "path": "/models/furnitures/fur_brj_wc_h_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "toilets",
-    "description" : "Toilettes Hommes",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [75.14563, -0.10843, -31.63589],
-      "max": [79.29416, 3.8161, -28.06817]
-    },
-    "pathCoords" : [72.30, 12.75, -29.33]
-  },
-  {
-    "name": "Petit-Amphi",
-    "displayName":  "Petit Amphithéâtre",
-    "path": "/models/furnitures/fur_petit_amphi_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "CM",
-    "description" : "x places - Petit Amphithéâtre",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [67.976, 3.477, -51.547],
-      "max": [84.736, 7.415, -38.561]
-    },
-    "pathCoords" : [80.58, 5.54, -41.76]
-  },
-  {
-    "name": "Grand-Amphi",
-    "displayName":  "Grand Amphithéâtre",
-    "path": "/models/furnitures/fur_grand_amphi_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "CM",
-    "description" : "x places - Grand Amphithéâtre",
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [71.789, 2.783, -63.470],
-      "max": [84.310, 7.476, -48.525]
-    },
-    "pathCoords" : [82.05, 5.54, -55.03]
+    "pathCoords" : [52.45, 9.32, -32.32]
   },
   {
     "name": "LCOMS",
@@ -883,38 +915,6 @@
     "pathCoords" : [52.50, 12.75, -32.91]
   },
   {
-    "name": "IECL",
-    "displayName":  "IECL",
-    "path": "/models/furnitures/fur_iecl_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "office",
-    "description" : "Institut Elie CARTAN de Lorraine - Zone réglementée",
-    "persons" : [],
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [49.60507, 4.06586, -35.13533],
-      "max": [56.11785, 8.35236, -29.86901]
-    },
-    "pathCoords" : [52.50, 12.75, -32.91]
-  },
-  {
-    "name": "LGIPM",
-    "displayName":  "LGIPM",
-    "path": "/models/furnitures/fur_lgipm_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
-    "type": "office",
-    "description" : "Laboratoire de Génie Informatique, de Production et de Maintenance - Zone réglementée",
-    "persons" : [],
-    "adjacentZoneNames": [],
-    "triggerBox": {
-      "min": [47.25213, 7.57228, -34.88866],
-      "max": [55.91292, 10.74428, -30.05124]
-    },
-    "pathCoords" : [52.50, 12.75, -32.91]
-  },
-  {
     "name": "Caféteria CROUS",
     "displayName":  "Caféteria CROUS",
     "path": "/models/furnitures/fur_cafeteria_sized.glb",
@@ -927,7 +927,7 @@
       "min": [71.7541, 4.18376, -22.73291],
       "max": [88.74828, 7.67197, -11.19636]
     },
-    "pathCoords" : [52.50, 12.75, -32.91]
+    "pathCoords" : [83.08, 2.651, -19.25]
   },
   {
     "name": "landscape",

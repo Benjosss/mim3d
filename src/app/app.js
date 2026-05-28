@@ -21,7 +21,7 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 
 const DEBUG_MODE = false;
-const DEBUG_MODE_STATS = true;
+const DEBUG_MODE_STATS = false;
 
 // ================= CONFIG =================
 const CONFIG = {
