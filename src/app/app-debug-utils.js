@@ -49,7 +49,7 @@ export default class AppDebugUtils{
             wireframe.matrix.copy(mesh.matrixWorld);
 
             // Couleur rouge pour les collisions
-            wireframe.material.color.set(0xff0000);
+            wireframe.material.color.set(0xffF0F0);
             wireframe.material.opacity = 0.5;
             wireframe.material.transparent = true;
 
@@ -87,7 +87,10 @@ export default class AppDebugUtils{
     renderDebugMessage(){
         const div = document.createElement('div');
         div.className = 'toast-notification';
-        div.innerHTML = "<span style='color: red'>[MODE DEBUG]</span> <span style='color: white'>: 'F1' pour afficher l'état des zones en console</span> <br>" +
+        div.innerHTML = "<span style='color: red'>[MODE DEBUG]</span> <br>" +
+            "<br> <span style='color: white'>=> 'F1' pour afficher l'état des zones en console</span>" +
+            "<br> <span style='color: white'>=> 'F2' pour afficher les boites de collisions</span>" +
+            "<br> <span style='color: white'>=> 'F3' pour afficher les coordonées actuelles en console</span> <br>" +
             "<br> <span style='color: green'>NavMesh </span> " +
             "<br> <span style='color: yellow'>TriggerBoxes </span> " +
             "<br> <span style='color: red'>Capsule joueur </span> " +

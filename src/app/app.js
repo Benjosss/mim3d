@@ -278,12 +278,18 @@ document.addEventListener('keydown', e => {
             e.preventDefault();
             zoneManager.getStatus();
         }
+        if (e.code === 'F2'){
+            e.preventDefault();
+            debugUtil.buildColliderMeshesHelper(colliderMeshes);
+        }
+        if (e.code === 'F3') {
+            e.preventDefault();
+            console.log("📍 Position :", camera.position.clone());
+            console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
+            console.log("🗺️  Salle actuelle :", zoneManager.currentRoom?.name ?? 'aucune');
+        }
     }
 
-    if (e.code === 'F4') {
-        console.log("📍 Position :", camera.position.clone());
-        console.log("🗺️  Zone actuelle :", zoneManager.currentZone?.name ?? 'aucune');
-    }
     if (e.code === 'F6') {
         e.preventDefault();
         bvhPhysicsUtils.backToSpawnPoint();
