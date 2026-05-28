@@ -65,8 +65,23 @@ export class Zone {
                         // Ombrages
                         child.castShadow = true;
                         child.receiveShadow = true;
-                        if (child.material.map) {
-                            child.material.map.anisotropy = 16;
+
+                        const mat = child.material;
+                        if (mat.map) {
+                            mat.map.anisotropy = 16;
+                        }
+
+                        // Rendu du verre
+                        const isGlass = mat.transparent
+                            || mat.opacity < 1
+
+                        if (isGlass) {
+                            mat.transparent  = true;
+                            mat.opacity      = Math.max(mat.opacity, 0.3);   // minimum visible
+                            mat.side         = THREE.DoubleSide;             // visible des deux côtés
+                            mat.depthWrite   = false;                        // évite les artefacts
+                            mat.alphaTest    = 0;
+                            child.renderOrder = 1;                           // rendu après les matériaux opaques
                         }
                     }
 
