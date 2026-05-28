@@ -99,7 +99,7 @@ export class ZoneManager {
                 const distance = adjZone.triggerBox.distanceToPoint(playerPosition);
 
                 if (distance < 15.0) { // Seuil de 3 mètres avant l'entrée réelle
-                    this._loadZone(adjZone);
+                    void this._loadZone(adjZone);
                 }
             }
         }
@@ -161,7 +161,7 @@ export class ZoneManager {
         // Pas de transition si on est déjà dans la bonne zone de navigation
         if (navigationZone === this.currentZone) return;
 
-        this._triggerTransition(navigationZone);
+        void this._triggerTransition(navigationZone);
     }
 
     // =====================================================
@@ -313,7 +313,7 @@ export class ZoneManager {
                 this._loadQueue.push(z);
             }
         }
-        this._processQueue();
+        void this._processQueue();
     }
 
     async _processQueue() {
@@ -426,18 +426,5 @@ export class ZoneManager {
         }
         console.table(status);
         return status;
-    }
-
-    checkImpostorsVisibility() {
-        for (const [name, zone] of this.zones) {
-            if (zone.physics) {
-                if (zone.isVisible && zone.impostorContent?.visible) {
-                    console.error(`Error impostor zone : ${name}`)
-                }
-                if (!zone.isVisible && !zone.impostorContent?.visible) {
-                    console.error(`Error impostor zone : ${name}`)
-                }
-            }
-        }
     }
 }

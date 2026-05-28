@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import {BackSide, PCFShadowMap} from "three";
 
 export default class SceneSetup {
     constructor(config) {
@@ -31,7 +32,7 @@ export default class SceneSetup {
         ]
 
         for (let i = 0; i < 6; i++) {
-            skyArray[i].side = THREE.BackSide;
+            skyArray[i].side = BackSide;
         }
 
         let skyboxGeo = new THREE.BoxGeometry(10000, 10000, 10000);
@@ -68,7 +69,7 @@ export default class SceneSetup {
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFShadowMap;
+        renderer.shadowMap.type = PCFShadowMap;
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         document.body.appendChild(renderer.domElement);
 

@@ -1,8 +1,6 @@
 import * as THREE from "three";
 
 export class Zone {
-    DEBUG_IMPOSTORS_OPACITY = false;
-
     /**
      * Constructeur de la classe Zone permettant de construire la hierarchie des zones
      * @param config
