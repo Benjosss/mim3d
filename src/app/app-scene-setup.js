@@ -81,7 +81,7 @@ export default class SceneSetup {
         renderer.shadowMap.type = PCFShadowMap;
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.1;
+        renderer.toneMappingExposure = 1;
         document.body.appendChild(renderer.domElement);
 
         return renderer;
@@ -93,7 +93,7 @@ export default class SceneSetup {
         const ambientLight = new THREE.AmbientLight(0xe8f4ff, 0.5);
 
         const sunLight = new THREE.DirectionalLight(0xfff4d6, 3.5);
-        sunLight.position.set(60, 80, 40);
+        sunLight.position.set(100, 80, 40);
         sunLight.castShadow = true;
         sunLight.shadow.mapSize.width  = 2048;
         sunLight.shadow.mapSize.height = 2048;
