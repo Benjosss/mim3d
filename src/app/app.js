@@ -314,6 +314,7 @@ document.addEventListener('keydown', e => {
         if (pathfinding.isGuiding){
             const kbdElement = document.getElementById("copy_kbd");
 
+            // Uniquement en HTTPS
             navigator.clipboard.writeText(pathfinding.getInstructionsText(zoneManager.currentRoom)).then(
                 () => {
                     kbdElement.style.backgroundColor = "rgba(40,167,69,0.56)";
