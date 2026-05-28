@@ -290,6 +290,7 @@ export default class AppPathfinding {
     }
 
     endMove() {
+        this.camera.lookAt(this.playerPos);
         this.splineCurve = null;
         this.isMoving = false;
         this.playerGroup.visible = true;
