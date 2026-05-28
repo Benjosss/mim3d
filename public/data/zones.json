@@ -252,6 +252,21 @@
     }
   },
   {
+    "name": "BN1-019",
+    "displayName":  "BN1-019",
+    "path": "/models/furnitures/fur_bn1_019_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TD",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [70.91314, 7.75693, -74.81104],
+      "max": [78.45118, 11.06904, -67.18431]
+    },
+    "pathCoords" : [75.77, 12.75, -46.51]
+  },
+  {
     "name": "BN2-013",
     "displayName":  "BN2-013",
     "path": "/models/furnitures/fur_bn2_013_sized.glb",
@@ -657,6 +672,51 @@
     "pathCoords" : [80.94, 16.21, -5.81]
   },
   {
+    "name": "BN3-WC-H",
+    "displayName":  "Toilettes hommes, 3ème étage, aile B",
+    "path": "/models/furnitures/fur_bn3_wc_h_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "toilets",
+    "description" : "Toilettes Hommes",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [70.77495, 14.71936, -31.77047],
+      "max": [74.55966, 18.03908, -23.57218]
+    },
+    "pathCoords" : [72.30, 12.75, -29.33]
+  },
+  {
+    "name": "ARJ-030",
+    "displayName":  "ARJ-030",
+    "path": "/models/furnitures/fur_arj_030_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - Cellul Génie Civil",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [20.23154, -0.79712, -69.40587],
+      "max": [33.08558, 3.61976, -58.30839]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "ARJ-027",
+    "displayName":  "ARJ-027",
+    "path": "/models/furnitures/fur_arj_027_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - Pierre et Marie CURIE",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [33.01131, -0.43867, -58.09857],
+      "max": [41.17522, 3.84931, -50.01027]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
     "name": "ARJ-015",
     "displayName":  "ARJ-015",
     "path": "/models/furnitures/fur_arj_015_sized.glb",
@@ -670,6 +730,111 @@
       "max": [56.118, 3.421, -11.563]
     },
     "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "ARJ-013",
+    "displayName":  "ARJ-013",
+    "path": "/models/furnitures/fur_arj_013_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places - ESP Mécanique",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [27.4798, -0.03167, -43.15797],
+      "max": [46.55103, 4.04219, -24.23701]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "ARJ-012",
+    "displayName":  "ARJ-012",
+    "path": "/models/furnitures/fur_arj_012_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [22.85528, -0.46517, -46.50838],
+      "max": [35.87306, 3.95172, -32.83872]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "ARJ-010",
+    "displayName":  "ARJ-010",
+    "path": "/models/furnitures/fur_arj_010_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [15.98793, -0.39194, -55.75921],
+      "max": [25.54438, 3.52047, -46.05899]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "ARJ-009",
+    "displayName":  "ARJ-009",
+    "path": "/models/furnitures/fur_arj_009_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "x places",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [6.73937, -0.27818, -61.83537],
+      "max": [21.47306, 3.63424, -46.82599]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "conseils",
+    "displayName":  "Salle des conseils",
+    "path": "/models/furnitures/fur_conseils_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "TP",
+    "description" : "Salle des conseils - Katherine JOHNSON",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [32.54482, -0.43867, -69.39983],
+      "max": [43.32837, 3.84931, -58.14311]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "BRJ-006/7/8",
+    "displayName":  "BRJ-006/7/8",
+    "path": "/models/furnitures/fur_brj_6_7_8_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "CM",
+    "description" : "x places - Salle d'examens",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [70.16491, -0.09346, -65.2485],
+      "max": [86.10144, 3.77605, -38.44554]
+    },
+    "pathCoords" : [54.21, 1.29, -22.08]
+  },
+  {
+    "name": "BRJ-WC-H",
+    "displayName":  "Toilettes hommes, Rez-de-jardin, aile B",
+    "path": "/models/furnitures/fur_brj_wc_h_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "toilets",
+    "description" : "Toilettes Hommes",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [75.14563, -0.10843, -31.63589],
+      "max": [79.29416, 3.8161, -28.06817]
+    },
+    "pathCoords" : [72.30, 12.75, -29.33]
   },
   {
     "name": "Petit-Amphi",
@@ -708,12 +873,59 @@
     "impostorPath" : "",
     "physics" : false,
     "type": "office",
-    "description" : "Laboratoire du LCOMS - Zone réglementée",
+    "description" : "Laboratoire de Conception, Optimisation et Modélisation des Systèmes - Zone réglementée",
     "persons" : ["LANUEL Yann", "MINICH Sarah", "LUCARELLI Giorgio", "ABDELSADEK Youssef", "MARTIN Benoît"],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [49.226, 11.008, -34.390],
       "max": [56.113, 14.490, -31.602]
+    },
+    "pathCoords" : [52.50, 12.75, -32.91]
+  },
+  {
+    "name": "IECL",
+    "displayName":  "IECL",
+    "path": "/models/furnitures/fur_iecl_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "office",
+    "description" : "Institut Elie CARTAN de Lorraine - Zone réglementée",
+    "persons" : [],
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [49.60507, 4.06586, -35.13533],
+      "max": [56.11785, 8.35236, -29.86901]
+    },
+    "pathCoords" : [52.50, 12.75, -32.91]
+  },
+  {
+    "name": "LGIPM",
+    "displayName":  "LGIPM",
+    "path": "/models/furnitures/fur_lgipm_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "office",
+    "description" : "Laboratoire de Génie Informatique, de Production et de Maintenance - Zone réglementée",
+    "persons" : [],
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [47.25213, 7.57228, -34.88866],
+      "max": [55.91292, 10.74428, -30.05124]
+    },
+    "pathCoords" : [52.50, 12.75, -32.91]
+  },
+  {
+    "name": "Caféteria CROUS",
+    "displayName":  "Caféteria CROUS",
+    "path": "/models/furnitures/fur_cafeteria_sized.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "CM",
+    "description" : "Caféteria du CROUS",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [71.7541, 4.18376, -22.73291],
+      "max": [88.74828, 7.67197, -11.19636]
     },
     "pathCoords" : [52.50, 12.75, -32.91]
   },
