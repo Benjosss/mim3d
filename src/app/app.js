@@ -13,7 +13,6 @@ import AppPathfinding from "./app-pathfinding.js";
 import {ZoneSearcher} from "./panels/zone-searcher.js";
 import {PersonSearcher} from "./panels/person-searcher.js";
 import {PanelUtils} from "./panels/panel-utils.js";
-import {Vector3} from "three";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
