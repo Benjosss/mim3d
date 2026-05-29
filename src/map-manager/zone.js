@@ -13,7 +13,7 @@ export class Zone {
         this.physics = config.physics;                              // Présence de collisions ou non
         this.type = config.type;                                    // Type de zone
         this.description = config.description;                      // Description de la zone
-        this.persons = config.persons ?? [];                        // Noms des occupants pour un bureau
+        this.persons = config.persons ?? [];                        // Noms des occupants et leur rôle pour un bureau
         this.adjacentZoneNames = config.adjacentZoneNames ?? [];    // Tableau des noms des zones adjacentes
         this.triggerBox = config.triggerBox;                        // Trigger Box de la zone
         this.pathCoords = config.pathCoords;                        // Coordonnées d'arrivée du pathfinding

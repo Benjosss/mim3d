@@ -110,7 +110,8 @@ export class ZoneSearcher {
 
             let des = zone.description;
             if(zone.type === "office"){
-                des = zone.description + " - " + zone.persons.join(", ");
+                const names = zone.persons.map(p => p.name).join(", ");
+                des = zone.description + " - " + names;
             }
 
             const item = document.createElement('div');

@@ -454,7 +454,11 @@
     "physics" : false,
     "type": "office",
     "description" : "Gestion relations internationales, département Anglais, chargée de Communication, formation continue, DAEU B",
-    "persons" : ["DUVAL Julianne", "FORÊT Alexandrine", "CAPELLE Bérangère"],
+    "persons": [
+      { "name": "DUVAL Julianne", "function": "Gestionnaire Relations Internationales - Secrétaire département Anglais"},
+      { "name": "FORÊT Alexandrine", "function": "Chargée de Communication"},
+      { "name": "CAPELLE Bérangère", "function": "Gestionnaire Formation continue - Apprentissage - DAEU B"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -61.7408],
@@ -470,7 +474,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Secrétariat et gestion Licence Maths (- Eco), Licence PPPE",
-    "persons" : ["GAY Christelle"],
+    "persons": [
+      { "name": "GAY Christelle", "function": "Secrétaire pédagogique Licence Maths - Licence Maths-Eco - Licence PPPE"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -58.69958],
@@ -486,7 +492,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Bureau gestionnaire scolarité et secrétaire pédagogique",
-    "persons" : ["BERTRAND Laurence"],
+    "persons": [
+      { "name": "BERTRAND Laurence", "function": "Gestionnaire scolarité - Secrétaire pédagogique"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -55.38344],
@@ -502,14 +510,10 @@
     "physics" : false,
     "type": "office",
     "description" : "Bureau responsable service formation et assistant communication",
-    "persons": {
-      "0": "CR",
-      "1": "EN"
-    },
-    "function": {
-      "0": "blabla",
-      "1": "blabla"
-    },
+    "persons": [
+      { "name": "CROUVEZIER Fabrice", "function": "Responsable service formation"},
+      { "name": "ENGELMANN Nathan", "function": "Assistant communication"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -52.73177],
@@ -525,7 +529,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Bureau responsable adjointe service scolarité",
-    "persons" : ["MALINSKA Isabelle"],
+    "persons": [
+      { "name": "MALINSKA Isabelle", "function": "Responsable adjointe service scolarité"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -49.33076],
@@ -541,7 +547,10 @@
     "physics" : false,
     "type": "office",
     "description" : "Secrétariat et gestion SPI, GC, GI, Méca et Licences Pro",
-    "persons" : ["BECKER Virginie", "HARTENSTEIN Amélie"],
+    "persons": [
+      { "name": "BECKER Virginie", "function": "Secrétaire département SPI - Secrétaire pédagogique Master GC, GI, Méca"},
+      { "name": "HARTENSTEIN Amélie", "function": "Gestionnaire scolarité - Secrétaire pédagogique Licence SPI, Licences Pro"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -43.53034],
@@ -557,7 +566,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Bureau gestionnaire accueil scolarité",
-    "persons" : ["MORCHAIN Coralie"],
+    "persons": [
+      { "name": "MORCHAIN Coralie", "function": "Gestionnaire Accueil Scolarité"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -39.78892],
@@ -573,7 +584,10 @@
     "physics" : false,
     "type": "office",
     "description" : "Bureau département informatique (secrétaires Licence et Master)",
-    "persons" : ["MALRIAT Florie", "LAHIR Fanny"],
+    "persons": [
+      { "name": "MALRIAT Florie", "function": "Secrétaire pédagogique Licence Informatique"},
+      { "name": "LAHIR Fanny", "function": "Secrétaire département Informatique, Secrétaire pédagogique Master Informatique"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -37.26616],
@@ -589,7 +603,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Responsable administrative",
-    "persons" : ["LEGRAND Muriel"],
+    "persons": [
+      { "name": "LEGRAND Muriel", "function": "Responsable administrative"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -29.05394],
@@ -605,7 +621,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Assistante de direction",
-    "persons" : ["KOCABEY Reyhan"],
+    "persons": [
+      { "name": "KOCABEY Reyhan", "function": "Assistance de direction"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.73485, 7.77749, -26.09957],
@@ -621,7 +639,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Bureau du directeur",
-    "persons" : ["NAGIH Anass"],
+    "persons": [
+      { "name": "NAGIH Anass", "function": "Directeur"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.80818, 7.77749, -21.06575],
@@ -637,7 +657,11 @@
     "physics" : false,
     "type": "office",
     "description" : "Service informatique",
-    "persons" : ["KRIER Pascal", "ABERKANE Malik", "GUILLAUME Jean-Sébastien"],
+    "persons": [
+      { "name": "KRIER Pascal", "function": "Service informatique"},
+      { "name": "ABERKANE Malik", "function": "Service informatique"},
+      { "name": "GUILLAUME Jean-Sébastien", "function": "Service informatique"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [80.26888, 7.77749, -17.17623],
@@ -1073,7 +1097,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Institut Elie CARTAN de Lorraine - Zone réglementée",
-    "persons" : [],
+    "persons" : [
+      {"name": "DUBOIS Isabelle", "function": "MCF"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [49.60507, 4.06586, -35.13533],
@@ -1089,7 +1115,9 @@
     "physics" : false,
     "type": "office",
     "description" : "Laboratoire de Génie Informatique, de Production et de Maintenance - Zone réglementée",
-    "persons" : [],
+    "persons" : [
+      {"name": "ZIDNA Ahmed", "function": "MCF"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [47.25213, 7.57228, -34.88866],
@@ -1105,7 +1133,13 @@
     "physics" : false,
     "type": "office",
     "description" : "Laboratoire de Conception, Optimisation et Modélisation des Systèmes - Zone réglementée",
-    "persons" : ["LANUEL Yann", "MINICH Sarah", "LUCARELLI Giorgio", "ABDELSADEK Youssef", "MARTIN Benoît"],
+    "persons" : [
+      {"name": "LANUEL Yann", "function": "MCF"},
+      {"name": "MINICH Sarah", "function": "MCF"},
+      {"name": "LUCARELLI Giorgio", "function": "MCF"},
+      {"name": "ABDELSADEK Youssef", "function": "MCF"},
+      {"name": "MARTIN Benoît", "function": "MCF"}
+    ],
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [49.226, 11.008, -34.390],

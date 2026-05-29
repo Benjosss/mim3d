@@ -39,42 +39,46 @@ export default class JsonParser {
 
         if (!jsonData) {
             console.log("Zones loading error");
-        } else {
-            jsonData.forEach((zone) => {
-                const newZone = {
-                    name: zone.name,
-                    displayName: zone.displayName,
-                    path: zone.path,
-                    impostorPath: zone.impostorPath,
-                    physics: zone.physics,
-                    type: zone.type,
-                    description: zone.description,
-                    adjacentZoneNames: zone.adjacentZoneNames || [],
-                    triggerBox: new THREE.Box3(
-                        new THREE.Vector3(...zone.triggerBox.min),
-                        new THREE.Vector3(...zone.triggerBox.max)
-                    ),
-                };
-
-                if (zone.type !== "corridor" && zone.type !== "stairs") {
-                    try{
-                        newZone.pathCoords = new THREE.Vector3(...zone.pathCoords);
-                    }catch(e){
-                        console.error(`Unable to fetch target coordinates for zone ${zone.name}`, e);
-                    }
-                }
-
-                if (zone.type === "office"){
-                    try{
-                        newZone.persons = [...zone.persons];
-                    }catch(e){
-                        console.error(`Unable to fetch occupants of zone ${zone.name}`, e)
-                    }
-                }
-
-                ZONES.push(new Zone(newZone));
-            });
+            return ZONES;
         }
+
+        jsonData.forEach((zone) => {
+            const newZone = {
+                name: zone.name,
+                displayName: zone.displayName,
+                path: zone.path,
+                impostorPath: zone.impostorPath,
+                physics: zone.physics,
+                type: zone.type,
+                description: zone.description,
+                adjacentZoneNames: zone.adjacentZoneNames || [],
+                triggerBox: new THREE.Box3(
+                    new THREE.Vector3(...zone.triggerBox.min),
+                    new THREE.Vector3(...zone.triggerBox.max)
+                ),
+            };
+
+            if (zone.type !== "corridor" && zone.type !== "stairs") {
+                try {
+                    newZone.pathCoords = new THREE.Vector3(...zone.pathCoords);
+                } catch(e) {
+                    console.error(`Unable to fetch target coordinates for zone ${zone.name}`, e);
+                }
+            }
+
+            // Gestion des bureaux (offices) avec la nouvelle structure "employees"
+            if (zone.type === "office") {
+                try {
+
+                    newZone.persons = zone.persons || [];
+                } catch(e) {
+                    console.error(`Unable to fetch employees of zone ${zone.name}`, e);
+                }
+            }
+
+            ZONES.push(new Zone(newZone));
+        });
+
         return ZONES;
     }
 }

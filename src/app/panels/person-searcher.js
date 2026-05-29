@@ -13,12 +13,12 @@ export class PersonSearcher {
 
         const filteredZones = this.zones.filter(zone => {
             if (zone.type !== "office") return false;
-            return zone.persons.some(person => person.toLowerCase().includes(str));
+            return zone.persons.some(person => person.name.toLowerCase().includes(str) || person.function.toLowerCase().includes(str));
         });
 
         // Trie par la première personne du bureau
         return filteredZones.sort((a, b) =>
-            a.persons[0].localeCompare(b.persons[0], "fr")
+            a.name.localeCompare(b.name, "fr")
         );
     }
 
@@ -40,7 +40,7 @@ export class PersonSearcher {
         resultsList.innerHTML = "";
         results.forEach(zone => {
             const str = searchText.toLowerCase();
-            const matched = zone.persons.filter(p => p.toLowerCase().includes(str));
+            const matched = zone.persons.filter(p => p.name.toLowerCase().includes(str) || p.function.toLowerCase().includes(str));
 
             matched.forEach(person => {
                 const item = document.createElement('div');
@@ -49,8 +49,8 @@ export class PersonSearcher {
                 <div class="result-info">
                     <span class="material-symbols-outlined icon-main">person</span>
                     <div>
-                        <span class="room-name">${person}</span>
-                        <span class="room-details">${zone.displayName} - ${zone.description}</span>
+                        <span class="room-name">${person.name}</span>
+                        <span class="room-details">${zone.displayName} - ${person.function}</span>
                     </div>
                 </div>
                 <div class="result-actions">
