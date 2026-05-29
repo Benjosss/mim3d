@@ -5,60 +5,19 @@ export class ZoneSearcher {
         this.onNavigate = onNavigate;
     }
 
-    /**
-     * Affiche toutes les zones triées par types
-     */
-    printHierarchy() {
-        const zones = this.zones;
-
-        let types = [];
-        let sort = [];
-        zones.forEach((zone) => {
-            if(!types.includes(zone.type)) {
-                types.push(zone.type);
-            }
-        })
-        types.forEach((type) => {
-            zones.forEach((zone) => {
-                if(zone.type === type) {
-                    sort.push({
-                        name: zone.name,
-                        type: zone.type,
-                        description: zone.description,
-                    });
-                }
-            })
-        })
-        console.table(types);
-        console.table(sort);
-    }
-
-    /**
-     * Affiche toutes les zones dont le type est le paramètre type
-     * @param type
-     */
-    printHierarchyByType(type) {
-        const zones = this.zones;
-
-        let sort = [];
-        zones.forEach((zone) => {
-            if(zone.type === type) {
-                sort.push({
-                    name: zone.name,
-                    type: zone.type,
-                    description: zone.description,
-                });
-            }
-        })
-        console.table(sort);
-    }
-
     // ================= RESEARCH =================
 
     zoneSearchByString(str){
         str = str.toLowerCase();
-        const filteredZones = this.zones.filter(zone => zone.displayName.toLowerCase().includes(str));
-        return filteredZones.sort((a,b) => a.displayName.localeCompare(b.displayName, "fr"));
+        const filteredZones = this.zones.filter(zone => {
+            const matchDisplayName = zone.displayName.toLowerCase().includes(str);
+
+            const matchOtherNames = zone.otherNames.some(name =>
+                name.toLowerCase().includes(str)
+            );
+
+            return matchDisplayName || matchOtherNames;
+        });        return filteredZones.sort((a,b) => a.displayName.localeCompare(b.displayName, "fr"));
     }
 
     zonesFilterByType(types, zones){
@@ -108,10 +67,15 @@ export class ZoneSearcher {
                 icon = "distance";
             }
 
+            let title = zone.displayName;
             let des = zone.description;
             if(zone.type === "office"){
-                const names = zone.persons.map(p => p.name).join(", ");
-                des = zone.description + " - " + names;
+                const personNames = zone.persons.map(p => p.name).join(", ");
+                des = zone.description + " - " + personNames;
+            }
+            if(zone.otherNames.length > 0){
+                const otherNames = zone.otherNames.join(" • ");
+                title = zone.displayName + " • " + otherNames;
             }
 
             const item = document.createElement('div');
@@ -120,7 +84,7 @@ export class ZoneSearcher {
             <div class="result-info">
                 <span class="material-symbols-outlined icon-main">${icon}</span>
                 <div>
-                    <span class="room-name">${zone.displayName}</span>
+                    <span class="room-name">${title}</span>
                     <span class="room-details">${des}</span>
                 </div>
             </div>

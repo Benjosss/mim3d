@@ -269,11 +269,12 @@
   {
     "name": "ARJ-027",
     "displayName":  "ARJ-027",
+    "otherNames": ["Pierre et Marie CURIE"],
     "path": "/models/furnitures/fur_arj_027_sized.glb",
     "impostorPath" : "",
     "physics" : false,
     "type": "TP",
-    "description" : "x places - Pierre et Marie CURIE",
+    "description" : "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [33.01131, -0.200, -58.09857],
@@ -284,11 +285,12 @@
   {
     "name": "ARJ-015",
     "displayName":  "ARJ-015",
+    "otherNames": ["Méca fluides"],
     "path": "/models/furnitures/fur_arj_015_sized.glb",
     "impostorPath" : "",
     "physics" : false,
     "type": "TP",
-    "description" : "x places - Méca fluide",
+    "description" : "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [44.799, -0.200, -35.339],
@@ -299,11 +301,12 @@
   {
     "name": "ARJ-013",
     "displayName":  "ARJ-013",
+    "otherNames": ["ESP Mécanique"],
     "path": "/models/furnitures/fur_arj_013_sized.glb",
     "impostorPath" : "",
     "physics" : false,
     "type": "TP",
-    "description" : "x places - ESP Mécanique",
+    "description" : "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [27.4798, -0.200, -43.15797],
@@ -359,11 +362,12 @@
   {
     "name": "conseils",
     "displayName":  "Salle des conseils",
+    "otherNames" : ["Katherine JOHNSON", "Salle de réunion"],
     "path": "/models/furnitures/fur_conseils_sized.glb",
     "impostorPath" : "",
     "physics" : false,
-    "type": "TP",
-    "description" : "Salle des conseils - Katherine JOHNSON",
+    "type": "misc",
+    "description" : "Salle des conseils",
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [32.54482, -0.200, -69.39983],
@@ -374,6 +378,7 @@
   {
     "name": "BRJ-006/7/8",
     "displayName":  "BRJ-006/7/8",
+    "otherNames": ["Salle d'examens"],
     "path": "/models/furnitures/fur_brj_6_7_8_sized.glb",
     "impostorPath" : "",
     "physics" : false,
@@ -408,7 +413,7 @@
     "impostorPath" : "",
     "physics" : false,
     "type": "CM",
-    "description" : "x places - Petit Amphithéâtre",
+    "description" : "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [67.976, 3.477, -51.547],
@@ -423,7 +428,7 @@
     "impostorPath" : "",
     "physics" : false,
     "type": "CM",
-    "description" : "x places - Grand Amphithéâtre",
+    "description" : "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [71.789, 2.783, -63.470],

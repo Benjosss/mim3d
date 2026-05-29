@@ -64,6 +64,9 @@ export default class JsonParser {
                 } catch(e) {
                     console.error(`Unable to fetch target coordinates for zone ${zone.name}`, e);
                 }
+                if (zone.type !== "toilets"){
+                    newZone.otherNames = zone.otherNames || [];
+                }
             }
 
             // Gestion des bureaux (offices) avec la nouvelle structure "employees"

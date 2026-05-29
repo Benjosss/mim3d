@@ -8,6 +8,7 @@ export class Zone {
     constructor(config) {
         this.name = config.name;                                    // Nom de la zone
         this.displayName = config.displayName;                      // Nom de la zone affiché
+        this.otherNames = config.otherNames ?? [];                   // Autres noms pour la salle en question
         this.modelPath = config.path;                               // Chemin du fichier .glb HD de la zone
         this.impostorPath = config.impostorPath;                    // Chemin du fichier .glb SD de la zone
         this.physics = config.physics;                              // Présence de collisions ou non
