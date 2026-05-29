@@ -1168,6 +1168,36 @@
     "pathCoords" : [83.08, 2.651, -19.25]
   },
   {
+    "name": "mainEntrance",
+    "displayName":  "Entrée/Sortie principale",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "misc",
+    "description" : "Portes du hall d'entrée",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [67.12588, 3.98629, -29.8904],
+      "max": [69.34141, 6.8261, -28.00451]
+    },
+    "pathCoords" : [68.36, 4.24, -29.02]
+  },
+  {
+    "name": "rearExit",
+    "displayName":  "Sortie parking",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "misc",
+    "description" : "Sortie du RDJ vers le parking arrière",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [84.89738, -0.12637, -69.46027],
+      "max": [86.89738, 2.74353, -68.37164]
+    },
+    "pathCoords" : [86.04, -0.00, -69.28]
+  },
+  {
     "name": "landscape",
     "displayName":  "Terrain",
     "path": "/models/zones/landscape_sized.glb",

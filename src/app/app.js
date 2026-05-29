@@ -20,7 +20,7 @@ THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 const DEBUG_MODE_STATS = false;
 
 // ================= CONFIG =================
