@@ -102,6 +102,24 @@ export default class AppDebugUtils{
         div.style.fontSize = "20px";
         div.style.fontWeight = "bold";
         document.body.appendChild(div);
+
+        const coordinatesDiv = document.createElement('div');
+        coordinatesDiv.className = 'toast-notification';
+        coordinatesDiv.innerHTML = "<span style='color: white' id='debug-coordinates'></span> <br>";
+        coordinatesDiv.style.zIndex = "9999";
+        coordinatesDiv.style.position = "absolute";
+        coordinatesDiv.style.bottom = "5px";
+        coordinatesDiv.style.right = "5px";
+        coordinatesDiv.style.fontSize = "20px";
+        coordinatesDiv.style.fontWeight = "bold";
+        document.body.appendChild(coordinatesDiv);
+    }
+
+    showCoordinates(playerPos, camera){
+        const div = document.getElementById("debug-coordinates");
+        const look = new THREE.Vector3();
+        camera.getWorldPosition(look);
+        div.innerHTML = "<p> Position (X/Y/Z) : " + playerPos.toArray().map(c => c.toFixed(2)).join(" • ") + "<br> Regard (X/Y/Z) : " + look.toArray().map(c => c.toFixed(2)).join(" • ") + "</p>";
     }
 
 }

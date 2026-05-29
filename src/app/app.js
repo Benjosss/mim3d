@@ -13,6 +13,7 @@ import AppPathfinding from "./app-pathfinding.js";
 import {ZoneSearcher} from "./panels/zone-searcher.js";
 import {PersonSearcher} from "./panels/person-searcher.js";
 import {PanelUtils} from "./panels/panel-utils.js";
+import {Vector3} from "three";
 
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
@@ -20,13 +21,15 @@ THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 const DEBUG_MODE_STATS = false;
 
 // ================= CONFIG =================
 const CONFIG = {
     startZone: 'floor0hall',
-    spawnPoint: new THREE.Vector3(65, 5.5, -32),
+    spawnPoint: new THREE.Vector3(65, 4.24, -32),
+    // Le Y du vecteur de regard doit être similaire à celui du point d'apparition
+    lookAt: new THREE.Vector3(64.99, 4.24, -31.88),
     playerRadius: 0.4,
     playerHeight: 1.3,
     moveSpeed: 8,
@@ -466,6 +469,7 @@ function animate(timestamp) {
 
         if (DEBUG_MODE) {
             debugUtil.playerCapsuleHelperFollow(capsuleHelper, playerPos);
+            debugUtil.showCoordinates(playerPos, camera);
             pathfinding.showNearestPointSegment();
         }
     }

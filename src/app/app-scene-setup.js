@@ -55,6 +55,7 @@ export default class SceneSetup {
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
         camera.position.set(...CONFIG.spawnPoint);
+        camera.lookAt(CONFIG.lookAt);
         scene.add(camera);
 
         return camera;
