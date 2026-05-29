@@ -673,7 +673,7 @@ export default class AppPathfinding {
     }
 
     getZoneAtPoint(point, zones) {
-        const furnitures = ["CM", "TD", "TP", "toilets", "office"]
+        const furnitures = ["CM", "TD", "TP", "toilets", "office", "misc"]
         const candidates = zones.filter(z => z.triggerBox.containsPoint(point) && !furnitures.includes(z.type));
 
         if (candidates.length === 0) return null;

@@ -104,6 +104,9 @@ export class ZoneSearcher {
             if(zone.type === "toilets"){
                 icon = "wc";
             }
+            if(zone.type === "misc"){
+                icon = "distance";
+            }
 
             let des = zone.description;
             if(zone.type === "office"){

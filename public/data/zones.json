@@ -377,7 +377,7 @@
     "path": "/models/furnitures/fur_brj_6_7_8_sized.glb",
     "impostorPath" : "",
     "physics" : false,
-    "type": "CM",
+    "type": "misc",
     "description" : "x places - Salle d'examens",
     "adjacentZoneNames": [],
     "triggerBox": {
@@ -502,7 +502,14 @@
     "physics" : false,
     "type": "office",
     "description" : "Bureau responsable service formation et assistant communication",
-    "persons" : ["CROUVEZIER Fabrice", "ENGELMANN Nathan"],
+    "persons": {
+      "0": "CR",
+      "1": "EN"
+    },
+    "function": {
+      "0": "blabla",
+      "1": "blabla"
+    },
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [79.84872, 7.77749, -52.73177],
@@ -1112,7 +1119,7 @@
     "path": "/models/furnitures/fur_cafeteria_sized.glb",
     "impostorPath" : "",
     "physics" : false,
-    "type": "CM",
+    "type": "misc",
     "description" : "Caféteria du CROUS",
     "adjacentZoneNames": [],
     "triggerBox": {
