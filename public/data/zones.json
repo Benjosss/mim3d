@@ -437,6 +437,21 @@
     "pathCoords" : [81.76, 5.54, -54.91]
   },
   {
+    "name": "RDC-WC-PMR",
+    "displayName":  "Toilettes personnes à mobilité réduite, Rez-de-chaussé, aile B",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "toilets",
+    "description" : "Toilettes pour personnes à mobilité réduite",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [80.03127, 4.13835, -31.69526],
+      "max": [81.40644, 6.25151, -30.66348]
+    },
+    "pathCoords" : [80.46, 5.54, -31.44]
+  },
+  {
     "name": "BN1-019",
     "displayName":  "BN1-019",
     "path": "/models/furnitures/fur_bn1_019_sized.glb",
@@ -673,6 +688,21 @@
       "max": [82.54233, 10.88112, -13.98492]
     },
     "pathCoords" : [80.56, 9.32, -16.29]
+  },
+  {
+    "name": "BN1-WC-PMR",
+    "displayName":  "Toilettes personnes à mobilité réduite, 1ème étage, aile B",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath" : "",
+    "physics" : false,
+    "type": "toilets",
+    "description" : "Toilettes pour personnes à mobilité réduite",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [78.10595, 7.97534, -43.56062],
+      "max": [78.94796, 10.0324, -42.40476]
+    },
+    "pathCoords" : [78.72, 9.32, -43]
   },
   {
     "name": "BN2-013",
