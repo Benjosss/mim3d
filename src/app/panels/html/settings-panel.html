@@ -1,0 +1,64 @@
+<div class="panel-top-row">
+  <div class="panel-top-row__left">
+    <button id="settingsBackBtn" class="panel-back-btn">
+      <span class="material-symbols-outlined">logout</span>
+    </button>
+    <kbd>P</kbd>
+  </div>
+  <h2>Paramètres</h2>
+</div>
+
+<!-- Section : Affichage -->
+<div class="settings-section">
+  <p class="settings-section-title">Affichage</p>
+
+  <div class="settings-row">
+    <div class="settings-row-left">
+      <span class="material-symbols-outlined">directions_walk</span>
+      <div>
+        <p class="settings-row-label">Afficher les chemins de guidage</p>
+        <p class="settings-row-description">Visualise le trajet calculé en 3D</p>
+      </div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="settings-show-path">
+      <span class="slider round"></span>
+    </label>
+  </div>
+
+  <div class="settings-row">
+    <div class="settings-row-left">
+      <span class="material-symbols-outlined">meeting_room</span>
+      <div>
+        <p class="settings-row-label">Afficher la description de la salle courante</p>
+        <p class="settings-row-description">Panneau d'informations en haut à droite</p>
+      </div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="settings-show-zone" checked>
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>
+
+<div class="settings-divider"></div>
+
+<!-- Section : Navigation -->
+<div class="settings-section">
+  <p class="settings-section-title">Navigation</p>
+
+  <div class="settings-row">
+    <div class="settings-row-left">
+      <span class="material-symbols-outlined">person</span>
+      <div>
+        <p class="settings-row-label">Vitesse de déplacement</p>
+        <p class="settings-row-description">Vitesse de marche du personnage</p>
+      </div>
+    </div>
+    <select class="settings-select" id="settings-speed" aria-label="speed-select">
+      <option value="5">Lente</option>
+      <option value="8" selected>Normale</option>
+      <option value="12">Rapide</option>
+    </select>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import {ZoneSearcher} from "./panels/zone-searcher.js";
 import {PersonSearcher} from "./panels/person-searcher.js";
 import {PanelUtils} from "./panels/panel-utils.js";
 
+
 // Monkey-patch Three.js
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -22,6 +23,56 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 const DEBUG_MODE = false;
 const DEBUG_MODE_STATS = false;
+
+const panelUtils = new PanelUtils();
+
+let startButton, menuPanel, infosPanel, guidedNavPanel, keyBindPanel, walkPanel, helpPanel, settingsPanel, roomFindPanel, personFindPanel, roomFindPanelInput, personFindPanelInput;
+
+async function initUI() {
+
+    // Chargement des panels de l'UI
+    await panelUtils.loadAllHtmlPanels([
+        ['menuPanel',      './panels/html/menu-panel.html'],
+        ['keyBindPanel',   './panels/html/keybind-panel.html'],
+        ['walkPanel',      './panels/html/walk-panel.html'],
+        ['infosPanel',     './panels/html/infos-panel.html'],
+        ['guidedNavPanel', './panels/html/guided-nav-panel.html'],
+        ['helpPanel',      './panels/html/help-panel.html'],
+        ['settingsPanel',  './panels/html/settings-panel.html'],
+        ['roomFindPanel',  './panels/html/room-find-panel.html'],
+        ['personFindPanel','./panels/html/person-find-panel.html'],
+    ]);
+
+    // Récupération des éléments dynamique de l'UI après son chargement
+    startButton = document.getElementById("startButton");
+    menuPanel = document.getElementById('menuPanel');
+    infosPanel = document.getElementById('infosPanel');
+    guidedNavPanel = document.getElementById('guidedNavPanel');
+    keyBindPanel = document.getElementById("keyBindPanel");
+    walkPanel = document.getElementById("walkPanel");
+    helpPanel = document.getElementById("helpPanel");
+    settingsPanel = document.getElementById("settingsPanel");
+    roomFindPanel = document.getElementById("roomFindPanel");
+    personFindPanel = document.getElementById("personFindPanel");
+
+    roomFindPanelInput = document.getElementById("searchBar-input");
+    personFindPanelInput = document.getElementById("searchBar-p-input");
+
+    panelUtils.onPanelBtnClick("startButton", () => controls.lock());
+
+    panelUtils.onPanelBtnClick("helpButton", () => {
+        controls.lock();
+        currentOverlay = "help";
+        controls.unlock();
+    });
+
+    panelUtils.onPanelBtnClick("settingsButton", () => {
+        controls.lock();
+        currentOverlay = "settings";
+        controls.unlock();
+    });
+}
+
 
 // ================= CONFIG =================
 const CONFIG = {
@@ -74,35 +125,9 @@ const capsuleHelper = debugUtil.buildPlayerCapsuleHelper();
 let currentOverlay = "menu";
 
 // ================= CONTROLS =================
-const panelUtils = new PanelUtils();
-
-const startButton = document.getElementById("startButton");
-const menuPanel = document.getElementById('menuPanel');
-const infosPanel = document.getElementById('infosPanel');
-const guidedNavPanel = document.getElementById('guidedNavPanel');
-const keyBindPanel = document.getElementById("keyBindPanel");
-const walkPanel = document.getElementById("walkPanel");
-const helpPanel = document.getElementById("helpPanel");
-const settingsPanel = document.getElementById("settingsPanel");
-const roomFindPanel = document.getElementById("roomFindPanel");
-const personFindPanel = document.getElementById("personFindPanel");
-
-const roomFindPanelInput = document.getElementById("searchBar-input");
-const personFindPanelInput = document.getElementById("searchBar-p-input");
-
-panelUtils.onPanelBtnClick("startButton", () => controls.lock());
-panelUtils.onPanelBtnClick("helpButton", () => {
-    controls.lock();
-    currentOverlay = "help";
-    controls.unlock();
-});
-panelUtils.onPanelBtnClick("settingsButton", () => {
-    controls.lock();
-    currentOverlay = "settings";
-    controls.unlock();
-});
-
 const controls = new PointerLockControls(camera, renderer.domElement);
+
+await initUI();
 
 controls.addEventListener('lock', () => {
     if (startButton) startButton.innerText = "Continuer la visite";
