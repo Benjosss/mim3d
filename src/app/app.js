@@ -438,15 +438,15 @@ async function _initUI() {
 
     // Chargement des panels de l'UI
     await panelUtils.loadAllHtmlPanels([
-        ['menuPanel',      './panels/html/menu-panel.html'],
-        ['keyBindPanel',   './panels/html/keybind-panel.html'],
-        ['walkPanel',      './panels/html/walk-panel.html'],
-        ['infosPanel',     './panels/html/infos-panel.html'],
-        ['guidedNavPanel', './panels/html/guided-nav-panel.html'],
-        ['helpPanel',      './panels/html/help-panel.html'],
-        ['settingsPanel',  './panels/html/settings-panel.html'],
-        ['roomFindPanel',  './panels/html/room-find-panel.html'],
-        ['personFindPanel','./panels/html/person-find-panel.html'],
+        ['menuPanel',      '/html-panel/menu-panel.html'],
+        ['keyBindPanel',   '/html-panel/keybind-panel.html'],
+        ['walkPanel',      '/html-panel/walk-panel.html'],
+        ['infosPanel',     '/html-panel/infos-panel.html'],
+        ['guidedNavPanel', '/html-panel/guided-nav-panel.html'],
+        ['helpPanel',      '/html-panel/help-panel.html'],
+        ['settingsPanel',  '/html-panel/settings-panel.html'],
+        ['roomFindPanel',  '/html-panel/room-find-panel.html'],
+        ['personFindPanel','/html-panel/person-find-panel.html'],
     ]);
 
     // Récupération des éléments dynamique de l'UI après son chargement
