@@ -295,7 +295,7 @@ export default class AppPathfinding {
 
     endMove(fpsPlayer) {
         this.camera.lookAt(this.targetZoneCenter);
-        this.targetZoneCenter = new Vector3();
+        this.targetZoneCenter = new THREE.Vector3();
         this.splineCurve = null;
         this.isMoving = false;
         this.playerGroup.visible = true;
