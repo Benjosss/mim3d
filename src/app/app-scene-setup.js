@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {BackSide, PCFShadowMap} from "three";
+import {PCFShadowMap} from "three";
 import {HDRLoader} from "three/addons";
 
 export default class SceneSetup {
@@ -7,6 +7,8 @@ export default class SceneSetup {
         this.scene = new THREE.Scene();
         this.config = config;
     }
+
+    skyPath = '/models/skybox/day_ibl.hdr'
 
     getScene() {
         return this.scene;
@@ -17,36 +19,12 @@ export default class SceneSetup {
         scene.background = new THREE.Color(0x1a1a2e);
 
         const hdrLoader = new HDRLoader();
-        hdrLoader.load('/models/skybox/day_ibl.hdr', (texture) => {
+        hdrLoader.load(this.skyPath, (texture) => {
             texture.mapping = THREE.EquirectangularReflectionMapping;
             scene.environmentIntensity = 0.3;
             scene.environment = texture; // éclaire tous les matériaux
             scene.background  = texture; // remplace la skybox
         });
-
-        // let texture_ft = new THREE.TextureLoader().load('/models/skybox/miramar_ft.jpg', () => {}, () => {}, () => {} );
-        // let texture_bk = new THREE.TextureLoader().load('/models/skybox/miramar_bk.jpg', () => {}, () => {}, () => {});
-        // let texture_up = new THREE.TextureLoader().load('/models/skybox/miramar_up.jpg', () => {}, () => {}, () => {});
-        // let texture_dn = new THREE.TextureLoader().load('/models/skybox/miramar_dn.jpg', () => {}, () => {}, () => {});
-        // let texture_rt = new THREE.TextureLoader().load('/models/skybox/miramar_rt.jpg', () => {}, () => {}, () => {});
-        // let texture_lf = new THREE.TextureLoader().load('/models/skybox/miramar_lf.jpg', () => {}, () => {}, () => {});
-        //
-        // let skyArray = [
-        //     new THREE.MeshBasicMaterial({map: texture_ft}),
-        //     new THREE.MeshBasicMaterial({map: texture_bk}),
-        //     new THREE.MeshBasicMaterial({map: texture_up}),
-        //     new THREE.MeshBasicMaterial({map: texture_dn}),
-        //     new THREE.MeshBasicMaterial({map: texture_rt}),
-        //     new THREE.MeshBasicMaterial({map: texture_lf})
-        // ]
-        //
-        // for (let i = 0; i < 6; i++) {
-        //     skyArray[i].side = BackSide;
-        // }
-        //
-        // let skyboxGeo = new THREE.BoxGeometry(10000, 10000, 10000);
-        // let skybox = new THREE.Mesh(skyboxGeo, skyArray);
-        // scene.add(skybox);
     }
 
     buildCamera(){

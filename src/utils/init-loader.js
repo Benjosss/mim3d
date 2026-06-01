@@ -3,8 +3,7 @@ import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
 import {KTX2Loader} from "three/addons/loaders/KTX2Loader.js";
 
 export default class InitLoader{
-    constructor(){
-    }
+    constructor(){}
 
     initGltfLoader(renderer){
         const dracoLoader = new DRACOLoader();

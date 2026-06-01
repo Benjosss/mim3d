@@ -5,8 +5,7 @@ export class PersonSearcher {
         this.onNavigate = onNavigate;
     }
 
-
-    // ================= RESEARCH =================
+    // ================= RECHERCHE =================
 
     zoneSearchByString(str) {
         str = str.toLowerCase();

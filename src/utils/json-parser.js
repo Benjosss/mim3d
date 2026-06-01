@@ -1,12 +1,12 @@
-import {Zone} from "../map-manager/zone.js";
 import * as THREE from "three";
+
+import {Zone} from "../map-manager/zone.js";
 
 export default class JsonParser {
     /**
      * Constructeur du parseur
      */
-    constructor() {
-    }
+    constructor() {}
 
     /**
      * Lit et parse le fichier de données

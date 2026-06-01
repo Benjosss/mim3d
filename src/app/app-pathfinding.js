@@ -1,6 +1,5 @@
 import {Pathfinding, PathfindingHelper} from 'three-pathfinding';
 import * as THREE from "three";
-import {Vector3} from "three";
 
 export default class AppPathfinding {
     constructor(scene, camera, playerGroup, debugMode) {
@@ -21,7 +20,7 @@ export default class AppPathfinding {
         this.isNavMeshLoaded = false;
 
         this.isMoving = false;
-        this.targetZoneCenter = new Vector3();
+        this.targetZoneCenter = new THREE.Vector3();
         this.splineCurve = null;
         this.splineProgress = 0;
         this.splineTotalLength = 0;

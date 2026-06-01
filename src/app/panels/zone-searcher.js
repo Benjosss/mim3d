@@ -5,7 +5,7 @@ export class ZoneSearcher {
         this.onNavigate = onNavigate;
     }
 
-    // ================= RESEARCH =================
+    // ================= RECHERCHE =================
 
     zoneSearchByString(str){
         str = str.toLowerCase();
