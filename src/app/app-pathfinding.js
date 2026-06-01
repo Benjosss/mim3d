@@ -229,7 +229,7 @@ export default class AppPathfinding {
         }
     }
 
-    move(delta) {
+    move(delta, fpsPlayer) {
         if (!this.splineCurve || this.splineCurve.length === 0) {
             this.isMoving = false;
             return;
@@ -285,16 +285,27 @@ export default class AppPathfinding {
         }
 
         if (this.splineProgress >= this.splineTotalLength) {
-            this.endMove();
+            this.endMove(fpsPlayer);
         }
     }
 
-    endMove() {
+    endMove(fpsPlayer) {
         this.camera.lookAt(this.playerPos);
         this.splineCurve = null;
         this.isMoving = false;
         this.playerGroup.visible = true;
         this.smoothLookAt = null;
+
+        const gestureAction = fpsPlayer.model.userData.actions['pointing'];
+
+        if (gestureAction) {
+            gestureAction.reset(); // Recommence du début
+            gestureAction.setLoop(THREE.LoopOnce); // Ne joue qu'une fois
+            gestureAction.clampWhenFinished = false; // Revient à la pose d'origine (idle) après
+            gestureAction.enabled = true;
+            gestureAction.paused = false;
+            gestureAction.play();
+        }
 
         document.getElementById("walkPanel").style.display = "none";
         document.getElementById("walkPanel-p").innerHTML = ""

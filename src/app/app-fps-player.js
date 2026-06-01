@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export default class AppFpsPlayer {
-    FPS_HIDDEN_PARTS = ['head', 'hair', 'eyes', 'internal', 'internal2'];
+    FPS_HIDDEN_PARTS = ['head', 'hair', 'eyes'];
 
     constructor(scene, gltfLoader, camera, config) {
         this.scene = scene;
@@ -18,7 +18,7 @@ export default class AppFpsPlayer {
 
         this.gltfLoader.load(path, (gltf) => {
             this.model = gltf.scene;
-            this.model.scale.set(0.8, 0.8, 0.8);
+            this.model.scale.set(0.9, 0.9, 0.9);
             this.model.position.y = 0;
             this.model.rotation.y = Math.PI; // Rotation de 180 deg
 
@@ -33,19 +33,24 @@ export default class AppFpsPlayer {
 
             this.mixer = new THREE.AnimationMixer(this.model);
 
-            const animations = gltf.animations;
-            const clip = animations[0];
-
-            // Supprime les déplacements du modèle (root motion)
-            clip.tracks = clip.tracks.filter(track => {
-                return !(track.name.includes('position') &&
-                    (track.name.includes('Hips') || track.name.includes('hips')));
+            const actions = {};
+            gltf.animations.forEach(clip => {
+                actions[clip.name.toLowerCase()] = this.mixer.clipAction(clip);
             });
 
-            const walkAction = this.mixer.clipAction(clip);
+            this.model.userData.actions = actions;
+
+            const walkAction = actions['walk'];
             walkAction.play();
             walkAction.paused = true;
-            this.model.userData.walkAction = walkAction;
+
+            const idleAction = actions['idle'];
+            idleAction.play();
+            idleAction.paused = true;
+
+            const handAction = actions['pointing'];
+            handAction.play();
+            handAction.paused = true;
 
             player.add(this.model);
 
@@ -54,7 +59,6 @@ export default class AppFpsPlayer {
         return player
     }
 
-    camera
 
     cameraFollowPlayer(playerPos) {
         const camera = this.camera;

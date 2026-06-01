@@ -155,7 +155,7 @@ const gltfLoader = new InitLoader().initGltfLoader(renderer);
 
 // ================= CHARGEMENT DU PERSONNAGE =================
 const fpsPlayer = new AppFpsPlayer(scene, gltfLoader, camera, CONFIG);
-const player = fpsPlayer.initFpsCharacter("/models/characters/woman_anim.glb");
+const player = fpsPlayer.initFpsCharacter("/models/characters/man.glb");
 
 // ================= ZONE MANAGER =================
 // On passe colliderMeshes au ZoneManager
@@ -407,7 +407,7 @@ function animate(timestamp) {
     const deltaTime = Math.min(0.05, timer.getDelta());
 
 
-    // Mise à jour du mixer
+    // Mise à jour du mixer d'animations
     if (fpsPlayer.mixer) fpsPlayer.mixer.update(deltaTime);
 
     if (controls.isLocked) {
@@ -436,8 +436,10 @@ function animate(timestamp) {
         if (keyMap['KeyA'] || keyMap['ArrowLeft']) playerVelocity.add(bvhPhysicsUtils.getSideVector().multiplyScalar(-speed));
         if (keyMap['KeyD'] || keyMap['ArrowRight']) playerVelocity.add(bvhPhysicsUtils.getSideVector().multiplyScalar(speed));
 
-        if (fpsPlayer.model?.userData.walkAction) {
-            fpsPlayer.model.userData.walkAction.paused = !isMoving;
+        if (fpsPlayer.model?.userData.actions) {
+            fpsPlayer.model.userData.actions['walk'].paused = !isMoving;
+            fpsPlayer.model.userData.actions['idle'].paused = isMoving;
+
         }
 
         // ZoneManager : détection de transition à chaque frame
@@ -463,7 +465,7 @@ function animate(timestamp) {
 
 
         //Pathfinding
-        pathfinding.move(deltaTime);
+        pathfinding.move(deltaTime, fpsPlayer);
         pathfinding.guide(ZONES, zoneManager.currentRoom);
 
         if (DEBUG_MODE) {
