@@ -1,5 +1,6 @@
 import {Pathfinding, PathfindingHelper} from 'three-pathfinding';
 import * as THREE from "three";
+import {Vector3} from "three";
 
 export default class AppPathfinding {
     constructor(scene, camera, playerGroup, debugMode) {
@@ -20,6 +21,7 @@ export default class AppPathfinding {
         this.isNavMeshLoaded = false;
 
         this.isMoving = false;
+        this.targetZoneCenter = new Vector3();
         this.splineCurve = null;
         this.splineProgress = 0;
         this.splineTotalLength = 0;
@@ -129,7 +131,10 @@ export default class AppPathfinding {
 
         let target = null;
         zones.forEach(zone => {
-            if (zone.name === name) target = zone.pathCoords;
+            if (zone.name === name){
+                target = zone.pathCoords;
+                zone.triggerBox.getCenter(this.targetZoneCenter);
+            }
         })
 
         if (!this.isNavMeshLoaded || !target) return;
@@ -290,7 +295,8 @@ export default class AppPathfinding {
     }
 
     endMove(fpsPlayer) {
-        this.camera.lookAt(this.playerPos);
+        this.camera.lookAt(this.targetZoneCenter);
+        this.targetZoneCenter = new Vector3();
         this.splineCurve = null;
         this.isMoving = false;
         this.playerGroup.visible = true;

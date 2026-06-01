@@ -361,7 +361,7 @@ document.addEventListener('keydown', e => {
             pathfinding.endGuide();
         }
         if (pathfinding.isMoving){
-            pathfinding.endMove();
+            pathfinding.endMove(fpsPlayer);
         }
     }
 });
