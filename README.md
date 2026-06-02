@@ -1,9 +1,8 @@
-# mim3d
+![favicon.png](public/images/favicon.png)
 
 > Visite virtuelle interactive de l'UFR MIM — explorez les espaces, repérez-vous, naviguez de salle en salle.
 
 ---
-
 ## Présentation
 
 **mim3d** est une application web de visite virtuelle 3D permettant aux étudiants, enseignants et visiteurs de se repérer dans les locaux de l'UFR MIM. Le bâtiment est explorable en vue à la première personne (FPS).
