@@ -21,30 +21,38 @@ THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 // ================= CONFIG =================
+/** @type {boolean} Toggle mode DEBUG */
 const DEBUG_MODE = false;
+/** @type {boolean} Toggle mode STATS */
 const DEBUG_MODE_STATS = false;
 
+/**
+ * Configuration globale de l'application
+ * @type {Object}
+ */
 const CONFIG = {
-    zonesJsonPath: "/data/zones.json",
-    navMeshPath: "/models/navmeshes/navmesh_mesh.glb",
-    startZone: 'floor0hall',
-    spawnPoint: new THREE.Vector3(65, 4.24, -32),
+    zonesJsonPath: "/data/zones.json",                                  // Chemin du fichier json comprennant les zones
+    navMeshPath: "/models/navmeshes/navmesh_mesh.glb",                  // Chemin du maillage de navigation
+    startZone: 'floor0hall',                                            // Non de la zone de départ (1ere chargée)
+    spawnPoint: new THREE.Vector3(65, 4.24, -32),              // Coordonnées du point d'apparition
     // ATTENTION : Le Y du vecteur de regard doit être similaire à celui du point d'apparition pour regarder tout droit
-    lookAt: new THREE.Vector3(64.99, 4.24, -31.88),
-    playerPath: "/models/characters/man.glb",
-    playerRadius: 0.4,
-    playerHeight: 1.3,
-    moveSpeed: 8,
-    gravity: 30,
-    debugMode: DEBUG_MODE,
+    lookAt: new THREE.Vector3(64.99, 4.24, -31.88),            // Vecteur directionnel du regard à l'apparition
+    playerPath: "/models/characters/man.glb",                           // Chemin du modèle du joueur
+    playerRadius: 0.4,                                                  // Rayon de la capsule joueur
+    playerHeight: 1.3,                                                  // Hauteur de la capsule joueur
+    moveSpeed: 8,                                                       // Vitesse de déplacement par défaut
+    gravity: 30,                                                        // Valeur de gravité par défaut
+    debugMode: DEBUG_MODE,                                              // Toggle mode debug
 };
 
+// Instantiations de classes
 const sceneSetup = new SceneSetup(CONFIG);
 const panelUtils = new PanelUtils();
 const parser = new jsonParser();
 const timer = new THREE.Timer();
 const stats = new Stats();
 
+// Déclaration des variables globales
 let scene, camera, renderer;
 let gltfLoader;
 let ZONES = [];
@@ -240,6 +248,7 @@ document.getElementById('settings-show-path').addEventListener('change', (e) => 
 })
 
 // ================= INPUT (AZERTY) =================
+/** @type {Object<string, boolean>} Map des touches pressées */
 const keyMap = {};
 document.addEventListener('keydown', e => keyMap[e.code] = true);
 document.addEventListener('keyup', e => keyMap[e.code] = false);
@@ -338,6 +347,10 @@ document.addEventListener('keydown', e => {
 });
 
 // ================= BOUCLE DE RENDU =================
+/**
+ * Boucle d'animation principale
+ * @param {number} timestamp - Temps écoulé depuis le début
+ */
 function animate(timestamp) {
     requestAnimationFrame(animate);
 
@@ -364,6 +377,7 @@ function animate(timestamp) {
 
         const isMoving = isKeyboardMoving || isAutoMoving;
 
+        // On réduit le rayon de la capsule de joueur pour éviter les collisions résiduelles lors de la navigation auto
         if (pathfinding.isMoving) {
             CONFIG.playerRadius = 0.2;
         } else {
@@ -434,6 +448,11 @@ function animate(timestamp) {
 requestAnimationFrame(animate);
 
 
+/**
+ * Initialise l'interface utilisateur (chargement HTML et binding des événements)
+ * @async
+ * @returns {Promise<void>}
+ */
 async function _initUI() {
 
     // Chargement des panels de l'UI
@@ -502,6 +521,11 @@ async function _initUI() {
     _backToGame("settingsBackBtn", "settings");
 }
 
+/**
+ * Alterne l'affichage d'un panel via le système de lock des contrôles
+ * @param {Event} e - L'événement de touche
+ * @param {string} overlay - L'identifiant de l'overlay à basculer
+ */
 function _togglePanel(e, overlay){
     e.preventDefault();
     if (currentOverlay === overlay){
@@ -515,6 +539,11 @@ function _togglePanel(e, overlay){
     }
 }
 
+/**
+ * Ferme un panel et retourne au jeu (lock les contrôles)
+ * @param {string} id - L'ID du bouton de retour
+ * @param {string} overlay - L'identifiant de l'overlay actuel
+ */
 function _backToGame(id, overlay){
     panelUtils.onPanelBtnClick(id, () =>{
         if (currentOverlay === overlay) {

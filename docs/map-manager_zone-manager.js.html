@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: map-manager/zone-manager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: map-manager/zone-manager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as THREE from 'three';
+
+/**
+ * Orchestrateur du système de streaming.
+ * Gère le cycle de vie des zones, les transitions fluides et la mise à jour des collisionneurs actifs.
+ */
+export class ZoneManager {
+    /**
+     * @param {THREE.Scene} scene - Scène principale.
+     * @param {GLTFLoader} loader - Chargeur partagé.
+     * @param {THREE.Mesh[]} colliderMeshes - Référence vers le tableau de collisions global.
+     * @param {boolean} debugMode - Etat du mode debug.
+     */
+    constructor(scene, loader, colliderMeshes, debugMode) {
+        this.scene = scene;
+        this.loader = loader;
+        this.colliderMeshes = colliderMeshes; // Tableau modifié par référence pour la physique globale
+        this.zones = new Map();
+        this.currentZone = null;  // Zone de navigation (avec physique)
+        this.currentRoom = null;  // Zone précise (peut être du mobilier/sans physique)
+        this.managedZones = new Set();
+
+        this._transitioning = false;
+        this._loadQueue = [];
+        this._isProcessingQueue = false;
+        this._rebuildScheduled = false;
+
+        this.debugMode = debugMode;
+    }
+
+    /** Messages d'alerte spécifiques à certaines zones réglementées */
+    MSG_LABOS = {
+        "floor2_a": "⚠️ Zone réglementée — sonnez à l'interphone, émargez et attendez qu'on vous ouvre. Uniquement sur RDV !",
+        "floor1_a": "⚠️ Zone réglementée — sonnez à l'interphone et attendez qu'on vous ouvre. Uniquement sur RDV !",
+        "floor0_a": "⚠️ Zone réglementée — sonnez à l'interphone et attendez qu'on vous ouvre. Uniquement sur RDV !",
+    };
+
+    /** Enregistre une zone dans le dictionnaire du manager */
+    registerZone(zone) {
+        this.zones.set(zone.name, zone);
+    }
+
+    /** Enregistre un tableau de zones */
+    registerMultiZones(zones) {
+        zones.forEach(zone => this.registerZone(zone));
+    }
+
+    /** Mise à jour appelée à chaque frame pour gérer la détection de proximité */
+    update(playerPosition) {
+        this._detectZoneChange(playerPosition);
+    }
+
+    /**
+     * Initialise l'application dans une zone précise.
+     * @param {string} startZoneName
+     */
+    async init(startZoneName) {
+        const startZone = this.zones.get(startZoneName);
+        if (!startZone) return;
+
+        // Chargement critique de la première zone
+        await this._loadZone(startZone);
+        this._showZone(startZone);
+        this.currentZone = startZone;
+
+        this._rebuildColliders(); // Initialisation de la physique
+        this._queueAdjacentZones(startZone); // Préchargement des voisines
+
+        // Affichage initial des imposteurs pour les zones lointaines
+        for (const [name, zone] of this.zones) {
+            if (name !== this.currentZone.name &amp;&amp; zone.impostorPath) {
+                this._manageImpostorVisibility(zone, true).catch(console.error);
+            }
+        }
+    }
+
+    /**
+     * Détecte si le joueur s'approche d'une nouvelle zone ou change de pièce.
+     * Gère la hiérarchie des zones (la plus petite contenant le joueur gagne).
+     * @private
+     */
+    _detectZoneChange(playerPosition) {
+        if (!this.currentZone) return;
+
+        // 1. Anticipation : charge les zones voisines si le joueur s'approche à moins de 15m
+        for (const adjName of this.currentZone.adjacentZoneNames) {
+            const adjZone = this.zones.get(adjName);
+            if (adjZone &amp;&amp; !adjZone.isLoaded &amp;&amp; !adjZone.isLoading) {
+                const distance = adjZone.triggerBox.distanceToPoint(playerPosition);
+                if (distance &lt; 15.0) void this._loadZone(adjZone);
+            }
+        }
+
+        // 2. Identification de la zone actuelle (Collision avec les TriggerBoxes)
+        const candidates = [];
+        for (const [, zone] of this.zones) {
+            if (zone.isPointInside(playerPosition)) candidates.push(zone);
+        }
+
+        // Nettoyage des zones sans physique dès qu'on en sort
+        for (const [, zone] of this.zones) {
+            if (!zone.physics &amp;&amp; zone.isVisible &amp;&amp; !zone.isPointInside(playerPosition)) {
+                zone.hide(this.scene);
+            }
+        }
+
+        if (candidates.length === 0) return;
+
+        // Priorité à la zone ayant le plus petit volume (ex: bureau à l'intérieur d'un étage)
+        const boxVolume = (box) => {
+            const s = new THREE.Vector3();
+            box.getSize(s);
+            return s.x * s.y * s.z;
+        };
+        candidates.sort((a, b) => boxVolume(a.triggerBox) - boxVolume(b.triggerBox));
+
+        const smallest = candidates[0];
+        let navigationZone;
+
+        // Gestion du mobilier (sans physique) : on l'affiche mais on navigue sur la zone parente
+        if (!smallest.physics) {
+            this.currentRoom = smallest;
+            if (!smallest.isLoaded &amp;&amp; !smallest.isLoading) {
+                this._loadZone(smallest).then(() => {
+                    this._showZone(smallest);
+                    this._scheduleColliderRebuild();
+                });
+            } else if (smallest.isLoaded &amp;&amp; !smallest.isVisible) {
+                this._showZone(smallest);
+            }
+            navigationZone = candidates.find(z => z.physics);
+        } else {
+            navigationZone = smallest;
+            this.currentRoom = smallest;
+        }
+
+        if (!navigationZone || navigationZone === this.currentZone) return;
+
+        // Lancement de la transition vers la nouvelle zone majeure
+        void this._triggerTransition(navigationZone);
+    }
+
+    /**
+     * Gère le passage d'une zone HD à une autre.
+     * @private
+     */
+    async _triggerTransition(newZone) {
+        if (this._transitioning) return;
+        this._transitioning = true;
+
+        try {
+            const previousZone = this.currentZone;
+            await this._loadZone(newZone); // S'assure que c'est chargé
+            this._showZone(newZone);
+
+            // Affiche les voisines pour éviter les "trous" visuels
+            for (const adjName of newZone.adjacentZoneNames) {
+                const adjZone = this.zones.get(adjName);
+                if (adjZone?.isLoaded) this._showZone(adjZone);
+            }
+
+            this.currentZone = newZone;
+            this._showZoneWarning(newZone.name);
+            this._rebuildColliders(); // Met à jour les murs/sols collisionnables
+
+            this._scheduleUnloadFarZones(previousZone); // Nettoie les zones lointaines
+            this._queueAdjacentZones(newZone); // Prépare les nouvelles voisines
+        } catch (e) {
+            console.error('Error while transitioning :', e);
+        } finally {
+            this._transitioning = false;
+        }
+    }
+
+    /**
+     * Alterne entre modèle HD et Imposteur selon la distance.
+     * @private
+     */
+    async _manageImpostorVisibility(zone, visible) {
+        if (visible) {
+            if (!zone.isImpostorLoaded) await zone.loadImpostor(this.loader, this.debugMode);
+            if (zone.impostorContent &amp;&amp; !zone.impostorContent.parent) this.scene.add(zone.impostorContent);
+            zone.impostorContent.visible = true;
+        } else {
+            if (zone.impostorContent) zone.impostorContent.visible = false;
+        }
+    }
+
+    /**
+     * Planifie le déchargement des zones qui ne sont plus adjacentes.
+     * @private
+     */
+    _scheduleUnloadFarZones(previousZone) {
+        setTimeout(async () => {
+            if (!this.currentZone) return;
+
+            const highDetailNames = new Set([
+                this.currentZone.name,
+                ...this.currentZone.adjacentZoneNames,
+            ]);
+
+            for (const [name, zone] of this.zones) {
+                const isHDNeeded = highDetailNames.has(name);
+
+                if (isHDNeeded) {
+                    if (zone.isLoaded) this._showZone(zone);
+                } else {
+                    if (zone.isVisible) zone.hide(this.scene);
+                    if (zone.impostorPath) await this._manageImpostorVisibility(zone, true);
+
+                    // Si la zone n'est même plus voisine de l'ancienne zone, on libère la RAM
+                    const wasAdjacent = previousZone?.adjacentZoneNames.includes(name);
+                    if (!wasAdjacent) {
+                        zone.unload(this.scene);
+                        this.managedZones.delete(name);
+                    }
+                }
+            }
+            this._scheduleColliderRebuild();
+        }, 100);
+    }
+
+    /** Affiche le modèle HD et cache l'imposteur correspondant */
+    _showZone(zone) {
+        if (!zone.isLoaded) return;
+        zone.show(this.scene);
+        if (zone.impostorContent) zone.impostorContent.visible = false;
+    }
+
+    /** Charge une zone et notifie le manager de sa disponibilité */
+    async _loadZone(zone) {
+        if (zone.isLoaded) return;
+
+        // Attente active si déjà en cours de chargement par une autre tâche
+        if (zone.isLoading) {
+            while (zone.isLoading) {
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            return;
+        }
+
+        await zone.load(this.loader);
+        this.managedZones.add(zone.name);
+
+        // Si la zone chargée est la zone actuelle ou une voisine, on l'affiche de suite
+        if (this.currentZone &amp;&amp; (this.currentZone.name === zone.name || this.currentZone.adjacentZoneNames.includes(zone.name))) {
+            this._showZone(zone);
+            this._rebuildColliders();
+        }
+    }
+
+    /** Ajoute les voisines à la file d'attente de chargement en arrière-plan */
+    _queueAdjacentZones(zone) {
+        for (const name of zone.adjacentZoneNames) {
+            const z = this.zones.get(name);
+            if (!z || z.isLoaded || z.isLoading) continue;
+            if (!this._loadQueue.includes(z)) this._loadQueue.push(z);
+        }
+        void this._processQueue();
+    }
+
+    /** Traite la file d'attente de chargement un par un pour ne pas saturer le CPU/GPU */
+    async _processQueue() {
+        if (this._isProcessingQueue) return;
+        this._isProcessingQueue = true;
+
+        while (this._loadQueue.length > 0) {
+            const zone = this._loadQueue.shift();
+            await new Promise(r => setTimeout(r, 0)); // Laisse respirer le navigateur
+
+            if (!zone.isLoaded) {
+                await this._loadZone(zone);
+                if (this.currentZone?.adjacentZoneNames.includes(zone.name)) {
+                    this._showZone(zone);
+                    this._scheduleColliderRebuild();
+                }
+            }
+        }
+        this._isProcessingQueue = false;
+    }
+
+    /** Planifie une reconstruction des collisionneurs à la fin de la frame actuelle */
+    _scheduleColliderRebuild() {
+        if (this._rebuildScheduled) return;
+        this._rebuildScheduled = true;
+        setTimeout(() => {
+            this._rebuildColliders();
+            this._rebuildScheduled = false;
+        }, 0);
+    }
+
+    /**
+     * Collecte tous les maillages de collision des zones actuellement visibles
+     * et les injecte dans le tableau global utilisé par le moteur de physique.
+     */
+    _rebuildColliders() {
+        this.colliderMeshes.length = 0; // Vide le tableau sans changer la référence
+        for (const [, zone] of this.zones) {
+            if (zone.isVisible &amp;&amp; zone.colliderMeshes?.length) {
+                for (const mesh of zone.colliderMeshes) {
+                    mesh.updateMatrixWorld(true);
+                    this.colliderMeshes.push(mesh);
+                }
+            }
+        }
+    }
+
+    /** Affiche un message d'avertissement HTML si nécessaire */
+    _showZoneWarning(zoneName) {
+        const warningMsg = document.getElementById("warningMsg");
+        if (!warningMsg) return;
+
+        const msg = this.MSG_LABOS[zoneName];
+        if (msg) {
+            warningMsg.textContent = msg;
+            warningMsg.style.display = 'flex';
+            clearTimeout(this._warningTimeout);
+            this._warningTimeout = setTimeout(() => {
+                warningMsg.style.display = 'none';
+            }, 5000);
+        } else {
+            warningMsg.style.display = 'none';
+        }
+    }
+
+    /** Retourne un état textuel complet des zones pour le débogage console */
+    getStatus() {
+        const status = [];
+        for (const [name, zone] of this.zones) {
+            status.push({
+                name,
+                // Utilisation d'emojis pour simuler la couleur
+                loaded: zone.isLoaded ? "✅" : "❌",
+                visible: zone.isVisible ? "👁️" : "🌑",
+                impostor: zone.impostorContent?.visible ? "👁️" : "🌑",
+                colliders: zone.colliderMeshes?.length ?? 0,
+                current: zone === this.currentZone ? "⭐" : "❌",
+            });
+        }
+        console.table(status);
+        return status;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppDebugUtils_AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppFpsPlayer_AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPathfinding_AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="AppPhysicsBvh_AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="InitLoader.html">InitLoader</a></li><li><a href="InitLoader_InitLoader.html">InitLoader</a></li><li><a href="JsonParser.html">JsonParser</a></li><li><a href="JsonParser_JsonParser.html">JsonParser</a></li><li><a href="PanelUtils.html">PanelUtils</a></li><li><a href="PersonSearcher.html">PersonSearcher</a></li><li><a href="SceneSetup.html">SceneSetup</a></li><li><a href="SceneSetup_SceneSetup.html">SceneSetup</a></li><li><a href="Zone.html">Zone</a></li><li><a href="ZoneManager.html">ZoneManager</a></li><li><a href="ZoneSearcher.html">ZoneSearcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CONFIG">CONFIG</a></li><li><a href="global.html#DEBUG_MODE">DEBUG_MODE</a></li><li><a href="global.html#DEBUG_MODE_STATS">DEBUG_MODE_STATS</a></li><li><a href="global.html#FPS">FPS</a></li><li><a href="global.html#Intervalle">Intervalle</a></li><li><a href="global.html#Nombre">Nombre</a></li><li><a href="global.html#_backToGame">_backToGame</a></li><li><a href="global.html#_initUI">_initUI</a></li><li><a href="global.html#_togglePanel">_togglePanel</a></li><li><a href="global.html#ambient">ambient</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#clock">clock</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#cursor">cursor</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#gltfLoader">gltfLoader</a></li><li><a href="global.html#gridHelper">gridHelper</a></li><li><a href="global.html#intersectsBounds">intersectsBounds</a></li><li><a href="global.html#intersectsTriangle">intersectsTriangle</a></li><li><a href="global.html#key">key</a></li><li><a href="global.html#keyMap">keyMap</a></li><li><a href="global.html#lastFrameTime">lastFrameTime</a></li><li><a href="global.html#modelLoaded">modelLoaded</a></li><li><a href="global.html#particles">particles</a></li><li><a href="global.html#particlesGeo">particlesGeo</a></li><li><a href="global.html#particlesMat">particlesMat</a></li><li><a href="global.html#pivot">pivot</a></li><li><a href="global.html#pos">pos</a></li><li><a href="global.html#renderer">renderer</a></li><li><a href="global.html#resizeTimeout">resizeTimeout</a></li><li><a href="global.html#rim">rim</a></li><li><a href="global.html#scene">scene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jun 02 2026 09:56:01 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

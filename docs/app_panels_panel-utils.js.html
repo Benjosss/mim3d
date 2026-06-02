@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/panels/panel-utils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/panels/panel-utils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Classe utilitaire pour la gestion du chargement dynamique de panneaux HTML
+ * et la gestion des événements d'interface.
+ */
+export class PanelUtils{
+    /**
+     * Crée une instance de PanelUtils.
+     */
+    constructor(){}
+
+    /**
+     * Charge le contenu d'un fichier HTML externe dans un élément cible du DOM.
+     * @param {string} targetId - L'ID de l'élément HTML qui recevra le contenu.
+     * @param {string} path - Le chemin vers le fichier HTML à charger.
+     * @returns {Promise&lt;void>}
+     */
+    async loadHtmlPanel(targetId, path){
+        // Effectue la requête HTTP pour récupérer le fichier
+        const res = await fetch(path);
+
+        // Injecte le texte récupéré dans l'élément cible via son innerHTML
+        document.getElementById(targetId).innerHTML = await res.text();
+    }
+
+    /**
+     * Charge plusieurs panneaux HTML en parallèle.
+     * @param {string[][]} fragments - Un tableau de couples [targetId, path].
+     * @returns {Promise&lt;void>}
+     */
+    async loadAllHtmlPanels(fragments){
+        // Utilise Promise.all pour exécuter tous les chargements simultanément
+        await Promise.all(
+            fragments.map(([targetId, path]) => this.loadHtmlPanel(targetId, path))
+        );
+    }
+
+    /**
+     * Attache un écouteur d'événement 'click' à un bouton de panneau.
+     * @param {string} id - L'ID du bouton sur lequel attacher l'événement.
+     * @param {Function} action - La fonction de rappel (callback) à exécuter lors du clic.
+     */
+    onPanelBtnClick(id, action){
+        // Récupère l'élément et vérifie s'il existe (optional chaining)
+        document.getElementById(id)?.addEventListener('click', (e)=>{
+            // Empêche le comportement par défaut (ex: rechargement de page pour un lien/bouton)
+            e.preventDefault();
+
+            // Exécute l'action passée en paramètre
+            action();
+        })
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppDebugUtils_AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppFpsPlayer_AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPathfinding_AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="AppPhysicsBvh_AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="InitLoader.html">InitLoader</a></li><li><a href="InitLoader_InitLoader.html">InitLoader</a></li><li><a href="JsonParser.html">JsonParser</a></li><li><a href="JsonParser_JsonParser.html">JsonParser</a></li><li><a href="PanelUtils.html">PanelUtils</a></li><li><a href="PersonSearcher.html">PersonSearcher</a></li><li><a href="SceneSetup.html">SceneSetup</a></li><li><a href="SceneSetup_SceneSetup.html">SceneSetup</a></li><li><a href="Zone.html">Zone</a></li><li><a href="ZoneManager.html">ZoneManager</a></li><li><a href="ZoneSearcher.html">ZoneSearcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CONFIG">CONFIG</a></li><li><a href="global.html#DEBUG_MODE">DEBUG_MODE</a></li><li><a href="global.html#DEBUG_MODE_STATS">DEBUG_MODE_STATS</a></li><li><a href="global.html#FPS">FPS</a></li><li><a href="global.html#Intervalle">Intervalle</a></li><li><a href="global.html#Nombre">Nombre</a></li><li><a href="global.html#_backToGame">_backToGame</a></li><li><a href="global.html#_initUI">_initUI</a></li><li><a href="global.html#_togglePanel">_togglePanel</a></li><li><a href="global.html#ambient">ambient</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#clock">clock</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#cursor">cursor</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#gltfLoader">gltfLoader</a></li><li><a href="global.html#gridHelper">gridHelper</a></li><li><a href="global.html#intersectsBounds">intersectsBounds</a></li><li><a href="global.html#intersectsTriangle">intersectsTriangle</a></li><li><a href="global.html#key">key</a></li><li><a href="global.html#keyMap">keyMap</a></li><li><a href="global.html#lastFrameTime">lastFrameTime</a></li><li><a href="global.html#modelLoaded">modelLoaded</a></li><li><a href="global.html#particles">particles</a></li><li><a href="global.html#particlesGeo">particlesGeo</a></li><li><a href="global.html#particlesMat">particlesMat</a></li><li><a href="global.html#pivot">pivot</a></li><li><a href="global.html#pos">pos</a></li><li><a href="global.html#renderer">renderer</a></li><li><a href="global.html#resizeTimeout">resizeTimeout</a></li><li><a href="global.html#rim">rim</a></li><li><a href="global.html#scene">scene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jun 02 2026 09:56:01 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

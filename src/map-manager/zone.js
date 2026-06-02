@@ -1,56 +1,71 @@
 import * as THREE from "three";
 
+/**
+ * Représente une unité spatiale (salle, couloir) de l'application.
+ * Gère son propre chargement 3D (HD et Imposteur), ses collisions (BVH) et sa mémoire.
+ */
 export class Zone {
     /**
-     * Constructeur de la classe Zone permettant de construire la hierarchie des zones
-     * @param config
+     * @param {Object} config - Objet de configuration de la zone.
+     * @param {string} config.name - Identifiant unique de la zone.
+     * @param {string} config.displayName - Nom lisible affiché dans l'UI.
+     * @param {string[]} [config.otherNames] - Synonymes ou alias de la zone.
+     * @param {string} config.path - URL du modèle GLB haute définition.
+     * @param {string} [config.impostorPath] - URL du modèle GLB basse résolution.
+     * @param {boolean} config.physics - Indique si la zone bloque le passage (collisions).
+     * @param {string} config.type - Catégorie (office, toilets, misc, etc.).
+     * @param {string} config.description - Texte descriptif.
+     * @param {Array} [config.persons] - Occupants (pour les bureaux).
+     * @param {string[]} [config.adjacentZoneNames] - Zones connectées pour le streaming.
+     * @param {THREE.Box3} config.triggerBox - Boîte englobante pour la détection de présence.
+     * @param {THREE.Vector3} config.pathCoords - Point d'arrivée pour le pathfinding.
      */
     constructor(config) {
-        this.name = config.name;                                    // Nom de la zone
-        this.displayName = config.displayName;                      // Nom de la zone affiché
-        this.otherNames = config.otherNames ?? [];                   // Autres noms pour la salle en question
-        this.modelPath = config.path;                               // Chemin du fichier .glb HD de la zone
-        this.impostorPath = config.impostorPath;                    // Chemin du fichier .glb SD de la zone
-        this.physics = config.physics;                              // Présence de collisions ou non
-        this.type = config.type;                                    // Type de zone
-        this.description = config.description;                      // Description de la zone
-        this.persons = config.persons ?? [];                        // Noms des occupants et leur rôle pour un bureau
-        this.adjacentZoneNames = config.adjacentZoneNames ?? [];    // Tableau des noms des zones adjacentes
-        this.triggerBox = config.triggerBox;                        // Trigger Box de la zone
-        this.pathCoords = config.pathCoords;                        // Coordonnées d'arrivée du pathfinding
+        this.name = config.name;
+        this.displayName = config.displayName;
+        this.otherNames = config.otherNames ?? [];
+        this.modelPath = config.path;
+        this.impostorPath = config.impostorPath;
+        this.physics = config.physics;
+        this.type = config.type;
+        this.description = config.description;
+        this.persons = config.persons ?? [];
+        this.adjacentZoneNames = config.adjacentZoneNames ?? [];
+        this.triggerBox = config.triggerBox;
+        this.pathCoords = config.pathCoords;
 
-        this.content = null;                                        // THREE.Group
+        /** @type {THREE.Group|null} Modèle HD */
+        this.content = null;
+        /** @type {THREE.Group|null} Modèle basse résolution */
         this.impostorContent = null;
+        /** @type {THREE.Mesh[]} Maillages servant aux collisions */
+        this.colliderMeshes = [];
 
-        this.isLoaded = false;                                      // Status zone chargée ou non
+        this.isLoaded = false;
         this.isImpostorLoaded = false;
-        this.isLoading = false;                                     // Status zone en chargement ou non
-        this.isVisible = false;                                     // Status zone visible ou non
+        this.isLoading = false;
+        this.isVisible = false;
     }
 
     /**
-     * Charge le modèle en arrière-plan sans l'afficher.
-     * Calcule le BVH sur chaque géométrie pour les collisions.
-     * @param loader GLTFLoader
+     * Charge le modèle HD, configure les matériaux et calcule les arbres de collision (BVH).
+     * @param {GLTFLoader} loader - Instance du chargeur Three.js.
      * @returns {Promise<void>}
      */
     async load(loader) {
-        if (this.isLoaded || this.isLoading) return; // Zone déjà traitée
-
-        this.isLoading = true; // Début du chargement
+        if (this.isLoaded || this.isLoading) return;
+        this.isLoading = true;
 
         try {
-            const gltf = await loader.loadAsync(this.modelPath); // Chargement du modèle
+            const gltf = await loader.loadAsync(this.modelPath);
             this.content = gltf.scene;
-
-            // Préparation des meshes invisibles pour le moment
-            this.content.visible = false; // Meshes invisibles
+            this.content.visible = false;
             this.colliderMeshes = [];
 
             // Propriétés des meshes
             this.content.traverse(child => {
                 if (child.isMesh) {
-
+                    // Ajustement automatique du métal pour éviter l'aspect trop brillant
                     child.traverse(node => {
                         if (node.isMesh && node.material.metalness === 1) {
                             node.material.metalness = 0.3;
@@ -58,37 +73,30 @@ export class Zone {
                         }
                     });
 
-                    // Affichage des assets sans collisions
+                    // Configuration des objets décoratifs (sans collisions ou tag NOCOL)
                     if (!this.physics || child.name.includes("NOCOL")) {
                         child.visible = true;
                         // Ombrages
                         child.castShadow = true;
                         child.receiveShadow = true;
 
+                        // Gestion spécifique des matériaux transparents/verre
                         const mat = child.material;
-                        if (mat.map) {
-                            mat.map.anisotropy = 16;
-                        }
-
-                        // Rendu du verre
-                        const isGlass = mat.transparent
-                            || mat.opacity < 1
-
-                        if (isGlass) {
-                            mat.transparent  = true;
-                            mat.opacity      = Math.max(mat.opacity, 0.3);   // minimum visible
-                            mat.side         = THREE.DoubleSide;             // visible des deux côtés
-                            mat.depthWrite   = false;                        // évite les artefacts
-                            mat.alphaTest    = 0;
-                            child.renderOrder = 1;                           // rendu après les matériaux opaques
+                        if (mat.map) mat.map.anisotropy = 16;
+                        if (mat.transparent || mat.opacity < 1) {
+                            mat.transparent = true;
+                            mat.opacity = Math.max(mat.opacity, 0.3);
+                            mat.side = THREE.DoubleSide;
+                            mat.depthWrite = false;
+                            child.renderOrder = 1;
                         }
                     }
 
-                    // Calcul des collisions et masquage des assets de collisions
+                    // Extraction et calcul BVH pour les maillages de collision (SIMP_COL)
                     if (this.physics && child.name.includes("SIMP_COL")) {
                         if (!child.geometry.boundsTree) {
                             child.visible = false;
-                            child.geometry.computeBoundsTree();
+                            child.geometry.computeBoundsTree(); // Génération de l'arbre de collision
                             child.updateMatrixWorld(true);
                             this.colliderMeshes.push(child);
                         }
@@ -96,15 +104,19 @@ export class Zone {
                 }
             });
 
-            this.isLoaded = true; // Chargé
-            this.isLoading = false; // Plus en chargement
-
+            this.isLoaded = true;
+            this.isLoading = false;
         } catch (e) {
-            this.isLoading = false; // Plus en chargement
+            this.isLoading = false;
             throw e;
         }
     }
 
+    /**
+     * Charge le modèle "Imposteur" (basse qualité) pour l'affichage lointain.
+     * @param {GLTFLoader} loader
+     * @param {boolean} debugMode - Si vrai, rend l'imposteur semi-transparent.
+     */
     async loadImpostor(loader, debugMode) {
         if (this.isImpostorLoaded || !this.impostorPath) return;
 
@@ -113,29 +125,18 @@ export class Zone {
 
         this.impostorContent.traverse(child => {
             if (child.isMesh) {
-
-                child.traverse(node => {
-                    if (node.isMesh && node.material.metalness === 1) {
-                        node.material.metalness = 0.3;
-                        node.material.roughness = 0.5;
-                    }
-                });
-
+                // Mode Debug : vision "fantôme" des zones non chargées
                 if (debugMode) {
                     child.material.format = THREE.RGBAFormat;
                     child.material.transparent = true;
                     child.material.opacity = 0.5;
                 }
-                child.castShadow = false;
-                child.receiveShadow = true;
-
-                if (child.name.includes("SIMP_COL")) {
-                    child.visible = false;
-                }
+                // Cache les collisionneurs simplifiés de l'imposteur
+                if (child.name.includes("SIMP_COL")) child.visible = false;
             }
         });
 
-        // alignement avec la vraie zone
+        // Aligne l'imposteur sur la position du modèle HD
         if (this.content) {
             this.impostorContent.position.copy(this.content.position);
             this.impostorContent.rotation.copy(this.content.rotation);
@@ -147,43 +148,43 @@ export class Zone {
     }
 
     /**
-     * Ajoute le contenu à la scène et le rend visible.
-     * @param scene THREE.Scene
+     * Ajoute le modèle HD à la scène.
+     * @param {THREE.Scene} scene
      */
     show(scene) {
-        if (!this.isLoaded || this.isVisible) return; // La zone n'est pas chargée ou déjà traitée
-        scene.add(this.content); // Ajout du modèle à la scène
-        this.content.visible = true; // Visible
-        this.isVisible = true; // Status visible
+        if (!this.isLoaded || this.isVisible) return;
+        scene.add(this.content);
+        this.content.visible = true;
+        this.isVisible = true;
     }
 
     /**
-     * Retire le contenu de la scène sans libérer la mémoire.
-     * @param scene THREE.Scene
+     * Retire le modèle HD de la scène (garde les données en mémoire).
+     * @param {THREE.Scene} scene
      */
     hide(scene) {
-        if (!this.isVisible) return; // La zone est déjà cachée
-        scene.remove(this.content); // Retrait du modèle de la scène
-        this.isVisible = false; // Status non visible
+        if (!this.isVisible) return;
+        scene.remove(this.content);
+        this.isVisible = false;
     }
 
     /**
-     * Retire le contenu de la scène et libère la mémoire GPU + BVH.
-     * @param scene THREE.Scene
+     * Supprime le modèle de la scène et libère les ressources GPU (Géométries, Textures, BVH).
+     * @param {THREE.Scene} scene
      */
     unload(scene) {
-        if (!this.isLoaded) return; // On ne décharge que si le HD est là
+        if (!this.isLoaded) return;
+        this.hide(scene);
 
         this.hide(scene); // On retire le modèle HD de la scène
 
         // On vide uniquement le contenu lourd (Meshes HD + BVH)
         this.content.traverse(child => {
             if (child.isMesh) {
-                // Libération de la mémoire BVH
-                if (child.geometry.boundsTree) {
-                    child.geometry.disposeBoundsTree();
-                }
+                // Libération spécifique au plugin mesh-bvh
+                if (child.geometry.boundsTree) child.geometry.disposeBoundsTree();
                 child.geometry.dispose();
+
                 if (Array.isArray(child.material)) {
                     child.material.forEach(m => this._disposeMaterial(m));
                 } else {
@@ -192,15 +193,14 @@ export class Zone {
             }
         });
 
-        this.content = null; // Modèle plus chargé
-        this.isLoaded = false; // Zone non chargée
-        this.isLoading = false; // Zone non en chargement
+        this.content = null;
+        this.isLoaded = false;
+        this.isLoading = false;
         this.colliderMeshes = [];
     }
 
     /**
-     * Libération des textures du matériau
-     * @param material Matériau
+     * Nettoie proprement un matériau et ses textures.
      * @private
      */
     _disposeMaterial(material) {
@@ -212,8 +212,8 @@ export class Zone {
     }
 
     /**
-     * Retourne si un point est dans une TriggerBox de la zone
-     * @param point THREE.Vector3
+     * Vérifie si un point (ex: position joueur) se trouve dans la TriggerBox.
+     * @param {THREE.Vector3} point
      * @returns {boolean}
      */
     isPointInside(point) {

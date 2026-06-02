@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>mim3d</h1>
+<blockquote>
+<p>Visite virtuelle interactive de l'UFR MIM — explorez les espaces, repérez-vous, naviguez de salle en salle.</p>
+</blockquote>
+<hr>
+<h2>Présentation</h2>
+<p><strong>mim3d</strong> est une application web de visite virtuelle 3D permettant aux étudiants, enseignants et visiteurs de se repérer dans les locaux de l'UFR MIM. Le bâtiment est explorable en vue à la première personne (FPS).</p>
+<hr>
+<h2>Fonctionnalités</h2>
+<ul>
+<li><strong>Navigation FPS</strong> — déplacement libre dans le bâtiment à la première personne</li>
+<li><strong>Chargement dynamique des zones</strong> — seuls l'étage courant et les zones adjacentes sont chargés en mémoire, pour des performances optimales</li>
+<li><strong>Collisions BVH</strong> — détection de collisions précise et performante via <code>three-mesh-bvh</code></li>
+<li><strong>Pathfinding automatique</strong> — navigation guidée vers une salle via un agent 3D et un NavMesh (<code>three-pathfinding</code>)</li>
+<li><strong>Mobilier par salle</strong> — chargement indépendant du mobilier de chaque salle, sans impact sur les collisions globales</li>
+</ul>
+<hr>
+<h2>Stack technique</h2>
+<table>
+<thead>
+<tr>
+<th>Outil</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://threejs.org/">Three.js</a></td>
+<td>Moteur de rendu 3D WebGL</td>
+</tr>
+<tr>
+<td><a href="https://github.com/gkjohnson/three-mesh-bvh">three-mesh-bvh</a></td>
+<td>Collisions BVH haute performance</td>
+</tr>
+<tr>
+<td><a href="https://github.com/donmccurdy/three-pathfinding">three-pathfinding</a></td>
+<td>Navigation par NavMesh</td>
+</tr>
+<tr>
+<td><a href="https://threejs.org/docs/#examples/en/loaders/DRACOLoader">DRACOLoader</a></td>
+<td>Décompression des modèles GLB</td>
+</tr>
+<tr>
+<td>Vite / Webpack</td>
+<td>Bundler</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>Installation</h2>
+<pre class="prettyprint source lang-bash"><code># Cloner le dépôt
+git clone https://github.com/Benjosss/mim3d.git
+cd mim3d
+
+# Installer les dépendances
+npm install
+
+# Lancer en développement
+npm run dev
+</code></pre>
+<p>L'application est accessible sur <code>http://localhost:5173</code> (ou le port affiché dans le terminal).</p>
+<hr>
+<h2>Configuration des zones (<code>data.json</code>)</h2>
+<p>Chaque zone du bâtiment est décrite dans <code>public/data/data.json</code> :</p>
+<pre class="prettyprint source lang-json"><code>{
+  &quot;name&quot;: &quot;floor0&quot;,
+  &quot;path&quot;: &quot;models/0_floor_aisle_b_sized.glb&quot;,
+  &quot;impostorPath&quot; : &quot;models/impostors/0_floor_aisle_b_sized.glb&quot;,
+  &quot;physics&quot; : true,
+  &quot;type&quot;: &quot;corridor&quot;,
+  &quot;description&quot; : &quot;Rez de chaussé aile b&quot;,
+  &quot;adjacentZoneNames&quot;: [&quot;stairs1to0_1&quot;, &quot;floor1&quot;, &quot;floor-1&quot;, &quot;floor0ground&quot;, &quot;stairs0to-1_1&quot;, &quot;allstairs_2&quot;, &quot;allstairs_3&quot;, &quot;floor0hall&quot;],
+  &quot;triggerBox&quot;: {
+    &quot;min&quot;: [70.925, 2.651, -75.214],
+    &quot;max&quot;: [89.943, 7.642, -0.082]
+  }
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Identifiant unique de la zone</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Chemin vers le fichier GLB HD</td>
+</tr>
+<tr>
+<td><code>impostorPath</code></td>
+<td>Chemin vers le fichier GLB SD</td>
+</tr>
+<tr>
+<td><code>physics</code></td>
+<td><code>true</code> pour activer les collisions BVH</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>stairs</code>, <code>corridor</code>, <code>office</code>, <code>TD</code>, <code>TP</code>, <code>CM</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Description de la zone</td>
+</tr>
+<tr>
+<td><code>adjacentZoneNames</code></td>
+<td>Zones à précharger en arrière-plan</td>
+</tr>
+<tr>
+<td><code>triggerBox</code></td>
+<td>Boîte de détection de présence du joueur</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note</strong> : les zones SANS physique sont chargées automatiquement quand le joueur entre dans leur triggerBox, sans devenir la zone courante de navigation.</p>
+</blockquote>
+<hr>
+<h2>Contrôles</h2>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Z</code> / <code>↑</code></td>
+<td>Avancer</td>
+</tr>
+<tr>
+<td><code>S</code> / <code>↓</code></td>
+<td>Reculer</td>
+</tr>
+<tr>
+<td><code>Q</code> / <code>←</code></td>
+<td>Déplacer à gauche</td>
+</tr>
+<tr>
+<td><code>D</code> / <code>→</code></td>
+<td>Déplacer à droite</td>
+</tr>
+<tr>
+<td><code>Souris</code></td>
+<td>Regarder (après clic pour verrouiller)</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>Déverrouiller la souris</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>Build production</h2>
+<pre class="prettyprint source lang-bash"><code>npm run build
+</code></pre>
+<p>Les fichiers compilés sont générés dans <code>dist/</code>.</p>
+<hr>
+<h2>Licence</h2>
+<p>Projet universitaire — usage interne à la faculté.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppDebugUtils_AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppFpsPlayer_AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPathfinding_AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="AppPhysicsBvh_AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="InitLoader.html">InitLoader</a></li><li><a href="InitLoader_InitLoader.html">InitLoader</a></li><li><a href="JsonParser.html">JsonParser</a></li><li><a href="JsonParser_JsonParser.html">JsonParser</a></li><li><a href="PanelUtils.html">PanelUtils</a></li><li><a href="PersonSearcher.html">PersonSearcher</a></li><li><a href="SceneSetup.html">SceneSetup</a></li><li><a href="SceneSetup_SceneSetup.html">SceneSetup</a></li><li><a href="Zone.html">Zone</a></li><li><a href="ZoneManager.html">ZoneManager</a></li><li><a href="ZoneSearcher.html">ZoneSearcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CONFIG">CONFIG</a></li><li><a href="global.html#DEBUG_MODE">DEBUG_MODE</a></li><li><a href="global.html#DEBUG_MODE_STATS">DEBUG_MODE_STATS</a></li><li><a href="global.html#FPS">FPS</a></li><li><a href="global.html#Intervalle">Intervalle</a></li><li><a href="global.html#Nombre">Nombre</a></li><li><a href="global.html#_backToGame">_backToGame</a></li><li><a href="global.html#_initUI">_initUI</a></li><li><a href="global.html#_togglePanel">_togglePanel</a></li><li><a href="global.html#ambient">ambient</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#clock">clock</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#cursor">cursor</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#gltfLoader">gltfLoader</a></li><li><a href="global.html#gridHelper">gridHelper</a></li><li><a href="global.html#intersectsBounds">intersectsBounds</a></li><li><a href="global.html#intersectsTriangle">intersectsTriangle</a></li><li><a href="global.html#key">key</a></li><li><a href="global.html#keyMap">keyMap</a></li><li><a href="global.html#lastFrameTime">lastFrameTime</a></li><li><a href="global.html#modelLoaded">modelLoaded</a></li><li><a href="global.html#particles">particles</a></li><li><a href="global.html#particlesGeo">particlesGeo</a></li><li><a href="global.html#particlesMat">particlesMat</a></li><li><a href="global.html#pivot">pivot</a></li><li><a href="global.html#pos">pos</a></li><li><a href="global.html#renderer">renderer</a></li><li><a href="global.html#resizeTimeout">resizeTimeout</a></li><li><a href="global.html#rim">rim</a></li><li><a href="global.html#scene">scene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jun 02 2026 09:56:01 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

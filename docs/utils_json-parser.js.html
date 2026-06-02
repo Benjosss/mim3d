@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/json-parser.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/json-parser.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as THREE from "three";
+import {Zone} from "../map-manager/zone.js";
+
+/**
+ * Classe utilitaire pour charger et transformer les fichiers JSON de configuration en objets Zone.
+ */
+export default class JsonParser {
+    /**
+     * Crée une instance de JsonParser.
+     */
+    constructor() {}
+
+    /**
+     * Effectue une requête fetch pour récupérer les données JSON brutes.
+     * @param {string} filePath - Le chemin vers le fichier .json.
+     * @returns {Promise&lt;Object|Array>} Les données JSON parsées.
+     * @throws {Error} Si le fichier est introuvable ou illisible.
+     */
+    fetchJSONData(filePath) {
+        return fetch(filePath)
+            .then(response => {
+                // Vérification du statut de la réponse HTTP
+                if (!response.ok) {
+                    throw new Error(`Error, status : ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                // Log de l'erreur en cas d'échec réseau ou de syntaxe JSON
+                console.error('Error while fetching :', error);
+            });
+    }
+
+    /**
+     * Lit les données JSON et les convertit en instances de la classe Zone.
+     * Gère la conversion des types simples (JSON) vers les types complexes (Three.js).
+     * @param {Zone[]} ZONES - Le tableau de zones à remplir.
+     * @param {string} path - Chemin du fichier JSON source.
+     * @returns {Promise&lt;Zone[]>} Le tableau de zones complété.
+     */
+    async fillZonesTab(ZONES, path) {
+        const jsonData = await this.fetchJSONData(path);
+
+        // Sécurité si les données sont vides ou n'ont pas pu être chargées
+        if (!jsonData) {
+            console.log("Zones loading error");
+            return ZONES;
+        }
+
+        jsonData.forEach((zone) => {
+            // Création de l'objet de base avec les propriétés communes
+            const newZone = {
+                name: zone.name,
+                displayName: zone.displayName,
+                path: zone.path,
+                impostorPath: zone.impostorPath,
+                physics: zone.physics,
+                type: zone.type,
+                description: zone.description,
+                adjacentZoneNames: zone.adjacentZoneNames || [],
+                // Conversion des coordonnées min/max du JSON en instance de Box3 Three.js
+                triggerBox: new THREE.Box3(
+                    new THREE.Vector3(...zone.triggerBox.min),
+                    new THREE.Vector3(...zone.triggerBox.max)
+                ),
+            };
+
+            // Traitement spécifique pour les zones qui ne sont pas des escaliers ou des couloirs
+            if (zone.type !== "corridor" &amp;&amp; zone.type !== "stairs") {
+                try {
+                    // Conversion des coordonnées de destination du pathfinding
+                    newZone.pathCoords = new THREE.Vector3(...zone.pathCoords);
+                } catch(e) {
+                    console.error(`Unable to fetch target coordinates for zone ${zone.name}`, e);
+                }
+
+                // Gestion des alias (sauf pour les toilettes qui n'en ont généralement pas)
+                if (zone.type !== "toilets"){
+                    newZone.otherNames = zone.otherNames || [];
+                }
+            }
+
+            // Traitement spécifique aux bureaux pour la gestion du personnel (occupants)
+            if (zone.type === "office") {
+                try {
+                    newZone.persons = zone.persons || [];
+                } catch(e) {
+                    console.error(`Unable to fetch employees of zone ${zone.name}`, e);
+                }
+            }
+
+            // Instanciation de la classe Zone et ajout au tableau global
+            ZONES.push(new Zone(newZone));
+        });
+
+        return ZONES;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppDebugUtils_AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppFpsPlayer_AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPathfinding_AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="AppPhysicsBvh_AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="InitLoader.html">InitLoader</a></li><li><a href="InitLoader_InitLoader.html">InitLoader</a></li><li><a href="JsonParser.html">JsonParser</a></li><li><a href="JsonParser_JsonParser.html">JsonParser</a></li><li><a href="PanelUtils.html">PanelUtils</a></li><li><a href="PersonSearcher.html">PersonSearcher</a></li><li><a href="SceneSetup.html">SceneSetup</a></li><li><a href="SceneSetup_SceneSetup.html">SceneSetup</a></li><li><a href="Zone.html">Zone</a></li><li><a href="ZoneManager.html">ZoneManager</a></li><li><a href="ZoneSearcher.html">ZoneSearcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CONFIG">CONFIG</a></li><li><a href="global.html#DEBUG_MODE">DEBUG_MODE</a></li><li><a href="global.html#DEBUG_MODE_STATS">DEBUG_MODE_STATS</a></li><li><a href="global.html#FPS">FPS</a></li><li><a href="global.html#Intervalle">Intervalle</a></li><li><a href="global.html#Nombre">Nombre</a></li><li><a href="global.html#_backToGame">_backToGame</a></li><li><a href="global.html#_initUI">_initUI</a></li><li><a href="global.html#_togglePanel">_togglePanel</a></li><li><a href="global.html#ambient">ambient</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#clock">clock</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#cursor">cursor</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#gltfLoader">gltfLoader</a></li><li><a href="global.html#gridHelper">gridHelper</a></li><li><a href="global.html#intersectsBounds">intersectsBounds</a></li><li><a href="global.html#intersectsTriangle">intersectsTriangle</a></li><li><a href="global.html#key">key</a></li><li><a href="global.html#keyMap">keyMap</a></li><li><a href="global.html#lastFrameTime">lastFrameTime</a></li><li><a href="global.html#modelLoaded">modelLoaded</a></li><li><a href="global.html#particles">particles</a></li><li><a href="global.html#particlesGeo">particlesGeo</a></li><li><a href="global.html#particlesMat">particlesMat</a></li><li><a href="global.html#pivot">pivot</a></li><li><a href="global.html#pos">pos</a></li><li><a href="global.html#renderer">renderer</a></li><li><a href="global.html#resizeTimeout">resizeTimeout</a></li><li><a href="global.html#rim">rim</a></li><li><a href="global.html#scene">scene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jun 02 2026 09:56:01 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

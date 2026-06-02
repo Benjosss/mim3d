@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/panels/person-searcher.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/panels/person-searcher.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Gère la recherche et l'affichage des personnes (membres du personnel) au sein des zones.
+ */
+export class PersonSearcher {
+    /**
+     * @param {Array&lt;Object>} zones - Liste des données de zones/bureaux.
+     * @param {Object} pathfinding - Instance du moteur de calcul d'itinéraire.
+     * @param {Function} onNavigate - Callback exécuté lors du lancement d'une navigation.
+     */
+    constructor(zones, pathfinding, onNavigate) {
+        this.zones = zones;
+        this.pathfinding = pathfinding;
+        this.onNavigate = onNavigate;
+    }
+
+    // ================= RECHERCHE =================
+
+    /**
+     * Filtre les zones de type "office" pour trouver des personnes par nom ou fonction.
+     * @param {string} str - La chaîne de caractères à rechercher.
+     * @returns {Array&lt;Object>} Liste des zones filtrées et triées par nom.
+     */
+    zoneSearchByString(str) {
+        // Normalise la recherche en minuscules
+        str = str.toLowerCase();
+
+        const filteredZones = this.zones.filter(zone => {
+            // On ne recherche que dans les bureaux
+            if (zone.type !== "office") return false;
+
+            // Vérifie si au moins une personne correspond au nom ou à la fonction
+            return zone.persons.some(person =>
+                person.name.toLowerCase().includes(str) ||
+                person.function.toLowerCase().includes(str)
+            );
+        });
+
+        // Trie alphabétiquement par le nom de la zone (bureau)
+        return filteredZones.sort((a, b) =>
+            a.name.localeCompare(b.name, "fr")
+        );
+    }
+
+    /**
+     * Méthode principale qui lit l'input de recherche, filtre les résultats
+     * et met à jour dynamiquement la liste dans le DOM.
+     */
+    updateRoomSearch() {
+        // Récupération des éléments DOM nécessaires
+        const searchInput = document.querySelector('#searchBar-p input');
+        const resultsList = document.getElementById('personResultsList');
+
+        // Sécurité si les éléments ne sont pas encore chargés
+        if (!searchInput || !resultsList) return;
+
+        const searchText = searchInput.value;
+        const results = this.zoneSearchByString(searchText);
+
+        // On vide la liste actuelle avant de la reconstruire
+        resultsList.innerHTML = "";
+
+        results.forEach(zone => {
+            const str = searchText.toLowerCase();
+
+            // On récupère uniquement les personnes de la zone qui matchent la recherche
+            const matched = zone.persons.filter(p =>
+                p.name.toLowerCase().includes(str) ||
+                p.function.toLowerCase().includes(str)
+            );
+
+            matched.forEach(person => {
+                // Création de l'élément de résultat
+                const item = document.createElement('div');
+                item.className = 'result-item';
+                item.innerHTML = `
+                &lt;div class="result-info">
+                    &lt;span class="material-symbols-outlined icon-main">person&lt;/span>
+                    &lt;div>
+                        &lt;span class="room-name">${person.name}&lt;/span>
+                        &lt;span class="room-details">${zone.displayName} - ${person.function}&lt;/span>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div class="result-actions">
+                    &lt;span class="material-symbols-outlined">directions_walk&lt;/span>
+                    &lt;button class="btn-action guided-btn">Guidé&lt;/button>
+                    &lt;button class="btn-action auto-btn">Automatique&lt;/button>
+                &lt;/div>
+                `;
+
+                // Événement pour le mode "Guidé" (manuel/étape par étape)
+                item.querySelector('.guided-btn').addEventListener('click', () => {
+                    if (this.onNavigate) this.onNavigate();
+                    this.pathfinding.findGuidedPathTo(zone.name, zone.displayName, this.zones);
+                });
+
+                // Événement pour le mode "Automatique" (déplacement autonome)
+                item.querySelector('.auto-btn').addEventListener('click', () => {
+                    if (this.onNavigate) this.onNavigate();
+                    this.pathfinding.findAutoPathTo(zone.name, this.zones);
+                });
+
+                resultsList.appendChild(item);
+            });
+        });
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppDebugUtils_AppDebugUtils.html">AppDebugUtils</a></li><li><a href="AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppFpsPlayer_AppFpsPlayer.html">AppFpsPlayer</a></li><li><a href="AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPathfinding_AppPathfinding.html">AppPathfinding</a></li><li><a href="AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="AppPhysicsBvh_AppPhysicsBvh.html">AppPhysicsBvh</a></li><li><a href="InitLoader.html">InitLoader</a></li><li><a href="InitLoader_InitLoader.html">InitLoader</a></li><li><a href="JsonParser.html">JsonParser</a></li><li><a href="JsonParser_JsonParser.html">JsonParser</a></li><li><a href="PanelUtils.html">PanelUtils</a></li><li><a href="PersonSearcher.html">PersonSearcher</a></li><li><a href="SceneSetup.html">SceneSetup</a></li><li><a href="SceneSetup_SceneSetup.html">SceneSetup</a></li><li><a href="Zone.html">Zone</a></li><li><a href="ZoneManager.html">ZoneManager</a></li><li><a href="ZoneSearcher.html">ZoneSearcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CONFIG">CONFIG</a></li><li><a href="global.html#DEBUG_MODE">DEBUG_MODE</a></li><li><a href="global.html#DEBUG_MODE_STATS">DEBUG_MODE_STATS</a></li><li><a href="global.html#FPS">FPS</a></li><li><a href="global.html#Intervalle">Intervalle</a></li><li><a href="global.html#Nombre">Nombre</a></li><li><a href="global.html#_backToGame">_backToGame</a></li><li><a href="global.html#_initUI">_initUI</a></li><li><a href="global.html#_togglePanel">_togglePanel</a></li><li><a href="global.html#ambient">ambient</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#clock">clock</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#cursor">cursor</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#gltfLoader">gltfLoader</a></li><li><a href="global.html#gridHelper">gridHelper</a></li><li><a href="global.html#intersectsBounds">intersectsBounds</a></li><li><a href="global.html#intersectsTriangle">intersectsTriangle</a></li><li><a href="global.html#key">key</a></li><li><a href="global.html#keyMap">keyMap</a></li><li><a href="global.html#lastFrameTime">lastFrameTime</a></li><li><a href="global.html#modelLoaded">modelLoaded</a></li><li><a href="global.html#particles">particles</a></li><li><a href="global.html#particlesGeo">particlesGeo</a></li><li><a href="global.html#particlesMat">particlesMat</a></li><li><a href="global.html#pivot">pivot</a></li><li><a href="global.html#pos">pos</a></li><li><a href="global.html#renderer">renderer</a></li><li><a href="global.html#resizeTimeout">resizeTimeout</a></li><li><a href="global.html#rim">rim</a></li><li><a href="global.html#scene">scene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jun 02 2026 09:56:01 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

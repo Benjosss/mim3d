@@ -1,13 +1,28 @@
 import * as THREE from "three";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 
+/**
+ * Classe utilitaire pour le débogage de l'application Three.js.
+ * Gère les aides visuelles (helpers), les statistiques de performance et l'affichage des informations de debug.
+ */
 export default class AppDebugUtils{
+    /**
+     * Crée une instance de AppDebugUtils.
+     * @param {THREE.Scene} scene - La scène Three.js principale.
+     * @param {Object} config - Objet de configuration globale de l'application.
+     * @param {Stats} stats - Instance de la bibliothèque Stats.js.
+     */
     constructor(scene, config, stats){
         this.scene = scene;
         this.config = config;
         this.stats = stats;
     }
 
+    /**
+     * Construit une représentation visuelle (capsule) pour le joueur.
+     * Composée d'un cylindre et de deux demi-sphères en wireframe rouge.
+     * @returns {THREE.Group} Le groupe contenant les maillages de l'aide visuelle du joueur.
+     */
     buildPlayerCapsuleHelper(){
         const scene = this.scene;
         const CONFIG = this.config;
@@ -26,6 +41,11 @@ export default class AppDebugUtils{
         return capsuleHelper;
     }
 
+    /**
+     * Met à jour la position de l'aide visuelle de la capsule pour suivre le joueur.
+     * @param {THREE.Group} capsuleHelper - Le groupe retourné par buildPlayerCapsuleHelper.
+     * @param {THREE.Vector3} playerPos - La position actuelle du joueur.
+     */
     playerCapsuleHelperFollow(capsuleHelper, playerPos){
         const CONFIG = this.config;
 
@@ -36,6 +56,10 @@ export default class AppDebugUtils{
         );
     }
 
+    /**
+     * Crée des représentations en fil de fer (wireframe) pour tous les objets de collision.
+     * @param {THREE.Mesh[]} colliderMeshes - Tableau de meshes servant de collisionneurs.
+     */
     buildColliderMeshesHelper(colliderMeshes){
         const scene = this.scene;
 
@@ -57,6 +81,11 @@ export default class AppDebugUtils{
         });
     }
 
+    /**
+     * Ajoute des panneaux personnalisés à l'instance Stats.js (Draw calls, Zones, Géométries, Triangles).
+     * Configure également le style du conteneur Stats.
+     * @returns {Stats.Panel[]} Tableau contenant les nouveaux panneaux créés.
+     */
     createStatsPanels(){
         const stats = this.stats;
 
@@ -84,6 +113,10 @@ export default class AppDebugUtils{
         return [drawCallsPanel, zoneNumberPanel, geometriesCountPanel, trianglesCountPanel];
     }
 
+    /**
+     * Génère et injecte l'interface utilisateur de debug (Overlay HTML).
+     * Affiche l'aide des raccourcis clavier et prépare le conteneur des coordonnées.
+     */
     renderDebugMessage(){
         const div = document.createElement('div');
         div.className = 'toast-notification';
@@ -115,6 +148,11 @@ export default class AppDebugUtils{
         document.body.appendChild(coordinatesDiv);
     }
 
+    /**
+     * Met à jour l'affichage dynamique des coordonnées du joueur et de la caméra dans l'interface de debug.
+     * @param {THREE.Vector3} playerPos - Position actuelle du joueur.
+     * @param {THREE.Camera} camera - Caméra active pour récupérer le point de regard.
+     */
     showCoordinates(playerPos, camera){
         const div = document.getElementById("debug-coordinates");
         const look = new THREE.Vector3();

@@ -1,61 +1,90 @@
-import {Pathfinding, PathfindingHelper} from 'three-pathfinding';
+import { Pathfinding, PathfindingHelper } from 'three-pathfinding';
 import * as THREE from "three";
 
+/**
+ * Gestion du pathfinding et de la navigation assistée via NavMesh.
+ * * Cette classe gère le chargement du maillage de navigation (NavMesh), le calcul
+ * de trajectoires fluides (lissage laplacien), ainsi que deux modes de navigation :
+ * 1. Marche automatique : déplacement cinématique du joueur le long d'une courbe.
+ * 2. Guidage visuel : affichage d'un tracé au sol et d'instructions directionnelles.
+ *
+ * @class AppPathfinding
+ */
 export default class AppPathfinding {
+    /**
+     * @param {THREE.Scene}  scene         - Scène Three.js pour l'affichage des helpers et tracés.
+     * @param {THREE.Camera} camera        - Caméra pour l'orientation du regard en mode auto.
+     * @param {THREE.Group}  playerGroup   - Groupe 3D représentant le joueur.
+     * @param {boolean}      debugMode     - Active l'affichage visuel du NavMesh.
+     */
     constructor(scene, camera, playerGroup, debugMode) {
         this.scene = scene;
         this.camera = camera;
         this.playerGroup = playerGroup;
         this.debugMode = debugMode;
+
+        /** @type {boolean} État d'affichage du tracé visuel (tube 3D). */
         this.showPath = document.getElementById('settings-show-path').checked;
 
         this.pathfinding = new Pathfinding();
         this.pathfindingHelper = new PathfindingHelper();
 
-        this.speed = 4;
-        this.zone = "fac"
-        this.groupID = null;
-
+        this.speed = 4;                 // Vitesse de déplacement en unités/seconde
+        this.zone = "fac";              // Identifiant de la zone de navigation
+        this.groupID = null;            // ID du groupe (îlot) de navigation actuel
         this.navmesh = null;
         this.isNavMeshLoaded = false;
 
-        this.isMoving = false;
+        this.isMoving = false;          // État du déplacement automatique
         this.targetZoneCenter = new THREE.Vector3();
-        this.splineCurve = null;
-        this.splineProgress = 0;
-        this.splineTotalLength = 0;
-        this.visualPathLine = null; // Pour afficher la courbe
-        this.smoothLookAt = null;
+        this.splineCurve = null;        // Tableau de points formant le chemin lisse
+        this.splineProgress = 0;        // Progression actuelle (en unités de distance)
+        this.splineTotalLength = 0;     // Longueur totale du chemin
+        this.visualPathLine = null;     // Mesh (Tube) représentant le chemin visuel
+        this.smoothLookAt = null;       // Cible du regard lissée pour la caméra
 
-        this.isGuiding = false;
+        this.isGuiding = false;         // État du guidage visuel actif
         this.guidingPath = null;
         this.guideDestinationName = null;
         this.guideDestinationDiplayName = null;
         this.currentSegment = null;
     }
 
+    /** @type {number} Nombre de points d'anticipation pour le calcul du regard. */
+    LOOK_AHEAD_INDEX = 12;
+
     /**
-     * Injecte la référence à playerPos après sa déclaration dans app.js.
-     * @param {THREE.Vector3} playerPos
+     * Injecte la référence de position du joueur.
+     * @param {THREE.Vector3} playerPos - Position partagée du joueur.
      */
     setPlayerPos(playerPos) {
         this.playerPos = playerPos;
     }
 
+    /**
+     * Ajoute l'aide visuelle du pathfinding à la scène si le mode debug est actif.
+     */
     showHelper() {
         if (this.debugMode) {
             this.scene.add(this.pathfindingHelper);
         }
     }
 
+    /**
+     * Charge le fichier GLTF du NavMesh et initialise les données de zone.
+     * @param {string} path - URL du fichier GLTF.
+     * @param {THREE.GLTFLoader} loader - Instance du chargeur.
+     */
     loadNavMesh(path, loader) {
         loader.load(path, (gltf) => {
             let navMeshObject = null;
 
+            // Parcours pour trouver le mesh de navigation
             gltf.scene.traverse((child) => {
                 if (child.isMesh && child.geometry) {
                     navMeshObject = child;
 
+                    // Matériau de visualisation (semi-transparent en debug)
                     child.material = new THREE.MeshBasicMaterial({
                         color: 0x00ff00,
                         transparent: true,
@@ -65,6 +94,7 @@ export default class AppPathfinding {
 
                     this.debugMode ? child.material.opacity = 0.5 : child.material.opacity = 0;
 
+                    // Élévation légère pour éviter la superposition parfaite avec le sol
                     child.position.y += 0.05;
                 }
             });
@@ -74,12 +104,12 @@ export default class AppPathfinding {
                 return;
             }
 
-            // Préparation de la géométrie pour la logique de pathfinding
+            // Transformation de la géométrie dans l'espace monde pour le pathfinding
             navMeshObject.updateWorldMatrix(true, false);
             const geometry = navMeshObject.geometry.clone();
             geometry.applyMatrix4(navMeshObject.matrixWorld);
 
-            // Initialisation de la zone de navigation
+            // Création de la structure de données spatiale (BVH interne à three-pathfinding)
             this.pathfinding.setZoneData(this.zone, Pathfinding.createZone(geometry));
 
             // Décommenter pour voir les nodes du navmesh, LES PERFORMANCES SERONT FORTEMENT AFFECTEES
@@ -109,25 +139,38 @@ export default class AppPathfinding {
 
             this.scene.add(gltf.scene);
 
-            // Positionnement initial du joueur
-            const start = this.snapToNavMesh(new THREE.Vector3(85, 20, -3));
+            // Recalage initial du joueur sur le NavMesh au point (0,0,0)
+            const start = this.snapToNavMesh(new THREE.Vector3(0, 0, 0));
             if (start) this.playerGroup.position.copy(start);
         });
     }
 
+    /**
+     * Projette une position 3D sur le point le plus proche du NavMesh.
+     * @param {THREE.Vector3} position - Position source.
+     * @returns {THREE.Vector3|null} Position recalée ou null.
+     */
     snapToNavMesh(position) {
+        // Trouve l'îlot (groupe) de navigation sous la position
         const group = this.pathfinding.getGroup(this.zone, position);
         if (group === null) return null;
+        // Trouve le triangle (node) le plus proche
         const node = this.pathfinding.getClosestNode(position, this.zone, group);
         return node ? node.centroid.clone() : null;
     }
 
+    /**
+     * Calcule un chemin fluide pour la marche automatique.
+     * @param {string} name - Nom de la zone de destination.
+     * @param {Array}  zones - Liste des zones de déclenchement.
+     */
     findAutoPathTo(name, zones) {
         if (this.isGuiding || this.isMoving) {
             alert("Un guidage est déjà en cours !");
             return;
         }
 
+        // --- Résolution de la cible ---
         let target = null;
         zones.forEach(zone => {
             if (zone.name === name){
@@ -138,12 +181,14 @@ export default class AppPathfinding {
 
         if (!this.isNavMeshLoaded || !target) return;
 
+        // --- Calcul du chemin A* ---
         this.groupID = this.pathfinding.getGroup(this.zone, this.playerGroup.position);
         const start = this.snapToNavMesh(this.playerGroup.position);
         const end = this.snapToNavMesh(target);
 
         if (this.groupID === null || !start || !end) return;
 
+        // Retourne les points de passage bruts (sommets de triangles)
         const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
 
         if (!path || path.length === 0) return;
@@ -151,26 +196,19 @@ export default class AppPathfinding {
         const pathfindingZone = this.pathfinding.zones[this.zone];
         const group = pathfindingZone.groups[this.groupID];
 
-        const THRESHOLD = 1;
 
         // --- Construction du chemin enrichi ---
 
         // Inclut le point de départ pour couvrir le premier segment
         const fullPath = [start, ...path];
-
-        // Collecte les centroids de tous les nœuds traversés, ordonnés selon le chemin
-        const orderedCentroids = this.sampleIntermediatesPoints(group, fullPath, THRESHOLD);
-
+        // 1. Échantillonnage des centres de triangles traversés
+        const orderedCentroids = this.sampleIntermediatesPoints(group, fullPath, 1);
         if (orderedCentroids.length === 0) return;
 
-        // Lissage laplacien : déplace les centroids vers la moyenne de leurs voisins
-        // afin de s'éloigner des parois du NavMesh
-        const safeCentroids = this.pushAwayFromWalls(orderedCentroids, group, 2);
+        // 2. Éloignement des centres par rapport aux murs (Lissage Laplacien)
+        const safeCentroids = this.pushAwayFromWalls(orderedCentroids, group, 3);
 
-        // --- Densification linéaire du chemin final ---
-
-        // Interpole linéairement entre chaque centroid pour obtenir
-        // un chemin dense et régulier (1 point toutes les 0.5 unités)
+        // 3. Densification : création d'une liste de points à intervalle régulier (0.5m)
         const linearPath = [];
         const allPoints = [this.playerGroup.position.clone(), ...safeCentroids];
 
@@ -184,55 +222,28 @@ export default class AppPathfinding {
             }
         });
 
-        // Stocke le chemin final et met à jour le helper de visualisation
+        // --- Préparation des données de mouvement ---
         this.splineCurve = linearPath;
         let totalDist = 0;
         for (let i = 1; i < linearPath.length; i++) {
             totalDist += linearPath[i].distanceTo(linearPath[i - 1]);
         }
-        this.splineTotalLength = totalDist; // distance réelle en unités monde
+        this.splineTotalLength = totalDist;
         this.splineProgress = 0;
-        this.pathfindingHelper
-            .reset()
-            .setPlayerPosition(start)
-            .setTargetPosition(end)
-            .setPath(this.splineCurve);
+
+        // Mise à jour visuelle des outils de debug
+        this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(this.splineCurve);
 
         if (this.showPath) {
-            // Supprime l'ancien tracé s'il existe
-            if (this.visualPathLine) {
-                this.scene.remove(this.visualPathLine);
-                this.visualPathLine.geometry.dispose();
-                this.visualPathLine.material.dispose();
-                this.visualPathLine = null;
-            }
-
-            const step = Math.max(1, Math.floor(linearPath.length / 100));
-            const tubePoints = linearPath.filter((_, i) => i % step === 0);
-            if (tubePoints.at(-1) !== linearPath.at(-1)) tubePoints.push(linearPath.at(-1));
-
-            const curve = new THREE.CatmullRomCurve3(tubePoints, false, 'centripetal', 0.5);
-
-            const tubeGeo = new THREE.TubeGeometry(
-                curve,
-                tubePoints.length * 2, // segments le long du tube
-                0.1,                          // rayon du tube
-                10,                     // segments radiaux
-                false
-            );
-
-            const tubeMat = new THREE.MeshBasicMaterial({
-                color: 0xffffff,
-                transparent: true,
-                opacity: 0.75,
-                depthWrite: false, // évite les artefacts avec le sol
-            });
-
-            this.visualPathLine = new THREE.Mesh(tubeGeo, tubeMat);
-            this.scene.add(this.visualPathLine);
+            this._createVisualPath(linearPath);
         }
     }
 
+    /**
+     * Boucle de mise à jour du mouvement automatique (appelée à chaque frame).
+     * @param {number} delta - Temps écoulé.
+     * @param {Object} fpsPlayer - Contrôleur du joueur.
+     */
     move(delta, fpsPlayer) {
         if (!this.splineCurve || this.splineCurve.length === 0) {
             this.isMoving = false;
@@ -240,9 +251,9 @@ export default class AppPathfinding {
         }
 
         this.isMoving = true;
-        this.playerGroup.visible = false;
+        this.playerGroup.visible = false; // Masquage du modèle pour la vue caméra
 
-        // splineProgress accumule la distance parcourue en unités monde
+        // Avancement sur la distance totale
         this.splineProgress += this.speed * delta;
 
         // Cherche le point correspondant à cette distance dans le tableau
@@ -250,49 +261,56 @@ export default class AppPathfinding {
         let newPos = this.splineCurve[this.splineCurve.length - 1];
         let lookAtTarget = this.splineCurve[Math.min(10, this.splineCurve.length - 1)];
 
+        // Recherche du segment correspondant à la progression actuelle
         for (let i = 1; i < this.splineCurve.length; i++) {
             const segDist = this.splineCurve[i].distanceTo(this.splineCurve[i - 1]);
             if (accumulated + segDist >= this.splineProgress) {
-                // Interpolation dans ce segment
+                // Interpolation précise entre deux points du chemin
                 const t = (this.splineProgress - accumulated) / segDist;
                 newPos = new THREE.Vector3().lerpVectors(this.splineCurve[i - 1], this.splineCurve[i], t);
 
-                // Regarder 12 unités plus loin
-                const lookIdx = Math.min(i + 12, this.splineCurve.length - 1);
+                // Détermination du point de regard (anticipation)
+                const lookIdx = Math.min(i + this.LOOK_AHEAD_INDEX, this.splineCurve.length - 1);
                 lookAtTarget = this.splineCurve[lookIdx];
                 break;
             }
             accumulated += segDist;
         }
 
-        if (!this.smoothLookAt) {
-            this.smoothLookAt = lookAtTarget.clone();
-        }
-        this.smoothLookAt.lerp(lookAtTarget, 0.06); // 0.05 = inertie, ajuste entre 0.01 (très lent) et 0.15 (plus réactif)
+        // Lissage de l'orientation (Interpolation de la cible du regard)
+        if (!this.smoothLookAt) this.smoothLookAt = lookAtTarget.clone();
+        this.smoothLookAt.lerp(lookAtTarget, 0.06);
 
-        // Élève le point de regard à hauteur des yeux
+        // Élévation du regard à 1m (hauteur d'yeux)
         const eyeLevelTarget = this.smoothLookAt.clone();
         eyeLevelTarget.y += 1;
 
         this.camera.lookAt(eyeLevelTarget);
 
+        // Synchronisation des positions logique et visuelle
         if (this.playerPos) {
             this.playerPos.x = newPos.x;
             this.playerPos.z = newPos.z;
         }
-
         this.playerGroup.position.copy(newPos);
 
-        if (document.getElementById("walkPanel").style.display === "none") {
-            document.getElementById("walkPanel").style.display = "flex";
+        const panel = document.getElementById("walkPanel");
+        // Affichage de l'interface de contrôle
+        if (panel.style.display === "none") {
+            panel.style.display = "flex";
             document.getElementById("walkPanel-p").innerHTML = "Marche auto... <br> [Entrée] pour arrêter";
         }
 
+        // Condition d'arrêt
         if (this.splineProgress >= this.splineTotalLength) {
             this.endMove(fpsPlayer);
         }
     }
 
+    /**
+     * Termine la marche automatique et lance l'animation finale.
+     * @param {Object} fpsPlayer - Contrôleur du joueur.
+     */
     endMove(fpsPlayer) {
         this.camera.lookAt(this.targetZoneCenter);
         this.targetZoneCenter = new THREE.Vector3();
@@ -301,43 +319,21 @@ export default class AppPathfinding {
         this.playerGroup.visible = true;
         this.smoothLookAt = null;
 
+        // Déclenchement de l'animation de geste (montrer la pièce)
         const gestureAction = fpsPlayer.model.userData.actions['pointing'];
 
         if (gestureAction) {
-            gestureAction.reset(); // Recommence du début
-            gestureAction.setLoop(THREE.LoopOnce); // Ne joue qu'une fois
-            gestureAction.clampWhenFinished = false; // Revient à la pose d'origine (idle) après
-            gestureAction.enabled = true;
-            gestureAction.paused = false;
-            gestureAction.play();
+            gestureAction.reset().setLoop(THREE.LoopOnce).play();
         }
 
         document.getElementById("walkPanel").style.display = "none";
-        document.getElementById("walkPanel-p").innerHTML = ""
+        document.getElementById("walkPanel-p").innerHTML = "";
 
-
-        if (this.visualPathLine) {
-            this.scene.remove(this.visualPathLine);
-            this.visualPathLine.geometry.dispose();
-            this.visualPathLine.material.dispose();
-            this.visualPathLine = null;
-        }
+        this._clearVisualPath();
     }
 
     /**
-     * Calcule et initialise un chemin de guidage vers une destination nommée.
-     *
-     * Le chemin est construit en plusieurs étapes :
-     *  1. Recherche des coordonnées cibles dans la liste des zones fournies.
-     *  2. Calcul du chemin brut via le système de pathfinding sur le NavMesh.
-     *  3. Échantillonnage des centroids de nœuds le long de chaque segment du chemin.
-     *  4. Lissage laplacien pour éloigner les points des murs.
-     *  5. Densification linéaire du chemin final pour un déplacement fluide.
-     *
-     * @param {string} name         - Identifiant unique de la destination cible.
-     * @param {string} displayName  - Nom lisible affiché à l'utilisateur pendant le guidage.
-     * @param {Array}  zones        - Liste des zones disponibles, chacune contenant { name, pathCoords }.
-     * @returns {void}
+     * Initialise un guidage visuel vers une destination.
      */
     findGuidedPathTo(name, displayName, zones) {
         // Empêche le lancement d'un nouveau guidage si un déplacement ou guidage est déjà en cours
@@ -347,7 +343,6 @@ export default class AppPathfinding {
         }
 
         // --- Résolution de la destination ---
-
         let target = null;
         this.guideDestinationName = name;
         this.guideDestinationDiplayName = displayName;
@@ -374,28 +369,15 @@ export default class AppPathfinding {
 
         // Retourne un tableau de Vector3 représentant les waypoints du chemin
         const path = this.pathfinding.findPath(start, end, this.zone, this.groupID);
-
         if (!path || path.length === 0) return;
 
         // Récupère les nœuds du groupe de navigation actif
         const pathfindingZone = this.pathfinding.zones[this.zone];
         const group = pathfindingZone.groups[this.groupID];
 
-        // Rayon de recherche pour associer un sample à un nœud voisin
-        const THRESHOLD = 1;
-
-        // --- Construction du chemin enrichi ---
-
-        // Inclut le point de départ pour couvrir le premier segment
+        // Construction du chemin avec lissage identique à la marche auto
         const fullPath = [start, ...path];
-
-        // Collecte les centroids de tous les nœuds traversés, ordonnés selon le chemin
-        const orderedCentroids = this.sampleIntermediatesPoints(group, fullPath, THRESHOLD);
-
-        if (orderedCentroids.length === 0) return;
-
-        // Lissage laplacien : déplace les centroids vers la moyenne de leurs voisins
-        // afin de s'éloigner des parois du NavMesh
+        const orderedCentroids = this.sampleIntermediatesPoints(group, fullPath, 1);
         const safeCentroids = this.pushAwayFromWalls(orderedCentroids, group, 2);
 
         // --- Densification linéaire du chemin final ---
@@ -417,47 +399,17 @@ export default class AppPathfinding {
 
         // Stocke le chemin final et met à jour le helper de visualisation
         this.guidingPath = linearPath;
-        this.pathfindingHelper
-            .reset()
-            .setPlayerPosition(start)
-            .setTargetPosition(end)
-            .setPath(this.guidingPath);
+        this.pathfindingHelper.reset().setPlayerPosition(start).setTargetPosition(end).setPath(this.guidingPath);
 
         if (this.showPath) {
-            // Supprime l'ancien tracé s'il existe
-            if (this.visualPathLine) {
-                this.scene.remove(this.visualPathLine);
-                this.visualPathLine.geometry.dispose();
-                this.visualPathLine.material.dispose();
-                this.visualPathLine = null;
-            }
-
-            const step = Math.max(1, Math.floor(linearPath.length / 100));
-            const tubePoints = linearPath.filter((_, i) => i % step === 0);
-            if (tubePoints.at(-1) !== linearPath.at(-1)) tubePoints.push(linearPath.at(-1));
-
-            const curve = new THREE.CatmullRomCurve3(tubePoints, false, 'centripetal', 0.5);
-
-            const tubeGeo = new THREE.TubeGeometry(
-                curve,
-                tubePoints.length * 2, // segments le long du tube
-                0.1,                          // rayon du tube
-                10,                     // segments radiaux
-                false
-            );
-
-            const tubeMat = new THREE.MeshBasicMaterial({
-                color: 0xffffff,
-                transparent: true,
-                opacity: 0.75,
-                depthWrite: false, // évite les artefacts avec le sol
-            });
-
-            this.visualPathLine = new THREE.Mesh(tubeGeo, tubeMat);
-            this.scene.add(this.visualPathLine);
+            this._createVisualPath(linearPath);
         }
     }
 
+    /**
+     * Extrait les centres des triangles traversés par un chemin pour un tracé fluide.
+     * @returns {THREE.Vector3[]}
+     */
     sampleIntermediatesPoints(group, path, threshold, density = 0.8) {
         const visitedNodes = new Set();
         const orderedCentroids = [];
@@ -472,13 +424,11 @@ export default class AppPathfinding {
             const steps = Math.ceil(segLength / density);
 
             for (let s = 0; s <= steps; s++) {
-                const t = s / steps;
-                const sample = new THREE.Vector3().lerpVectors(segStart, segEnd, t);
-
-                // Trouver le noeud le plus proche de ce sample
+                const sample = new THREE.Vector3().lerpVectors(segStart, segEnd, s / steps);
                 let closest = null;
                 let closestDist = threshold;
 
+                // On cherche quel triangle du NavMesh se trouve sous ce point échantillonné
                 group.forEach(node => {
                     const d = node.centroid.distanceTo(sample);
                     if (d < closestDist) {
@@ -497,18 +447,22 @@ export default class AppPathfinding {
         return orderedCentroids;
     }
 
+    /**
+     * Pousse les points vers le centre des polygones pour éviter de raser les murs.
+     * @returns {THREE.Vector3[]}
+     */
     pushAwayFromWalls(centroids, group, iterations = 2) {
         let points = centroids.map(c => c.clone());
 
         for (let iter = 0; iter < iterations; iter++) {
             points = points.map((point, i) => {
-                if (i === 0 || i === points.length - 1) return point; // garde start/end
+                if (i === 0 || i === points.length - 1) return point;
 
                 // Trouver le noeud correspondant
                 const node = group.find(n => n.centroid.distanceTo(point) < 0.5);
                 if (!node) return point;
 
-                // Moyenne des centroids voisins
+                // Moyenne de position entre le point et ses voisins de navigation
                 const neighbourCentroids = node.neighbours
                     .map(id => group[id])
                     .filter(Boolean)
@@ -524,36 +478,28 @@ export default class AppPathfinding {
                 return point.clone().lerp(avg, 0.5);
             });
         }
-
         return points;
     }
 
+    /**
+     * Met à jour les instructions textuelles et directionnelles du guidage.
+     */
     guide(zones, current_room) {
         const guidedNavPanel = document.getElementById("guidedNavPanel");
 
-        if (!this.guidingPath) return
+        if (!this.guidingPath) return;
 
+        // --- Phase Initiale : Calcul des étapes (Escaliers, couloirs) ---
         if (!this.isGuiding) {
             const crossedZones = this.getCrossedZones(zones);
 
             const INSTRUCTION_RULES = {
                 stairs: (zone, prev, next) => {
-                    let goingUp;
-                    if (!prev) {
-                        goingUp = next?.triggerBox.min.y > zone?.triggerBox.min.y;
-                    } else {
-                        goingUp = next?.triggerBox.min.y > prev?.triggerBox.min.y;
-                    }
+                    let goingUp = (next?.triggerBox.min.y ?? zone?.triggerBox.min.y) > (prev?.triggerBox.min.y ?? zone?.triggerBox.min.y);
                     let deltaAlt = Math.abs(next?.triggerBox.min.y - prev?.triggerBox.min.y);
-                    console.log(deltaAlt);
-                    let floors = 0;
-                    while (deltaAlt >= 2.8) {
-                        floors++;
-                        deltaAlt -= 2.8;
-                    }
+                    let floors = Math.floor(deltaAlt / 2.8);
                     const direction = goingUp ? "Montez" : "Descendez";
-                    const etages = floors <= 1 ? "étage" : "étages";
-                    const etagesText = floors !== 0 ? "de " + floors + " " + etages : "";
+                    const etagesText = floors > 0 ? ` de ${floors} étage${floors > 1 ? 's' : ''}` : "";
                     return `${direction} l'escalier ${zone.displayName ?? ""} ${etagesText}`.trim();
                 },
                 corridor: (zone, prev, next) => `Dirigez-vous vers ${next?.displayName ?? this?.guideDestinationDiplayName ?? ""}`,
@@ -561,47 +507,36 @@ export default class AppPathfinding {
 
             const navInstructions = document.getElementById("navInstructions");
             crossedZones.forEach((zone, index) => {
-                const prev = crossedZones[index - 1] ?? null;
-                const next = crossedZones[index + 1] ?? null;
-
                 const rule = INSTRUCTION_RULES[zone.type] ?? (() => "Continuez");
-                const text = rule(zone, prev, next);
-
                 const item = document.createElement('p');
-                item.innerHTML = text;
-
+                item.innerHTML = rule(zone, crossedZones[index - 1], crossedZones[index + 1]);
                 navInstructions.appendChild(item);
-
-                this.isGuiding = true;
-                guidedNavPanel.style.display = "flex";
             });
+
+            this.isGuiding = true;
+            guidedNavPanel.style.display = "flex";
         }
 
+        // --- Phase Dynamique : Calcul des flèches/directions relatives ---
         if (this.isGuiding) {
-            const nearestNode = this.getNearestGuidedPathPointFromPlayer(this.playerPos)
+            const nearestNode = this.getNearestGuidedPathPointFromPlayer();
             const angle = this.getRelativeAngleToTarget(nearestNode);
             const angleDeg = angle * (180 / Math.PI);
 
-            const currentZone = this.getZoneAtPoint(this.playerPos, zones);
             const nextZone = this.getZoneAtPoint(nearestNode, zones);
-
-            let displayName = false;
-
-            if(currentZone !== nextZone) {
-                displayName = true;
-            }
-
             const dirInst = document.getElementById("directionInstructions");
+
+            // Détermination de l'instruction selon l'angle et l'altitude relative
             if(nearestNode.y < this.playerPos.y) {
                 dirInst.innerHTML = "<p>Descendez l'escalier</p>";
             } else if (nearestNode.y > this.playerPos.y + 1) {
                 dirInst.innerHTML = "<p>Montez l'escalier</p>";
             } else if (angleDeg > -30 && angleDeg <= 30) {
-                 displayName ? dirInst.innerHTML = "<p>Continuez tout droit vers '" + nextZone.displayName + "'</p>" : dirInst.innerHTML = "<p>Continuez tout droit</p>";
+                dirInst.innerHTML = `<p>Continuez tout droit vers '${nextZone?.displayName || "la suite"}'</p>`;
             } else if (angleDeg > 30 && angleDeg <= 150) {
-                displayName ? dirInst.innerHTML = "<p>Tournez à droite vers '" + nextZone.displayName + "'</p>" : dirInst.innerHTML = "<p>Tournez à droite</p>";
+                dirInst.innerHTML = `<p>Tournez à droite vers '${nextZone?.displayName || "la suite"}'</p>`;
             } else if (angleDeg < -30 && angleDeg >= -150) {
-                displayName ? dirInst.innerHTML = "<p>Tournez à gauche vers '" + nextZone.displayName + "'</p>" : dirInst.innerHTML = "<p>Tournez à gauche</p>";
+                dirInst.innerHTML = `<p>Tournez à gauche vers '${nextZone?.displayName || "la suite"}'</p>`;
             } else {
                 dirInst.innerHTML = "<p>Retournez-vous</p>";
             }
@@ -622,6 +557,10 @@ export default class AppPathfinding {
         }
     }
 
+    /**
+     * Calcule l'angle relatif (en radians) entre le regard de la caméra et un point cible.
+     * @returns {number} Angle normalisé entre -PI et PI.
+     */
     getRelativeAngleToTarget(targetPos) {
         const playerPos = this.camera.position;
 
@@ -629,23 +568,20 @@ export default class AppPathfinding {
         const dx = targetPos.x - playerPos.x;
         const dz = targetPos.z - playerPos.z;
 
-        // Calcul de l'angle du monde vers la cible
-        // On utilise -dz car dans Three.js, l'avant est vers -Z
+        // Angle du monde vers la cible
         const worldTargetAngle = Math.atan2(-dz, dx);
 
-        // 2. Direction du regard (Forward)
+        // Direction actuelle de la caméra
         const forward = new THREE.Vector3();
         this.camera.getWorldDirection(forward);
 
-        // Calcul de l'angle du monde du regard
+        // 2. Calcul de l'angle du monde du regard
         const worldLookAngle = Math.atan2(-forward.z, forward.x);
 
         // 3. Calcul de la différence
         let relativeAngle = worldTargetAngle - worldLookAngle;
 
-        // 4. Normalisation stricte entre -PI et PI
-        // C'est ici qu'on s'assure que "tourner à gauche" reste une valeur négative
-        // et "tourner à droite" une valeur positive (ou l'inverse selon ton choix)
+        // Normalisation stricte
         while (relativeAngle > Math.PI) relativeAngle -= Math.PI * 2;
         while (relativeAngle < -Math.PI) relativeAngle += Math.PI * 2;
 
@@ -654,6 +590,9 @@ export default class AppPathfinding {
         return -relativeAngle;
     }
 
+    /**
+     * Arrête le guidage et nettoie l'interface.
+     */
     endGuide() {
         this.guidingPath = null;
         this.guideDestinationName = null;
@@ -662,32 +601,28 @@ export default class AppPathfinding {
         document.getElementById("guidedNavPanel").style.display = "none";
         document.getElementById("navInstructions").innerHTML = "";
         document.getElementById("walkPanel").style.display = "none";
-        document.getElementById("walkPanel-p").innerHTML = "";
-
-        if (this.visualPathLine) {
-            this.scene.remove(this.visualPathLine);
-            this.visualPathLine.geometry.dispose();
-            this.visualPathLine.material.dispose();
-            this.visualPathLine = null;
-        }
+        this._clearVisualPath();
     }
 
+    /**
+     * Analyse le chemin de guidage pour lister les zones traversées sans doublon.
+     * @returns {Array} Liste des objets zones.
+     */
     getCrossedZones(zones) {
         const crossedZones = [];
-
         this.guidingPath.forEach(node => {
             const zone = this.getZoneAtPoint(node, zones);
             if (!zone) return;
-
             const last = crossedZones.at(-1);
-            if (!last || last.name !== zone.name) {
-                crossedZones.push(zone);
-            }
+            if (!last || last.name !== zone.name) crossedZones.push(zone);
         });
-
         return crossedZones;
     }
 
+    /**
+     * Trouve la zone (salle/escalier) contenant un point 3D.
+     * @returns {Object|null}
+     */
     getZoneAtPoint(point, zones) {
         const furnitures = ["CM", "TD", "TP", "toilets", "office", "misc"]
         const candidates = zones.filter(z => z.triggerBox.containsPoint(point) && !furnitures.includes(z.type));
@@ -695,33 +630,23 @@ export default class AppPathfinding {
         if (candidates.length === 0) return null;
         if (candidates.length === 1) return candidates[0];
 
-        // En cas de superposition, prend la plus petite box (la plus précise)
+        // Retourne la zone avec le plus petit volume pour plus de précision (emboîtement)
         return candidates.reduce((smallest, zone) => {
-            const sizeA = new THREE.Vector3();
-            const sizeB = new THREE.Vector3();
+            const sizeA = new THREE.Vector3(), sizeB = new THREE.Vector3();
             smallest.triggerBox.getSize(sizeA);
             zone.triggerBox.getSize(sizeB);
-            const volA = sizeA.x * sizeA.y * sizeA.z;
-            const volB = sizeB.x * sizeB.y * sizeB.z;
-            return volB < volA ? zone : smallest;
+            return (sizeB.x * sizeB.y * sizeB.z) < (sizeA.x * sizeA.y * sizeA.z) ? zone : smallest;
         });
     }
 
-    getInstructionsText(current_room) {
-        const title = current_room.displayName + " vers " + this.guideDestinationDiplayName;
-        const texte = document.getElementById("navInstructions").innerText;
-        return title + "\n\r" + texte;
-    }
-
-    getInstructionsTitle(current_room) {
-        return current_room.displayName + " vers " + this.guideDestinationDiplayName;
-    }
-
+    /**
+     * Trouve le point du chemin de guidage situé juste devant le joueur pour les calculs.
+     * @returns {THREE.Vector3|null}
+     */
     getNearestGuidedPathPointFromPlayer(){
         if(!this.isGuiding || !this.guidingPath || this.guidingPath.length === 0) return null;
 
-        let closestIndex = -1
-        let closestDist = Number.MAX_SAFE_INTEGER;
+        let closestIndex = -1, closestDist = Infinity;
 
         this.guidingPath.forEach((node, index) => {
             const dist = node.distanceToSquared(this.playerPos);
@@ -731,31 +656,46 @@ export default class AppPathfinding {
             }
         })
 
-        // TODO : Nombre magique = 12 ! A ajuster
-        const aheadIndex = Math.min(closestIndex + 12, this.guidingPath.length - 1);
-
+        // On renvoie un point situé "LOOK_AHEAD" index plus loin pour anticiper la direction
+        const aheadIndex = Math.min(closestIndex + this.LOOK_AHEAD_INDEX, this.guidingPath.length - 1);
         return this.guidingPath[aheadIndex];
     }
 
-    showNearestPointSegment() {
-        if (this.currentSegment) {
-            this.scene.remove(this.currentSegment);
-            this.currentSegment.geometry.dispose();  // Libère la mémoire de la géométrie
-            this.currentSegment.material.dispose();  // Libère la mémoire du matériau
-            this.currentSegment = null;
+    /**
+     * Crée un tube 3D pour visualiser le chemin dans la scène.
+     * @private
+     */
+    _createVisualPath(linearPath) {
+        this._clearVisualPath();
+
+        // Réduction du nombre de points pour la performance (max 100 segments)
+        const step = Math.max(1, Math.floor(linearPath.length / 100));
+        const tubePoints = linearPath.filter((_, i) => i % step === 0);
+        if (tubePoints.at(-1) !== linearPath.at(-1)) tubePoints.push(linearPath.at(-1));
+
+        const curve = new THREE.CatmullRomCurve3(tubePoints, false, 'centripetal', 0.5);
+        const tubeGeo = new THREE.TubeGeometry(curve, tubePoints.length * 2, 0.1, 10, false);
+        const tubeMat = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.75,
+            depthWrite: false
+        });
+
+        this.visualPathLine = new THREE.Mesh(tubeGeo, tubeMat);
+        this.scene.add(this.visualPathLine);
+    }
+
+    /**
+     * Supprime le tracé visuel et libère la mémoire GPU.
+     * @private
+     */
+    _clearVisualPath() {
+        if (this.visualPathLine) {
+            this.scene.remove(this.visualPathLine);
+            this.visualPathLine.geometry.dispose();
+            this.visualPathLine.material.dispose();
+            this.visualPathLine = null;
         }
-
-        if (!this.isGuiding || !this.guidingPath || this.guidingPath.length === 0) return;
-
-        const closestNode = this.getNearestGuidedPathPointFromPlayer(this.playerPos);
-        if (!closestNode) return;
-
-        const points = [this.playerPos, closestNode];
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.LineBasicMaterial({ color: 0x0000FF, linewidth: 10 });
-
-        // 2. Assigner le nouveau segment à notre variable de classe
-        this.currentSegment = new THREE.Line(geometry, material);
-        this.scene.add(this.currentSegment);
     }
 }
