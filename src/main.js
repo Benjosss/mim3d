@@ -20,6 +20,12 @@ document.querySelectorAll('a, button, .btn-primary').forEach(el => {
     el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
 });
 
+document.getElementById('main-start-btn').addEventListener('click', e => {
+    e.preventDefault();
+    history.pushState(null, '', '/UFRMIM');
+    window.location.href = './src/app/app.html';
+});
+
 // == Three.js setup =======================================
 /** @type {HTMLCanvasElement} Canvas cible pour le rendu Three.js */
 const canvas = document.getElementById('three-canvas');

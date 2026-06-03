@@ -4,10 +4,13 @@
     <meta charset="utf-8">
     <title>MIM3D - Visite</title>
     <link rel="icon" type="image/png" href="/images/favicon.png" />
-    <link rel="stylesheet" href="../css/app-style.css">
+    <link rel="stylesheet" href="/src/css/app-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=content_copy,directions_walk,distance,download,help,logout,meeting_room,person,person_search,pin_drop,search,settings,wc"/>
+    <script>
+        history.replaceState(null, '', '/UFRMIM');
+    </script>
 </head>
 <body>
 <!--Fragments chargés via panel-utils-->
@@ -31,6 +34,6 @@
 
 <p id="warningMsg"></p>
 
-<script type="module" src="./app.js"></script>
+<script type="module" src="/src/app/app.js"></script>
 </body>
 </html>
