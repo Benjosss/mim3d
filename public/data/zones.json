@@ -3,1242 +3,2290 @@
     "name": "floor-1",
     "displayName": "Rez-de-jardin, aile B",
     "path": "/models/zones/-1_floor_aisle_b_sized.glb",
-    "impostorPath" : "/models/impostors/imp_-1_floor_aisle_b_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_-1_floor_aisle_b_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Rez de jardin aile b",
-    "adjacentZoneNames": ["floor0", "stairs0to-1_1", "allstairs_1", "allstairs_2", "allstairs_3", "floor-1hall"],
+    "description": "Rez de jardin aile b",
+    "adjacentZoneNames": [
+      "floor0",
+      "stairs0to-1_1",
+      "allstairs_1",
+      "allstairs_2",
+      "allstairs_3",
+      "floor-1hall"
+    ],
     "triggerBox": {
-      "min": [56.320, -0.200, -69.797],
-      "max": [87.549, 4.006, -9.059]
+      "min": [
+        56.320,
+        -0.200,
+        -69.797
+      ],
+      "max": [
+        87.549,
+        4.006,
+        -9.059
+      ]
     }
   },
   {
     "name": "floor-1a",
-    "displayName":  "Rez-de-jardin, aile A",
+    "displayName": "Rez-de-jardin, aile A",
     "path": "/models/zones/-1_floor_aisle_a_sized.glb",
-    "impostorPath" : "/models/impostors/imp_-1_floor_aisle_a_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_-1_floor_aisle_a_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Rez de jardin, aile A",
-    "adjacentZoneNames": ["floor-1hall"],
+    "description": "Rez de jardin, aile A",
+    "adjacentZoneNames": [
+      "floor-1hall"
+    ],
     "triggerBox": {
-      "min": [-0.067, -0.200, -76.342],
-      "max": [56.431, 5.961, -11.398]
+      "min": [
+        -0.067,
+        -0.200,
+        -76.342
+      ],
+      "max": [
+        56.431,
+        5.961,
+        -11.398
+      ]
     }
   },
   {
     "name": "floor-1hall",
-    "displayName":  "Hall rez-de-jardin",
+    "displayName": "Hall rez-de-jardin",
     "path": "/models/zones/-1_floor_hall_sized.glb",
-    "impostorPath" : "/models/impostors/imp_-1_floor_hall_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_-1_floor_hall_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Hall rez de jardin",
-    "adjacentZoneNames": ["floor-1", "floor-1a"],
+    "description": "Hall rez de jardin",
+    "adjacentZoneNames": [
+      "floor-1",
+      "floor-1a"
+    ],
     "triggerBox": {
-      "min": [55.875, -0.200, -35.782],
-      "max": [71.525, 4.006, -27.852]
+      "min": [
+        55.875,
+        -0.200,
+        -35.782
+      ],
+      "max": [
+        71.525,
+        4.006,
+        -27.852
+      ]
     }
   },
   {
     "name": "floor0",
-    "displayName":  "Rez-de-chaussé, aile B",
+    "displayName": "Rez-de-chaussé, aile B",
     "path": "/models/zones/0_floor_aisle_b_sized.glb",
-    "impostorPath" : "/models/impostors/imp_0_floor_aisle_b_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_0_floor_aisle_b_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Rez de chaussé aile b",
-    "adjacentZoneNames": ["floor1", "floor-1", "allstairs_1", "stairs0to-1_1", "allstairs_2", "allstairs_3", "floor0hall"],
+    "description": "Rez de chaussé aile b",
+    "adjacentZoneNames": [
+      "floor1",
+      "floor-1",
+      "allstairs_1",
+      "stairs0to-1_1",
+      "allstairs_2",
+      "allstairs_3",
+      "floor0hall"
+    ],
     "triggerBox": {
-      "min": [70.925, 2.651, -75.214],
-      "max": [89.943, 7.642, -0.082]
+      "min": [
+        70.925,
+        2.651,
+        -75.214
+      ],
+      "max": [
+        89.943,
+        7.642,
+        -0.082
+      ]
     }
   },
   {
     "name": "floor0_a",
-    "displayName":  "Rez-de-chaussé, aile A",
+    "displayName": "Rez-de-chaussé, aile A",
     "path": "/models/zones/0_floor_aisle_a_sized.glb",
-    "impostorPath" : "/models/impostors/imp_0_floor_aisle_a_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_0_floor_aisle_a_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Rez de chaussé aile a",
-    "adjacentZoneNames": ["floor0hall"],
+    "description": "Rez de chaussé aile a",
+    "adjacentZoneNames": [
+      "floor0hall"
+    ],
     "triggerBox": {
-      "min": [5.963, 3.460, -76.234],
-      "max": [56.385, 7.649, -11.819]
+      "min": [
+        5.963,
+        3.460,
+        -76.234
+      ],
+      "max": [
+        56.385,
+        7.649,
+        -11.819
+      ]
     }
   },
   {
     "name": "floor0hall",
-    "displayName":  "Hall rez-de-chaussé",
+    "displayName": "Hall rez-de-chaussé",
     "path": "/models/zones/0_floor_hall_sized.glb",
-    "impostorPath" : "/models/impostors/imp_0_floor_hall_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_0_floor_hall_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Hall rez de chaussé",
-    "adjacentZoneNames": ["floor0",  "floor0_a"],
+    "description": "Hall rez de chaussé",
+    "adjacentZoneNames": [
+      "floor0",
+      "floor0_a"
+    ],
     "triggerBox": {
-      "min": [56.119, -0.100, -35.378],
-      "max": [71.158, 6.943, -27.871]
+      "min": [
+        56.119,
+        -0.100,
+        -35.378
+      ],
+      "max": [
+        71.158,
+        6.943,
+        -27.871
+      ]
     }
   },
   {
     "name": "floor1",
-    "displayName":  "1er étage, aile B",
+    "displayName": "1er étage, aile B",
     "path": "/models/zones/1_floor_aisle_b_sized.glb",
-    "impostorPath" : "/models/impostors/imp_1_floor_aisle_b_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_1_floor_aisle_b_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "1er étage aile b",
-    "adjacentZoneNames": ["floor2", "floor0", "allstairs_1", "allstairs_2", "allstairs_3", "floor1hall"],
+    "description": "1er étage aile b",
+    "adjacentZoneNames": [
+      "floor2",
+      "floor0",
+      "allstairs_1",
+      "allstairs_2",
+      "allstairs_3",
+      "floor1hall"
+    ],
     "triggerBox": {
-      "min": [71.049, 6.443, -75.211],
-      "max": [89.923, 11, -0.106]
+      "min": [
+        71.049,
+        6.443,
+        -75.211
+      ],
+      "max": [
+        89.923,
+        11,
+        -0.106
+      ]
     }
   },
   {
     "name": "floor1_a",
-    "displayName":  "1er étage, aile A",
+    "displayName": "1er étage, aile A",
     "path": "/models/zones/1_floor_aisle_a_sized.glb",
-    "impostorPath" : "/models/impostors/imp_1_floor_aisle_a_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_1_floor_aisle_a_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "1er étage aile a",
-    "adjacentZoneNames": ["floor1hall"],
+    "description": "1er étage aile a",
+    "adjacentZoneNames": [
+      "floor1hall"
+    ],
     "triggerBox": {
-      "min": [5.963, 7.64, -76.234],
-      "max": [57.094, 11.091, -11.821]
+      "min": [
+        5.963,
+        7.64,
+        -76.234
+      ],
+      "max": [
+        57.094,
+        11.091,
+        -11.821
+      ]
     }
   },
   {
     "name": "floor1hall",
-    "displayName":  "Passerelle 1er étage",
+    "displayName": "Passerelle 1er étage",
     "path": "/models/zones/1_floor_hall_sized.glb",
-    "impostorPath" : "/models/impostors/imp_1_floor_hall_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_1_floor_hall_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Passerelle 1er étage",
-    "adjacentZoneNames": ["floor1", "floor1_a"],
+    "description": "Passerelle 1er étage",
+    "adjacentZoneNames": [
+      "floor1",
+      "floor1_a"
+    ],
     "triggerBox": {
-      "min": [56.198, 7.64, -36.76386],
-      "max": [71.364, 11.091, -31.776]
+      "min": [
+        56.198,
+        7.64,
+        -36.76386
+      ],
+      "max": [
+        71.364,
+        11.091,
+        -31.776
+      ]
     }
   },
   {
     "name": "floor2",
-    "displayName":  "2ème étage, aile B",
+    "displayName": "2ème étage, aile B",
     "path": "/models/zones/2_floor_aisle_b_sized.glb",
-    "impostorPath" : "/models/impostors/imp_2_floor_aisle_b_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_2_floor_aisle_b_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "2ème étage aile b",
-    "adjacentZoneNames": [ "floor1", "floor3", "allstairs_1", "allstairs_2", "allstairs_3", "floor2hall"],
+    "description": "2ème étage aile b",
+    "adjacentZoneNames": [
+      "floor1",
+      "floor3",
+      "allstairs_1",
+      "allstairs_2",
+      "allstairs_3",
+      "floor2hall"
+    ],
     "triggerBox": {
-      "min": [70.950, 11.075, -75.211],
-      "max": [89.923, 14.553, -0.105]
+      "min": [
+        70.950,
+        11.075,
+        -75.211
+      ],
+      "max": [
+        89.923,
+        14.553,
+        -0.105
+      ]
     }
   },
   {
     "name": "floor2_a",
-    "displayName":  "2ème étage, aile A",
+    "displayName": "2ème étage, aile A",
     "path": "/models/zones/2_floor_aisle_a_sized.glb",
-    "impostorPath" : "/models/impostors/imp_2_floor_aisle_a_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_2_floor_aisle_a_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "2eme étage aile a",
-    "adjacentZoneNames": ["floor2hall"],
+    "description": "2eme étage aile a",
+    "adjacentZoneNames": [
+      "floor2hall"
+    ],
     "triggerBox": {
-      "min": [5.920, 10.575, -76.257],
-      "max": [57.096, 17.588, -16.588]
+      "min": [
+        5.920,
+        10.575,
+        -76.257
+      ],
+      "max": [
+        57.096,
+        17.588,
+        -16.588
+      ]
     }
   },
   {
     "name": "floor2hall",
-    "displayName":  "Passerelle 2ème étage",
+    "displayName": "Passerelle 2ème étage",
     "path": "/models/zones/2_floor_hall_sized.glb",
-    "impostorPath" : "/models/impostors/imp_2_floor_hall_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_2_floor_hall_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Passerelle 2ème étage",
-    "adjacentZoneNames": ["floor2", "floor2_a"],
+    "description": "Passerelle 2ème étage",
+    "adjacentZoneNames": [
+      "floor2",
+      "floor2_a"
+    ],
     "triggerBox": {
-      "min": [56.119, 10.560, -35.378],
-      "max": [71.158, 14.528, -27.871]
+      "min": [
+        56.119,
+        10.560,
+        -35.378
+      ],
+      "max": [
+        71.158,
+        14.528,
+        -27.871
+      ]
     }
   },
   {
     "name": "floor3",
-    "displayName":  "3ème étage, aile B",
+    "displayName": "3ème étage, aile B",
     "path": "/models/zones/3_floor_aisle_b_sized.glb",
-    "impostorPath" : "/models/impostors/imp_3_floor_aisle_b_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_3_floor_aisle_b_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "3ème étage aile b",
-    "adjacentZoneNames": ["floor2", "allstairs_1", "allstairs_2", "allstairs_3"],
+    "description": "3ème étage aile b",
+    "adjacentZoneNames": [
+      "floor2",
+      "allstairs_1",
+      "allstairs_2",
+      "allstairs_3"
+    ],
     "triggerBox": {
-      "min": [71.019, 14.530, -75.211],
-      "max": [89.925, 18.038, -0.105]
+      "min": [
+        71.019,
+        14.530,
+        -75.211
+      ],
+      "max": [
+        89.925,
+        18.038,
+        -0.105
+      ]
     }
   },
   {
     "name": "roofb",
-    "displayName":  "Toît, aile B",
+    "displayName": "Toît, aile B",
     "path": "/models/zones/roof_aisle_b_sized.glb",
-    "impostorPath" : "/models/impostors/imp_roof_aisle_b_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_roof_aisle_b_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Toit de l'aile b",
+    "description": "Toit de l'aile b",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [0,0,0],
-      "max": [0,0,0]
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        0,
+        0,
+        0
+      ]
     }
   },
   {
     "name": "stairs0to-1_1",
-    "displayName":  "Escalier RDC vers RDJ",
+    "displayName": "Escalier RDC vers RDJ",
     "path": "/models/zones/0_to_-1_stair_1_sized.glb",
-    "impostorPath" : "/models/impostors/imp_0_to_-1_stair_1_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_0_to_-1_stair_1_sized.glb",
+    "physics": true,
     "type": "stairs",
-    "description" : "Escalier 1",
-    "adjacentZoneNames": ["floor0", "floor-1"],
+    "description": "Escalier 1",
+    "adjacentZoneNames": [
+      "floor0",
+      "floor-1"
+    ],
     "triggerBox": {
-      "min": [83.508, -0.200, -34.614],
-      "max": [87.142, 5.309, -24.841]
+      "min": [
+        83.508,
+        -0.200,
+        -34.614
+      ],
+      "max": [
+        87.142,
+        5.309,
+        -24.841
+      ]
     }
   },
   {
     "name": "allstairs_1",
-    "displayName":  "Escaliers 1",
+    "displayName": "Escaliers 1",
     "path": "/models/zones/all_stair_1_sized.glb",
-    "impostorPath" : "/models/impostors/imp_all_stair_1_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_all_stair_1_sized.glb",
+    "physics": true,
     "type": "stairs",
-    "description" : "Escalier 1",
-    "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3"],
+    "description": "Escalier 1",
+    "adjacentZoneNames": [
+      "floor0",
+      "floor-1",
+      "floor1",
+      "floor2",
+      "floor3"
+    ],
     "triggerBox": {
-      "min": [74.374, -0.200, -28.07041],
-      "max": [78.635, 16.242, -20.365]
+      "min": [
+        74.374,
+        -0.200,
+        -28.07041
+      ],
+      "max": [
+        78.635,
+        16.242,
+        -20.365
+      ]
     }
   },
   {
     "name": "allstairs_2",
-    "displayName":  "Escaliers 2",
+    "displayName": "Escaliers 2",
     "path": "/models/zones/all_stair_2_sized.glb",
-    "impostorPath" : "/models/impostors/imp_all_stair_2_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_all_stair_2_sized.glb",
+    "physics": true,
     "type": "stairs",
-    "description" : "Escalier 2",
-    "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3"],
+    "description": "Escalier 2",
+    "adjacentZoneNames": [
+      "floor0",
+      "floor-1",
+      "floor1",
+      "floor2",
+      "floor3"
+    ],
     "triggerBox": {
-      "min": [71.247, -0.200, -40.233],
-      "max": [78.236, 16.038, -34.325]
+      "min": [
+        71.247,
+        -0.200,
+        -40.233
+      ],
+      "max": [
+        78.236,
+        16.038,
+        -34.325
+      ]
     }
   },
   {
     "name": "allstairs_3",
-    "displayName":  "Escaliers 3",
+    "displayName": "Escaliers 3",
     "path": "/models/zones/all_stair_3_sized.glb",
-    "impostorPath" : "/models/impostors/imp_all_stair_3_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_all_stair_3_sized.glb",
+    "physics": true,
     "type": "stairs",
-    "description" : "Escalier 3",
-    "adjacentZoneNames": ["floor0", "floor-1", "floor1", "floor2", "floor3"],
+    "description": "Escalier 3",
+    "adjacentZoneNames": [
+      "floor0",
+      "floor-1",
+      "floor1",
+      "floor2",
+      "floor3"
+    ],
     "triggerBox": {
-      "min": [71.524, -0.200, -69.277],
-      "max": [78.196, 15.816, -63.900]
+      "min": [
+        71.524,
+        -0.200,
+        -69.277
+      ],
+      "max": [
+        78.196,
+        15.816,
+        -63.900
+      ]
     }
   },
   {
     "name": "ARJ-030",
-    "displayName":  "ARJ-030",
+    "displayName": "ARJ-030",
     "path": "/models/furnitures/fur_arj_030_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TP",
-    "description" : "x places - Cellul Génie Civil",
+    "description": "x places - Cellul Génie Civil",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [20.23154, -0.200, -69.40587],
-      "max": [33.08558, 3.61976, -58.30839]
+      "min": [
+        20.23154,
+        -0.200,
+        -69.40587
+      ],
+      "max": [
+        33.08558,
+        3.61976,
+        -58.30839
+      ]
     },
-    "pathCoords" : [29.19, 1.29, -60.55]
+    "pathCoords": [
+      29.19,
+      1.29,
+      -60.55
+    ]
   },
   {
     "name": "ARJ-027",
-    "displayName":  "ARJ-027",
-    "otherNames": ["Pierre et Marie CURIE"],
+    "displayName": "ARJ-027",
+    "otherNames": [
+      "Pierre et Marie CURIE"
+    ],
     "path": "/models/furnitures/fur_arj_027_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TP",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [33.01131, -0.200, -58.09857],
-      "max": [41.17522, 3.84931, -50.01027]
+      "min": [
+        33.01131,
+        -0.200,
+        -58.09857
+      ],
+      "max": [
+        41.17522,
+        3.84931,
+        -50.01027
+      ]
     },
-    "pathCoords" : [40.25, 1.29, -51.92]
+    "pathCoords": [
+      40.25,
+      1.29,
+      -51.92
+    ]
   },
   {
     "name": "ARJ-015",
-    "displayName":  "ARJ-015",
-    "otherNames": ["Méca fluides"],
+    "displayName": "ARJ-015",
+    "otherNames": [
+      "Méca fluides"
+    ],
     "path": "/models/furnitures/fur_arj_015_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TP",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [44.799, -0.200, -35.339],
-      "max": [56.118, 3.421, -11.563]
+      "min": [
+        44.799,
+        -0.200,
+        -35.339
+      ],
+      "max": [
+        56.118,
+        3.421,
+        -11.563
+      ]
     },
-    "pathCoords" : [54.21, 1.29, -22.08]
+    "pathCoords": [
+      54.21,
+      1.29,
+      -22.08
+    ]
   },
   {
     "name": "ARJ-013",
-    "displayName":  "ARJ-013",
-    "otherNames": ["ESP Mécanique"],
+    "displayName": "ARJ-013",
+    "otherNames": [
+      "ESP Mécanique"
+    ],
     "path": "/models/furnitures/fur_arj_013_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TP",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [27.4798, -0.200, -43.15797],
-      "max": [46.55103, 4.04219, -24.23701]
+      "min": [
+        27.4798,
+        -0.200,
+        -43.15797
+      ],
+      "max": [
+        46.55103,
+        4.04219,
+        -24.23701
+      ]
     },
-    "pathCoords" : [42.002, 1.29, -32.74]
+    "pathCoords": [
+      42.002,
+      1.29,
+      -32.74
+    ]
   },
   {
     "name": "ARJ-012",
-    "displayName":  "ARJ-012",
+    "displayName": "ARJ-012",
     "path": "/models/furnitures/fur_arj_012_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TP",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [22.85528, -0.200, -46.50838],
-      "max": [35.87306, 3.95172, -32.83872]
+      "min": [
+        22.85528,
+        -0.200,
+        -46.50838
+      ],
+      "max": [
+        35.87306,
+        3.95172,
+        -32.83872
+      ]
     },
-    "pathCoords" : [34.57, 1.29, -42.48]
+    "pathCoords": [
+      34.57,
+      1.29,
+      -42.48
+    ]
   },
   {
     "name": "ARJ-010",
-    "displayName":  "ARJ-010",
+    "displayName": "ARJ-010",
     "path": "/models/furnitures/fur_arj_010_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TP",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [15.98793, -0.200, -55.75921],
-      "max": [25.54438, 3.52047, -46.05899]
+      "min": [
+        15.98793,
+        -0.200,
+        -55.75921
+      ],
+      "max": [
+        25.54438,
+        3.52047,
+        -46.05899
+      ]
     },
-    "pathCoords" : [20.89, 1.29, -53.62]
+    "pathCoords": [
+      20.89,
+      1.29,
+      -53.62
+    ]
   },
   {
     "name": "ARJ-009",
-    "displayName":  "ARJ-009",
+    "displayName": "ARJ-009",
     "path": "/models/furnitures/fur_arj_009_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TP",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [6.73937, -0.200, -61.83537],
-      "max": [21.47306, 3.63424, -46.82599]
+      "min": [
+        6.73937,
+        -0.200,
+        -61.83537
+      ],
+      "max": [
+        21.47306,
+        3.63424,
+        -46.82599
+      ]
     },
-    "pathCoords" : [17.98, 1.29, -54.85]
+    "pathCoords": [
+      17.98,
+      1.29,
+      -54.85
+    ]
   },
   {
     "name": "conseils",
-    "displayName":  "Salle des conseils",
-    "otherNames" : ["Katherine JOHNSON", "Salle de réunion"],
+    "displayName": "Salle des conseils",
+    "otherNames": [
+      "Katherine JOHNSON",
+      "Salle de réunion"
+    ],
     "path": "/models/furnitures/fur_conseils_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "misc",
-    "description" : "Salle des conseils",
+    "description": "Salle des conseils",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [32.54482, -0.200, -69.39983],
-      "max": [43.32837, 3.84931, -58.14311]
+      "min": [
+        32.54482,
+        -0.200,
+        -69.39983
+      ],
+      "max": [
+        43.32837,
+        3.84931,
+        -58.14311
+      ]
     },
-    "pathCoords" : [41.52, 1.29, -61.37]
+    "pathCoords": [
+      41.52,
+      1.29,
+      -61.37
+    ]
   },
   {
     "name": "BRJ-006/7/8",
-    "displayName":  "BRJ-006/7/8",
-    "otherNames": ["Salle d'examens"],
+    "displayName": "BRJ-006/7/8",
+    "otherNames": [
+      "Salle d'examens"
+    ],
     "path": "/models/furnitures/fur_brj_6_7_8_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "misc",
-    "description" : "x places - Salle d'examens",
+    "description": "x places - Salle d'examens",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [70.16491, -0.200, -65.2485],
-      "max": [86.10144, 3.77605, -38.44554]
+      "min": [
+        70.16491,
+        -0.200,
+        -65.2485
+      ],
+      "max": [
+        86.10144,
+        3.77605,
+        -38.44554
+      ]
     },
-    "pathCoords" : [83.101, 1.29, -42.60]
+    "pathCoords": [
+      83.101,
+      1.29,
+      -42.60
+    ]
   },
   {
     "name": "BRJ-WC-H",
-    "displayName":  "Toilettes hommes, Rez-de-jardin, aile B",
+    "displayName": "Toilettes hommes, Rez-de-jardin, aile B",
     "path": "/models/furnitures/fur_brj_wc_h_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "toilets",
-    "description" : "Toilettes Hommes",
+    "description": "Toilettes Hommes",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [75.14563, -0.200, -31.63589],
-      "max": [79.29416, 3.8161, -28.06817]
+      "min": [
+        75.14563,
+        -0.200,
+        -31.63589
+      ],
+      "max": [
+        79.29416,
+        3.8161,
+        -28.06817
+      ]
     },
-    "pathCoords" : [78.01, 12.75, -30.20]
+    "pathCoords": [
+      78.01,
+      12.75,
+      -30.20
+    ]
   },
   {
     "name": "Petit-Amphi",
-    "displayName":  "Petit Amphithéâtre",
+    "displayName": "Petit Amphithéâtre",
     "path": "/models/furnitures/fur_petit_amphi_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "CM",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [67.976, 3.477, -51.547],
-      "max": [84.736, 7.415, -38.561]
+      "min": [
+        67.976,
+        3.477,
+        -51.547
+      ],
+      "max": [
+        84.736,
+        7.415,
+        -38.561
+      ]
     },
-    "pathCoords" : [80.58, 5.54, -41.76]
+    "pathCoords": [
+      80.58,
+      5.54,
+      -41.76
+    ]
   },
   {
     "name": "Grand-Amphi",
-    "displayName":  "Grand Amphithéâtre",
+    "displayName": "Grand Amphithéâtre",
     "path": "/models/furnitures/fur_grand_amphi_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "CM",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.789, 2.783, -63.470],
-      "max": [84.310, 7.476, -48.525]
+      "min": [
+        71.789,
+        2.783,
+        -63.470
+      ],
+      "max": [
+        84.310,
+        7.476,
+        -48.525
+      ]
     },
-    "pathCoords" : [81.76, 5.54, -54.91]
+    "pathCoords": [
+      81.76,
+      5.54,
+      -54.91
+    ]
   },
   {
     "name": "RDC-WC-PMR",
-    "displayName":  "Toilettes personnes à mobilité réduite, Rez-de-chaussé, aile B",
+    "displayName": "Toilettes personnes à mobilité réduite, Rez-de-chaussé, aile B",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "toilets",
-    "description" : "Toilettes pour personnes à mobilité réduite",
+    "description": "Toilettes pour personnes à mobilité réduite",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [80.03127, 4.13835, -31.69526],
-      "max": [81.40644, 6.25151, -30.66348]
+      "min": [
+        80.03127,
+        4.13835,
+        -31.69526
+      ],
+      "max": [
+        81.40644,
+        6.25151,
+        -30.66348
+      ]
     },
-    "pathCoords" : [80.46, 5.54, -31.44]
+    "pathCoords": [
+      80.46,
+      5.54,
+      -31.44
+    ]
   },
   {
     "name": "BN1-019",
-    "displayName":  "BN1-019",
+    "displayName": "BN1-019",
     "path": "/models/furnitures/fur_bn1_019_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [70.91314, 7.75693, -74.81104],
-      "max": [78.45118, 11.06904, -67.18431]
+      "min": [
+        70.91314,
+        7.75693,
+        -74.81104
+      ],
+      "max": [
+        78.45118,
+        11.06904,
+        -67.18431
+      ]
     },
-    "pathCoords" : [76.96, 9.32, -68.30]
+    "pathCoords": [
+      76.96,
+      9.32,
+      -68.30
+    ]
   },
   {
     "name": "BN1-016",
-    "displayName":  "BN1-016",
+    "displayName": "BN1-016",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Gestion relations internationales, département Anglais, chargée de Communication, formation continue, DAEU B",
+    "description": "Gestion relations internationales, département Anglais, chargée de Communication, formation continue, DAEU B",
     "persons": [
-      { "name": "DUVAL Julianne", "function": "Gestionnaire Relations Internationales - Secrétaire département Anglais"},
-      { "name": "FORÊT Alexandrine", "function": "Chargée de Communication"},
-      { "name": "CAPELLE Bérangère", "function": "Gestionnaire Formation continue - Apprentissage - DAEU B"}
+      {
+        "name": "DUVAL Julianne",
+        "function": "Gestionnaire Relations Internationales - Secrétaire département Anglais"
+      },
+      {
+        "name": "FORÊT Alexandrine",
+        "function": "Chargée de Communication"
+      },
+      {
+        "name": "CAPELLE Bérangère",
+        "function": "Gestionnaire Formation continue - Apprentissage - DAEU B"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -61.7408],
-      "max": [81.89443, 10.88112, -59.47852]
+      "min": [
+        79.84872,
+        7.77749,
+        -61.7408
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -59.47852
+      ]
     },
-    "pathCoords" : [80.84, 9.32, -59.86]
+    "pathCoords": [
+      80.84,
+      9.32,
+      -59.86
+    ]
   },
   {
     "name": "BN1-015",
-    "displayName":  "BN1-015",
+    "displayName": "BN1-015",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Secrétariat et gestion Licence Maths (- Eco), Licence PPPE",
+    "description": "Secrétariat et gestion Licence Maths (- Eco), Licence PPPE",
     "persons": [
-      { "name": "GAY Christelle", "function": "Secrétaire pédagogique Licence Maths - Licence Maths-Eco - Licence PPPE"}
+      {
+        "name": "GAY Christelle",
+        "function": "Secrétaire pédagogique Licence Maths - Licence Maths-Eco - Licence PPPE"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -58.69958],
-      "max": [81.89443, 10.88112, -56.43729]
+      "min": [
+        79.84872,
+        7.77749,
+        -58.69958
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -56.43729
+      ]
     },
-    "pathCoords" : [80.67, 9.32, -57.39]
+    "pathCoords": [
+      80.67,
+      9.32,
+      -57.39
+    ]
   },
   {
     "name": "BN1-014",
-    "displayName":  "BN1-014",
+    "displayName": "BN1-014",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Bureau gestionnaire scolarité et secrétaire pédagogique",
+    "description": "Bureau gestionnaire scolarité et secrétaire pédagogique",
     "persons": [
-      { "name": "BERTRAND Laurence", "function": "Gestionnaire scolarité - Secrétaire pédagogique"}
+      {
+        "name": "BERTRAND Laurence",
+        "function": "Gestionnaire scolarité - Secrétaire pédagogique"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -55.38344],
-      "max": [81.89443, 10.88112, -53.12115]
+      "min": [
+        79.84872,
+        7.77749,
+        -55.38344
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -53.12115
+      ]
     },
-    "pathCoords" : [80.46, 9.32, -54.83]
+    "pathCoords": [
+      80.46,
+      9.32,
+      -54.83
+    ]
   },
   {
     "name": "BN1-013",
-    "displayName":  "BN1-013",
+    "displayName": "BN1-013",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Bureau responsable service formation et assistant communication",
+    "description": "Bureau responsable service formation et assistant communication",
     "persons": [
-      { "name": "CROUVEZIER Fabrice", "function": "Responsable service formation"},
-      { "name": "ENGELMANN Nathan", "function": "Assistant communication"}
+      {
+        "name": "CROUVEZIER Fabrice",
+        "function": "Responsable service formation"
+      },
+      {
+        "name": "ENGELMANN Nathan",
+        "function": "Assistant communication"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -52.73177],
-      "max": [81.89443, 10.88112, -50.46948]
+      "min": [
+        79.84872,
+        7.77749,
+        -52.73177
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -50.46948
+      ]
     },
-    "pathCoords" : [80.39, 9.32, -52.27]
+    "pathCoords": [
+      80.39,
+      9.32,
+      -52.27
+    ]
   },
   {
     "name": "BN1-012",
-    "displayName":  "BN1-012",
+    "displayName": "BN1-012",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Bureau responsable adjointe service scolarité",
+    "description": "Bureau responsable adjointe service scolarité",
     "persons": [
-      { "name": "MALINSKA Isabelle", "function": "Responsable adjointe service scolarité"}
+      {
+        "name": "MALINSKA Isabelle",
+        "function": "Responsable adjointe service scolarité"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -49.33076],
-      "max": [81.89443, 10.88112, -47.06848]
+      "min": [
+        79.84872,
+        7.77749,
+        -49.33076
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -47.06848
+      ]
     },
-    "pathCoords" : [80.42, 9.32, -49.29]
+    "pathCoords": [
+      80.42,
+      9.32,
+      -49.29
+    ]
   },
   {
     "name": "BN1-010",
-    "displayName":  "BN1-010",
+    "displayName": "BN1-010",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Secrétariat et gestion SPI, GC, GI, Méca et Licences Pro",
+    "description": "Secrétariat et gestion SPI, GC, GI, Méca et Licences Pro",
     "persons": [
-      { "name": "BECKER Virginie", "function": "Secrétaire département SPI - Secrétaire pédagogique Master GC, GI, Méca"},
-      { "name": "HARTENSTEIN Amélie", "function": "Gestionnaire scolarité - Secrétaire pédagogique Licence SPI, Licences Pro"}
+      {
+        "name": "BECKER Virginie",
+        "function": "Secrétaire département SPI - Secrétaire pédagogique Master GC, GI, Méca"
+      },
+      {
+        "name": "HARTENSTEIN Amélie",
+        "function": "Gestionnaire scolarité - Secrétaire pédagogique Licence SPI, Licences Pro"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -43.53034],
-      "max": [81.89443, 10.88112, -41.26805]
+      "min": [
+        79.84872,
+        7.77749,
+        -43.53034
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -41.26805
+      ]
     },
-    "pathCoords" : [80.33, 9.32, -42.66]
+    "pathCoords": [
+      80.33,
+      9.32,
+      -42.66
+    ]
   },
   {
     "name": "BN1-009",
-    "displayName":  "BN1-009",
+    "displayName": "BN1-009",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Bureau gestionnaire accueil scolarité",
+    "description": "Bureau gestionnaire accueil scolarité",
     "persons": [
-      { "name": "MORCHAIN Coralie", "function": "Gestionnaire Accueil Scolarité"}
+      {
+        "name": "MORCHAIN Coralie",
+        "function": "Gestionnaire Accueil Scolarité"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -39.78892],
-      "max": [81.89443, 10.88112, -37.52664]
+      "min": [
+        79.84872,
+        7.77749,
+        -39.78892
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -37.52664
+      ]
     },
-    "pathCoords" : [80.28, 9.32, -39.08]
+    "pathCoords": [
+      80.28,
+      9.32,
+      -39.08
+    ]
   },
   {
     "name": "BN1-008",
-    "displayName":  "BN1-008",
+    "displayName": "BN1-008",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Bureau département informatique (secrétaires Licence et Master)",
+    "description": "Bureau département informatique (secrétaires Licence et Master)",
     "persons": [
-      { "name": "MALRIAT Florie", "function": "Secrétaire pédagogique Licence Informatique"},
-      { "name": "LAHIR Fanny", "function": "Secrétaire département Informatique, Secrétaire pédagogique Master Informatique"}
+      {
+        "name": "MALRIAT Florie",
+        "function": "Secrétaire pédagogique Licence Informatique"
+      },
+      {
+        "name": "LAHIR Fanny",
+        "function": "Secrétaire département Informatique, Secrétaire pédagogique Master Informatique"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -37.26616],
-      "max": [81.89443, 10.88112, -35.00387]
+      "min": [
+        79.84872,
+        7.77749,
+        -37.26616
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -35.00387
+      ]
     },
-    "pathCoords" : [80.44, 9.32, -36.57]
+    "pathCoords": [
+      80.44,
+      9.32,
+      -36.57
+    ]
   },
   {
     "name": "BN1-005",
-    "displayName":  "BN1-005",
+    "displayName": "BN1-005",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Responsable administrative",
+    "description": "Responsable administrative",
     "persons": [
-      { "name": "LEGRAND Muriel", "function": "Responsable administrative"}
+      {
+        "name": "LEGRAND Muriel",
+        "function": "Responsable administrative"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.84872, 7.77749, -29.05394],
-      "max": [81.89443, 10.88112, -26.79165]
+      "min": [
+        79.84872,
+        7.77749,
+        -29.05394
+      ],
+      "max": [
+        81.89443,
+        10.88112,
+        -26.79165
+      ]
     },
-    "pathCoords" : [80.29, 9.32, -28.94]
+    "pathCoords": [
+      80.29,
+      9.32,
+      -28.94
+    ]
   },
   {
     "name": "BN1-004",
-    "displayName":  "BN1-004",
+    "displayName": "BN1-004",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Assistante de direction",
+    "description": "Assistante de direction",
     "persons": [
-      { "name": "KOCABEY Reyhan", "function": "Assistance de direction"}
+      {
+        "name": "KOCABEY Reyhan",
+        "function": "Assistance de direction"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.73485, 7.77749, -26.09957],
-      "max": [82.0083, 10.88112, -22.90826]
+      "min": [
+        79.73485,
+        7.77749,
+        -26.09957
+      ],
+      "max": [
+        82.0083,
+        10.88112,
+        -22.90826
+      ]
     },
-    "pathCoords" : [80.20, 9.32, -26.09]
+    "pathCoords": [
+      80.20,
+      9.32,
+      -26.09
+    ]
   },
   {
     "name": "BN1-003",
-    "displayName":  "BN1-003",
+    "displayName": "BN1-003",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Bureau du directeur",
+    "description": "Bureau du directeur",
     "persons": [
-      { "name": "NAGIH Anass", "function": "Directeur"}
+      {
+        "name": "NAGIH Anass",
+        "function": "Directeur"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.80818, 7.77749, -21.06575],
-      "max": [82.08163, 10.88112, -17.87444]
+      "min": [
+        79.80818,
+        7.77749,
+        -21.06575
+      ],
+      "max": [
+        82.08163,
+        10.88112,
+        -17.87444
+      ]
     },
-    "pathCoords" : [80.25, 9.32, -18.79]
+    "pathCoords": [
+      80.25,
+      9.32,
+      -18.79
+    ]
   },
   {
     "name": "BN1-002",
-    "displayName":  "BN1-002",
+    "displayName": "BN1-002",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Service informatique",
+    "description": "Service informatique",
     "persons": [
-      { "name": "KRIER Pascal", "function": "Service informatique"},
-      { "name": "ABERKANE Malik", "function": "Service informatique"},
-      { "name": "GUILLAUME Jean-Sébastien", "function": "Service informatique"}
+      {
+        "name": "KRIER Pascal",
+        "function": "Service informatique"
+      },
+      {
+        "name": "ABERKANE Malik",
+        "function": "Service informatique"
+      },
+      {
+        "name": "GUILLAUME Jean-Sébastien",
+        "function": "Service informatique"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [80.26888, 7.77749, -17.17623],
-      "max": [82.54233, 10.88112, -13.98492]
+      "min": [
+        80.26888,
+        7.77749,
+        -17.17623
+      ],
+      "max": [
+        82.54233,
+        10.88112,
+        -13.98492
+      ]
     },
-    "pathCoords" : [80.56, 9.32, -16.29]
+    "pathCoords": [
+      80.56,
+      9.32,
+      -16.29
+    ]
   },
   {
     "name": "BN1-WC-PMR",
-    "displayName":  "Toilettes personnes à mobilité réduite, 1ème étage, aile B",
+    "displayName": "Toilettes personnes à mobilité réduite, 1ème étage, aile B",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "toilets",
-    "description" : "Toilettes pour personnes à mobilité réduite",
+    "description": "Toilettes pour personnes à mobilité réduite",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.10595, 7.97534, -43.56062],
-      "max": [78.94796, 10.0324, -42.40476]
+      "min": [
+        78.10595,
+        7.97534,
+        -43.56062
+      ],
+      "max": [
+        78.94796,
+        10.0324,
+        -42.40476
+      ]
     },
-    "pathCoords" : [78.72, 9.32, -43]
+    "pathCoords": [
+      78.72,
+      9.32,
+      -43
+    ]
   },
   {
     "name": "BN2-013",
-    "displayName":  "BN2-013",
+    "displayName": "BN2-013",
     "path": "/models/furnitures/fur_bn2_013_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.131, 11.270, -47.763],
-      "max": [79.853, 14.619, -40.474]
+      "min": [
+        71.131,
+        11.270,
+        -47.763
+      ],
+      "max": [
+        79.853,
+        14.619,
+        -40.474
+      ]
     },
-    "pathCoords" : [75.77, 12.75, -46.51]
+    "pathCoords": [
+      75.77,
+      12.75,
+      -46.51
+    ]
   },
   {
     "name": "BN2-012",
-    "displayName":  "BN2-012",
+    "displayName": "BN2-012",
     "path": "/models/furnitures/fur_bn2_012_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [70.877, 11.273, -55.154],
-      "max": [79.479, 14.255, -47.533]
+      "min": [
+        70.877,
+        11.273,
+        -55.154
+      ],
+      "max": [
+        79.479,
+        14.255,
+        -47.533
+      ]
     },
-    "pathCoords" : [76.03, 12.75, -53.30]
+    "pathCoords": [
+      76.03,
+      12.75,
+      -53.30
+    ]
   },
   {
     "name": "BN2-011",
-    "displayName":  "BN2-011",
+    "displayName": "BN2-011",
     "path": "/models/furnitures/fur_bn2_011_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.409, 10.627, -63.816],
-      "max": [80.173, 14.425, -54.806]
+      "min": [
+        71.409,
+        10.627,
+        -63.816
+      ],
+      "max": [
+        80.173,
+        14.425,
+        -54.806
+      ]
     },
-    "pathCoords" : [75.90, 12.75, -62.60]
+    "pathCoords": [
+      75.90,
+      12.75,
+      -62.60
+    ]
   },
   {
     "name": "BN2-010",
-    "displayName":  "BN2-010",
+    "displayName": "BN2-010",
     "path": "/models/furnitures/fur_bn2_010_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.330, 10.973, -75.248],
-      "max": [79.756, 14.491, -67.401]
+      "min": [
+        71.330,
+        10.973,
+        -75.248
+      ],
+      "max": [
+        79.756,
+        14.491,
+        -67.401
+      ]
     },
-    "pathCoords" : [76.04, 12.75, -68.32]
+    "pathCoords": [
+      76.04,
+      12.75,
+      -68.32
+    ]
   },
   {
     "name": "BN2-009",
-    "displayName":  "BN2-009",
+    "displayName": "BN2-009",
     "path": "/models/furnitures/fur_bn2_009_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.225, 10.939, -75.553],
-      "max": [87.432, 14.408, -67.340]
+      "min": [
+        78.225,
+        10.939,
+        -75.553
+      ],
+      "max": [
+        87.432,
+        14.408,
+        -67.340
+      ]
     },
-    "pathCoords" : [81.62, 12.75, -70.33]
+    "pathCoords": [
+      81.62,
+      12.75,
+      -70.33
+    ]
   },
   {
     "name": "BN2-008",
-    "displayName":  "BN2-008",
+    "displayName": "BN2-008",
     "path": "/models/furnitures/fur_bn2_008_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.649, 11.185, -68.994],
-      "max": [86.989, 14.673, -61.726]
+      "min": [
+        78.649,
+        11.185,
+        -68.994
+      ],
+      "max": [
+        86.989,
+        14.673,
+        -61.726
+      ]
     },
-    "pathCoords" : [82.56, 12.75, -63.05]
+    "pathCoords": [
+      82.56,
+      12.75,
+      -63.05
+    ]
   },
   {
     "name": "BN2-007",
-    "displayName":  "BN2-007",
+    "displayName": "BN2-007",
     "path": "/models/furnitures/fur_bn2_007_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.357, 10.866, -61.720],
-      "max": [87.327, 14.372, -54.791]
+      "min": [
+        78.357,
+        10.866,
+        -61.720
+      ],
+      "max": [
+        87.327,
+        14.372,
+        -54.791
+      ]
     },
-    "pathCoords" : [83.02, 12.75, -60.58]
+    "pathCoords": [
+      83.02,
+      12.75,
+      -60.58
+    ]
   },
   {
     "name": "BN2-006",
-    "displayName":  "BN2-006",
+    "displayName": "BN2-006",
     "path": "/models/furnitures/fur_bn2_006_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.841, 11.085, -47.739],
-      "max": [87.562, 14.437, -39.166]
+      "min": [
+        78.841,
+        11.085,
+        -47.739
+      ],
+      "max": [
+        87.562,
+        14.437,
+        -39.166
+      ]
     },
-    "pathCoords" : [82.28, 12.75, -40.20]
+    "pathCoords": [
+      82.28,
+      12.75,
+      -40.20
+    ]
   },
   {
     "name": "BN2-005",
-    "displayName":  "BN2-005",
+    "displayName": "BN2-005",
     "path": "/models/furnitures/fur_bn2_005_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.581, 11.075, -38.413],
-      "max": [87.786, 14.752, -31.479]
+      "min": [
+        79.581,
+        11.075,
+        -38.413
+      ],
+      "max": [
+        87.786,
+        14.752,
+        -31.479
+      ]
     },
-    "pathCoords" : [82.72, 12.75, -33.30]
+    "pathCoords": [
+      82.72,
+      12.75,
+      -33.30
+    ]
   },
   {
     "name": "BN2-004",
-    "displayName":  "BN2-004",
+    "displayName": "BN2-004",
     "path": "/models/furnitures/fur_bn2_004_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.171, 10.683, -32.074],
-      "max": [87.278, 14.389, -24.448]
+      "min": [
+        79.171,
+        10.683,
+        -32.074
+      ],
+      "max": [
+        87.278,
+        14.389,
+        -24.448
+      ]
     },
-    "pathCoords" : [82.43, 12.75, -25.96]
+    "pathCoords": [
+      82.43,
+      12.75,
+      -25.96
+    ]
   },
   {
     "name": "BN2-003",
-    "displayName":  "BN2-003",
+    "displayName": "BN2-003",
     "path": "/models/furnitures/fur_bn2_003_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.184, 11.182, -24.471],
-      "max": [87.716, 14.146, -16.910]
+      "min": [
+        79.184,
+        11.182,
+        -24.471
+      ],
+      "max": [
+        87.716,
+        14.146,
+        -16.910
+      ]
     },
-    "pathCoords" : [83.28, 12.75, -18.45]
+    "pathCoords": [
+      83.28,
+      12.75,
+      -18.45
+    ]
   },
   {
     "name": "BN2-002",
-    "displayName":  "BN2-002",
+    "displayName": "BN2-002",
     "path": "/models/furnitures/fur_bn2_002_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.431, 11.007, -17.230],
-      "max": [88.885, 14.744, -7.622]
+      "min": [
+        79.431,
+        11.007,
+        -17.230
+      ],
+      "max": [
+        88.885,
+        14.744,
+        -7.622
+      ]
     },
-    "pathCoords" : [83.99, 12.75, -8.80]
+    "pathCoords": [
+      83.99,
+      12.75,
+      -8.80
+    ]
   },
   {
     "name": "BN2-001",
-    "displayName":  "BN2-001",
+    "displayName": "BN2-001",
     "path": "/models/furnitures/fur_bn2_001_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.963, 11.052, -12.120],
-      "max": [89.578, 14.830, -0.373]
+      "min": [
+        78.963,
+        11.052,
+        -12.120
+      ],
+      "max": [
+        89.578,
+        14.830,
+        -0.373
+      ]
     },
-    "pathCoords" : [80.94, 12.75, -5.81]
+    "pathCoords": [
+      80.94,
+      12.75,
+      -5.81
+    ]
   },
   {
     "name": "BN2-WC-H",
-    "displayName":  "Toilettes hommes, 2ème étage, aile B",
+    "displayName": "Toilettes hommes, 2ème étage, aile B",
     "path": "/models/furnitures/fur_bn2_wc_h_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "toilets",
-    "description" : "Toilettes Hommes",
+    "description": "Toilettes Hommes",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [69.826, 11.354, -31.234],
-      "max": [74.552, 14.527, -25.266]
+      "min": [
+        69.826,
+        11.354,
+        -31.234
+      ],
+      "max": [
+        74.552,
+        14.527,
+        -25.266
+      ]
     },
-    "pathCoords" : [72.30, 12.75, -29.33]
+    "pathCoords": [
+      72.30,
+      12.75,
+      -29.33
+    ]
   },
   {
     "name": "BN3-013",
-    "displayName":  "BN3-013",
+    "displayName": "BN3-013",
     "path": "/models/furnitures/fur_bn3_013_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.131, 14.530, -47.763],
-      "max": [79.853, 18.038, -40.474]
+      "min": [
+        71.131,
+        14.530,
+        -47.763
+      ],
+      "max": [
+        79.853,
+        18.038,
+        -40.474
+      ]
     },
-    "pathCoords" : [75.82, 16.21, -46.60]
+    "pathCoords": [
+      75.82,
+      16.21,
+      -46.60
+    ]
   },
   {
     "name": "BN3-012",
-    "displayName":  "BN3-012",
+    "displayName": "BN3-012",
     "path": "/models/furnitures/fur_bn3_012_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [70.877, 14.530, -55.154],
-      "max": [79.479, 18.038, -47.533]
+      "min": [
+        70.877,
+        14.530,
+        -55.154
+      ],
+      "max": [
+        79.479,
+        18.038,
+        -47.533
+      ]
     },
-    "pathCoords" : [75.83, 16.21, -53.24]
+    "pathCoords": [
+      75.83,
+      16.21,
+      -53.24
+    ]
   },
   {
     "name": "BN3-011",
-    "displayName":  "BN3-011",
+    "displayName": "BN3-011",
     "path": "/models/furnitures/fur_bn3_011_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.409, 14.530, -63.816],
-      "max": [80.173, 18.038, -54.806]
+      "min": [
+        71.409,
+        14.530,
+        -63.816
+      ],
+      "max": [
+        80.173,
+        18.038,
+        -54.806
+      ]
     },
-    "pathCoords" : [74.97, 16.21, -62.40]
+    "pathCoords": [
+      74.97,
+      16.21,
+      -62.40
+    ]
   },
   {
     "name": "BN3-010",
-    "displayName":  "BN3-010",
+    "displayName": "BN3-010",
     "path": "/models/furnitures/fur_bn3_010_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.330, 14.530, -75.248],
-      "max": [79.756, 18.038, -67.401]
+      "min": [
+        71.330,
+        14.530,
+        -75.248
+      ],
+      "max": [
+        79.756,
+        18.038,
+        -67.401
+      ]
     },
-    "pathCoords" : [75.97, 16.21, -68.53]
+    "pathCoords": [
+      75.97,
+      16.21,
+      -68.53
+    ]
   },
   {
     "name": "BN3-009",
-    "displayName":  "BN3-009",
+    "displayName": "BN3-009",
     "path": "/models/furnitures/fur_bn3_009_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.225, 14.530, -75.553],
-      "max": [87.432, 18.038, -67.340]
+      "min": [
+        78.225,
+        14.530,
+        -75.553
+      ],
+      "max": [
+        87.432,
+        18.038,
+        -67.340
+      ]
     },
-    "pathCoords" : [81.69, 16.21, -71.01]
+    "pathCoords": [
+      81.69,
+      16.21,
+      -71.01
+    ]
   },
   {
     "name": "BN3-008",
-    "displayName":  "BN3-008",
+    "displayName": "BN3-008",
     "path": "/models/furnitures/fur_bn3_008_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.649, 14.530, -68.994],
-      "max": [86.989, 18.038, -61.726]
+      "min": [
+        78.649,
+        14.530,
+        -68.994
+      ],
+      "max": [
+        86.989,
+        18.038,
+        -61.726
+      ]
     },
-    "pathCoords" : [83.25, 16.21, -63.11]
+    "pathCoords": [
+      83.25,
+      16.21,
+      -63.11
+    ]
   },
   {
     "name": "BN3-007",
-    "displayName":  "BN3-007",
+    "displayName": "BN3-007",
     "path": "/models/furnitures/fur_bn3_007_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.357, 14.530, -61.720],
-      "max": [87.327, 18.038, -54.791]
+      "min": [
+        78.357,
+        14.530,
+        -61.720
+      ],
+      "max": [
+        87.327,
+        18.038,
+        -54.791
+      ]
     },
-    "pathCoords" : [83.26, 16.21, -60.89]
+    "pathCoords": [
+      83.26,
+      16.21,
+      -60.89
+    ]
   },
   {
     "name": "BN3-006",
-    "displayName":  "BN3-006",
+    "displayName": "BN3-006",
     "path": "/models/furnitures/fur_bn3_006_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.841, 14.530, -47.739],
-      "max": [87.562, 18.038, -39.166]
+      "min": [
+        78.841,
+        14.530,
+        -47.739
+      ],
+      "max": [
+        87.562,
+        18.038,
+        -39.166
+      ]
     },
-    "pathCoords" : [83.89, 16.21, -40.36]
+    "pathCoords": [
+      83.89,
+      16.21,
+      -40.36
+    ]
   },
   {
     "name": "BN3-005",
-    "displayName":  "BN3-005",
+    "displayName": "BN3-005",
     "path": "/models/furnitures/fur_bn3_005_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.581, 14.530, -38.413],
-      "max": [87.786, 18.038, -31.479]
+      "min": [
+        79.581,
+        14.530,
+        -38.413
+      ],
+      "max": [
+        87.786,
+        18.038,
+        -31.479
+      ]
     },
-    "pathCoords" : [83.25, 16.21, -33.18]
+    "pathCoords": [
+      83.25,
+      16.21,
+      -33.18
+    ]
   },
   {
     "name": "BN3-004",
-    "displayName":  "BN3-004",
+    "displayName": "BN3-004",
     "path": "/models/furnitures/fur_bn3_004_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.171, 14.530, -32.074],
-      "max": [87.278, 18.038, -24.448]
+      "min": [
+        79.171,
+        14.530,
+        -32.074
+      ],
+      "max": [
+        87.278,
+        18.038,
+        -24.448
+      ]
     },
-    "pathCoords" : [82.43, 16.21, -25.96]
+    "pathCoords": [
+      82.43,
+      16.21,
+      -25.96
+    ]
   },
   {
     "name": "BN3-003",
-    "displayName":  "BN3-003",
+    "displayName": "BN3-003",
     "path": "/models/furnitures/fur_bn3_003_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.184, 14.530, -24.471],
-      "max": [87.716, 18.038, -16.910]
+      "min": [
+        79.184,
+        14.530,
+        -24.471
+      ],
+      "max": [
+        87.716,
+        18.038,
+        -16.910
+      ]
     },
-    "pathCoords" : [84.72, 16.21, -18.11]
+    "pathCoords": [
+      84.72,
+      16.21,
+      -18.11
+    ]
   },
   {
     "name": "BN3-002",
-    "displayName":  "BN3-002",
+    "displayName": "BN3-002",
     "path": "/models/furnitures/fur_bn3_002_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [79.431, 14.530, -17.230],
-      "max": [88.885, 18.038, -7.622]
+      "min": [
+        79.431,
+        14.530,
+        -17.230
+      ],
+      "max": [
+        88.885,
+        18.038,
+        -7.622
+      ]
     },
-    "pathCoords" : [84.37, 16.21, -8.97]
+    "pathCoords": [
+      84.37,
+      16.21,
+      -8.97
+    ]
   },
   {
     "name": "BN3-001",
-    "displayName":  "BN3-001",
+    "displayName": "BN3-001",
     "path": "/models/furnitures/fur_bn3_001_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "TD",
-    "description" : "x places",
+    "description": "x places",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [78.963, 14.530, -12.120],
-      "max": [89.578, 18.038, -0.373]
+      "min": [
+        78.963,
+        14.530,
+        -12.120
+      ],
+      "max": [
+        89.578,
+        18.038,
+        -0.373
+      ]
     },
-    "pathCoords" : [81.07, 16.21, -4.94]
+    "pathCoords": [
+      81.07,
+      16.21,
+      -4.94
+    ]
   },
   {
     "name": "BN3-WC-H",
-    "displayName":  "Toilettes hommes, 3ème étage, aile B",
+    "displayName": "Toilettes hommes, 3ème étage, aile B",
     "path": "/models/furnitures/fur_bn3_wc_h_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "toilets",
-    "description" : "Toilettes Hommes",
+    "description": "Toilettes Hommes",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [70.77495, 14.71936, -31.77047],
-      "max": [74.55966, 18.03908, -23.57218]
+      "min": [
+        70.77495,
+        14.71936,
+        -31.77047
+      ],
+      "max": [
+        74.55966,
+        18.03908,
+        -23.57218
+      ]
     },
-    "pathCoords" : [72.75, 16.21, -28.46]
+    "pathCoords": [
+      72.75,
+      16.21,
+      -28.46
+    ]
   },
   {
     "name": "IECL",
-    "displayName":  "IECL",
+    "displayName": "IECL",
     "path": "/models/furnitures/fur_iecl_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Institut Elie CARTAN de Lorraine - Zone réglementée",
-    "persons" : [
-      {"name": "DUBOIS Isabelle", "function": "MCF"}
+    "description": "Institut Elie CARTAN de Lorraine - Zone réglementée",
+    "persons": [
+      {
+        "name": "DUBOIS Isabelle",
+        "function": "MCF"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [49.60507, 4.06586, -35.13533],
-      "max": [56.11785, 8.35236, -29.86901]
+      "min": [
+        49.60507,
+        4.06586,
+        -35.13533
+      ],
+      "max": [
+        56.11785,
+        8.35236,
+        -29.86901
+      ]
     },
-    "pathCoords" : [54.50, 5.54, -32.69]
+    "pathCoords": [
+      54.50,
+      5.54,
+      -32.69
+    ]
   },
   {
     "name": "LGIPM",
-    "displayName":  "LGIPM",
+    "displayName": "LGIPM",
     "path": "/models/furnitures/fur_lgipm_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Laboratoire de Génie Informatique, de Production et de Maintenance - Zone réglementée",
-    "persons" : [
-      {"name": "ZIDNA Ahmed", "function": "MCF"}
+    "description": "Laboratoire de Génie Informatique, de Production et de Maintenance - Zone réglementée",
+    "persons": [
+      {
+        "name": "ZIDNA Ahmed",
+        "function": "MCF"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [47.25213, 7.57228, -34.88866],
-      "max": [55.91292, 10.74428, -30.05124]
+      "min": [
+        47.25213,
+        7.57228,
+        -34.88866
+      ],
+      "max": [
+        55.91292,
+        10.74428,
+        -30.05124
+      ]
     },
-    "pathCoords" : [52.45, 9.32, -32.32]
+    "pathCoords": [
+      52.45,
+      9.32,
+      -32.32
+    ]
   },
   {
     "name": "LCOMS",
-    "displayName":  "LCOMS",
+    "displayName": "LCOMS",
     "path": "/models/furnitures/fur_lcoms_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "office",
-    "description" : "Laboratoire de Conception, Optimisation et Modélisation des Systèmes - Zone réglementée",
-    "persons" : [
-      {"name": "LANUEL Yann", "function": "MCF"},
-      {"name": "MINICH Sarah", "function": "MCF"},
-      {"name": "LUCARELLI Giorgio", "function": "MCF"},
-      {"name": "ABDELSADEK Youssef", "function": "MCF"},
-      {"name": "MARTIN Benoît", "function": "MCF"}
+    "description": "Laboratoire de Conception, Optimisation et Modélisation des Systèmes - Zone réglementée",
+    "persons": [
+      {
+        "name": "LANUEL Yann",
+        "function": "MCF"
+      },
+      {
+        "name": "MINICH Sarah",
+        "function": "MCF"
+      },
+      {
+        "name": "LUCARELLI Giorgio",
+        "function": "MCF"
+      },
+      {
+        "name": "ABDELSADEK Youssef",
+        "function": "MCF"
+      },
+      {
+        "name": "MARTIN Benoît",
+        "function": "MCF"
+      }
     ],
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [49.226, 11.008, -34.390],
-      "max": [56.113, 14.490, -31.602]
+      "min": [
+        49.226,
+        11.008,
+        -34.390
+      ],
+      "max": [
+        56.113,
+        14.490,
+        -31.602
+      ]
     },
-    "pathCoords" : [52.50, 12.75, -32.91]
+    "pathCoords": [
+      52.50,
+      12.75,
+      -32.91
+    ]
   },
   {
     "name": "Caféteria CROUS",
-    "displayName":  "Caféteria CROUS",
+    "displayName": "Caféteria CROUS",
     "path": "/models/furnitures/fur_cafeteria_sized.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "misc",
-    "description" : "Caféteria du CROUS",
+    "description": "Caféteria du CROUS",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [71.7541, 4.18376, -22.73291],
-      "max": [88.74828, 7.67197, -11.19636]
+      "min": [
+        71.7541,
+        4.18376,
+        -22.73291
+      ],
+      "max": [
+        88.74828,
+        7.67197,
+        -11.19636
+      ]
     },
-    "pathCoords" : [83.08, 2.651, -19.25]
+    "pathCoords": [
+      83.08,
+      2.651,
+      -19.25
+    ]
   },
   {
     "name": "mainEntrance",
-    "displayName":  "Entrée/Sortie principale",
+    "displayName": "Entrée/Sortie principale",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "misc",
-    "description" : "Portes du hall d'entrée",
+    "description": "Portes du hall d'entrée",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [67.12588, 3.98629, -29.8904],
-      "max": [69.34141, 6.8261, -28.00451]
+      "min": [
+        67.12588,
+        3.98629,
+        -29.8904
+      ],
+      "max": [
+        69.34141,
+        6.8261,
+        -28.00451
+      ]
     },
-    "pathCoords" : [68.36, 4.24, -29.02]
+    "pathCoords": [
+      68.36,
+      4.24,
+      -29.02
+    ]
   },
   {
     "name": "rearExit",
-    "displayName":  "Sortie parking",
+    "displayName": "Sortie parking",
     "path": "/models/furnitures/blob.glb",
-    "impostorPath" : "",
-    "physics" : false,
+    "impostorPath": "",
+    "physics": false,
     "type": "misc",
-    "description" : "Sortie du RDJ vers le parking arrière",
+    "description": "Sortie du RDJ vers le parking arrière",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [84.89738, -0.12637, -69.46027],
-      "max": [86.89738, 2.74353, -68.37164]
+      "min": [
+        84.89738,
+        -0.12637,
+        -69.46027
+      ],
+      "max": [
+        86.89738,
+        2.74353,
+        -68.37164
+      ]
     },
-    "pathCoords" : [86.04, -0.00, -69.28]
+    "pathCoords": [
+      86.04,
+      -0.00,
+      -69.28
+    ]
   },
   {
     "name": "landscape",
-    "displayName":  "Terrain",
+    "displayName": "Terrain",
     "path": "/models/zones/landscape_sized.glb",
-    "impostorPath" : "/models/impostors/imp_landscape_sized.glb",
-    "physics" : true,
+    "impostorPath": "/models/impostors/imp_landscape_sized.glb",
+    "physics": true,
     "type": "corridor",
-    "description" : "Terrain",
+    "description": "Terrain",
     "adjacentZoneNames": [],
     "triggerBox": {
-      "min": [0,0,0],
-      "max": [0,0,0]
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        0,
+        0,
+        0
+      ]
     }
   }
 ]
