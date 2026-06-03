@@ -22,8 +22,7 @@ document.querySelectorAll('a, button, .btn-primary').forEach(el => {
 
 document.getElementById('main-start-btn').addEventListener('click', e => {
     e.preventDefault();
-    history.pushState(null, '', '/UFRMIM');
-    window.location.href = './src/app/app.html';
+    window.location.href = '/src/app/app.html';
 });
 
 // == Three.js setup =======================================
