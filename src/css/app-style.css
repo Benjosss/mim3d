@@ -162,7 +162,7 @@ kbd {
     font-size: 32px;
 }
 
-#helpButton {
+#helpButton, #creditsButton {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -185,9 +185,15 @@ kbd {
     font-size: 24px;
 }
 
-#helpButton:hover {
+#helpButton:hover, #creditsButton:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.8);
+}
+
+#creditsButton {
+    font-size: 0.9rem;
+    padding: 8px 20px;
+    gap: 3px;
 }
 
 /* ===== KEYBIND PANEL ===== */

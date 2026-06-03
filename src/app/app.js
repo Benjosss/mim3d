@@ -485,6 +485,12 @@ async function _initUI() {
 
     panelUtils.onPanelBtnClick("startButton", () => controls.lock());
 
+    panelUtils.onPanelBtnClick("creditsButton", () => {
+        const msg =
+            "Crédits : Benjamin LALLEMENT - Département Informatique - Département Sciences pour l'Ingénieur"
+        alert(msg);
+    });
+
     panelUtils.onPanelBtnClick("settingsButton", () => {
         controls.lock();
         currentOverlay = "settings";
