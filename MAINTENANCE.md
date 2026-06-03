@@ -190,7 +190,7 @@ renommer les maillages et matériaux avec le préfixe `NO_COL` qui vont être g�
 <br>
 7. De la même façon, exporter les objets `NO_COL` dans le format `NOM_ZONE.glb`.  
 <br>
-8. Copier le script python `admin/traitement/post_traitment_zones.py` dans le dossier où se trouvent vos nouveaux 
+8. Copier le script python `admin/traitement/post_traitement_zones.py` dans le dossier où se trouvent vos nouveaux 
 fichiers, créer des dossiers `sized` et `impostors` et exécuter avec 
 ```bash 
 python post_traitment_zones.py
@@ -201,7 +201,7 @@ et son imposteur.
 respectivement dans `public/models/zones` et `public/models/impostors`  
 <br>
 10. Dans le cas où il s'agit du mobiler pour les zones de type `CM`, `TD`, `TP`, `office` ou `misc`, sauter les étapes 
-2 à 7 et à l'étape 8 exécuter `admin/traitement/post_traitment_furnitures.py` après avoir créé un dossier `furnitures` 
+2 à 7 et à l'étape 8 exécuter `admin/traitement/post_traitement_furnitures.py` après avoir créé un dossier `furnitures` 
 là où se trouvent les fichiers exportés.  
 <br>
 > Benjamin LALLEMENT - UFR MIM - Mis à jour le 02/06/2026 
