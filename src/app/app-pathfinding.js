@@ -639,6 +639,16 @@ export default class AppPathfinding {
         });
     }
 
+    getInstructionsText(current_room) {
+        const title = current_room.displayName + " vers " + this.guideDestinationDiplayName;
+        const texte = document.getElementById("navInstructions").innerText;
+        return title + "\n\r" + texte;
+    }
+
+    getInstructionsTitle(current_room) {
+        return current_room.displayName + " vers " + this.guideDestinationDiplayName;
+    }
+
     /**
      * Trouve le point du chemin de guidage situé juste devant le joueur pour les calculs.
      * @returns {THREE.Vector3|null}
@@ -659,6 +669,28 @@ export default class AppPathfinding {
         // On renvoie un point situé "LOOK_AHEAD" index plus loin pour anticiper la direction
         const aheadIndex = Math.min(closestIndex + this.LOOK_AHEAD_INDEX, this.guidingPath.length - 1);
         return this.guidingPath[aheadIndex];
+    }
+
+    showNearestPointSegment() {
+        if (this.currentSegment) {
+            this.scene.remove(this.currentSegment);
+            this.currentSegment.geometry.dispose();  // Libère la mémoire de la géométrie
+            this.currentSegment.material.dispose();  // Libère la mémoire du matériau
+            this.currentSegment = null;
+        }
+
+        if (!this.isGuiding || !this.guidingPath || this.guidingPath.length === 0) return;
+
+        const closestNode = this.getNearestGuidedPathPointFromPlayer();
+        if (!closestNode) return;
+
+        const points = [this.playerPos, closestNode];
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({ color: 0x0000FF, linewidth: 10 });
+
+        // 2. Assigner le nouveau segment à notre variable de classe
+        this.currentSegment = new THREE.Line(geometry, material);
+        this.scene.add(this.currentSegment);
     }
 
     /**
