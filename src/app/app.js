@@ -38,6 +38,7 @@ const CONFIG = {
     // ATTENTION : Le Y du vecteur de regard doit être similaire à celui du point d'apparition pour regarder tout droit
     lookAt: new THREE.Vector3(64.99, 4.24, -31.88),            // Vecteur directionnel du regard à l'apparition
     playerPath: "/models/characters/man.glb",                           // Chemin du modèle du joueur
+    timeoutDelta : 5,                                                   // Temps d'inactivité en minutes avant le retour au point d'apparition
     playerRadius: 0.4,                                                  // Rayon de la capsule joueur
     playerHeight: 1.3,                                                  // Hauteur de la capsule joueur
     moveSpeed: 8,                                                       // Vitesse de déplacement par défaut
@@ -83,6 +84,11 @@ gltfLoader = new InitLoader().initGltfLoader(renderer);
 fpsPlayer = new AppFpsPlayer(scene, gltfLoader, camera, CONFIG);
 playerGroup = fpsPlayer.initFpsCharacter(CONFIG.playerPath);
 controls = new PointerLockControls(camera, renderer.domElement);
+
+// ================= AFK TIMEOUT =================
+const AFK_TIMEOUT = CONFIG.timeoutDelta * 60 * 1000;
+let lastMovementTime = Date.now();
+let lastPlayerPosition = CONFIG.spawnPoint.clone();
 
 // ================= ZONE MANAGER =================
 // On passe colliderMeshes au ZoneManager
@@ -414,6 +420,32 @@ function animate(timestamp) {
         // Caméra FPS
         fpsPlayer.cameraFollowPlayer(playerPos)
         fpsPlayer.playerYawFollow(playerGroup, playerPos);
+
+        // ================= AFK CHECK =================
+        const distanceMoved = playerPos.distanceTo(lastPlayerPosition);
+
+        // On considère qu'un déplacement > 10 cm est une activité
+        if (distanceMoved > 0.1) {
+            lastMovementTime = Date.now();
+            lastPlayerPosition.copy(playerPos);
+        }
+
+        // Retour au spawn après inactivité
+        if (Date.now() - lastMovementTime > AFK_TIMEOUT) {
+            bvhPhysicsUtils.backToSpawnPoint();
+
+            lastMovementTime = Date.now();
+            lastPlayerPosition.copy(playerPos);
+
+            // Arrête une éventuelle navigation automatique
+            if (pathfinding.isMoving) {
+                pathfinding.endMove(fpsPlayer);
+            }
+
+            if (pathfinding.isGuiding) {
+                pathfinding.endGuide();
+            }
+        }
 
         //Pathfinding
         pathfinding.move(deltaTime, fpsPlayer);
