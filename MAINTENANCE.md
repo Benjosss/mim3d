@@ -32,14 +32,14 @@ de modifications sur les personnes occupants les bureaux de l'UFR.
 
 ```bash
 cd ~/mim3d
-bash ./admin/linux_modif_bureau.sh
+bash ./admin/linux_modif_zones.sh
 ```
 
 ### Windows : 
 
 ```cmd
 cd /mim3d/admin
-windows_modif_bureau.bat
+windows_modif_zones.bat
 ```
 
 Ou double-cliquer sur le `.bat`
@@ -50,7 +50,7 @@ Utiliser directement le script source Javascript :
 
 ```bash
 cd mim3d/admin
-node edit_offices.js
+node edit_zones.js
 ```
 
 ## 2. Modifier le fichier `public/data/zones.json`
