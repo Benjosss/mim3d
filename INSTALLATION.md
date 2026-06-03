@@ -100,10 +100,11 @@ Et remplacer tout le contenu du fichier par :
 server {
     listen 80;
     server_name _;
-
     root /home/ubuntu/mim3d/dist;
     index index.html;
-
+    location = /UFRMIM {
+        try_files /src/app/app.html =404;
+    }
     location / {
         try_files $uri $uri/ /index.html;
     }
