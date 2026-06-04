@@ -12,6 +12,7 @@ Afin de pouvoir faire tourner le projet en local ou sur un serveur, il faut :
 > Deux cas d'utilisation sont possibles :  
 > I. Faire tourner en local (mode développement)  
 > II. Faire tourner sur un serveur (Linux ici)
+---
 
 ## I. Développement local :
 
@@ -36,7 +37,7 @@ npm run dev
 
 Dans la console un lien en "localhost" apparaitra, cliquer dessus pour l'ouvrir dans le navigateur.  
 Chaque modification dans le code rechargera la page en direct (hot-reload).
-
+---
 
 ## II. Déployer sur un serveur (Linux - Ubuntu) :
 
@@ -154,5 +155,6 @@ Plus besoin de taper les 3 commandes pour mettre à jour mais uniquement `deploy
 
 <br>  
 
+---
 > Benjamin LALLEMENT - UFR MIM - Mis à jour le 02/06/2026  
 > ATTENTION : Lien du repo Github succeptible de changer

@@ -22,6 +22,8 @@ Pour les mises à jour autres que les modifications du fichier `public/data/zone
 > b. Modifier le modèle du navmesh  
 > c. Modifier les modèles 3D     
 
+---
+
 ## 1. Modifier les occupants des bureaux et laboratoires
 
 Dans le dossier `admin/` deux scripts sont disponibles : un pour Linux, l'autre pour Windows.  
@@ -52,6 +54,8 @@ Utiliser directement le script source Javascript :
 cd mim3d/admin
 node edit_zones.js
 ```
+
+---
 
 ## 2. Modifier le fichier `public/data/zones.json`
 
@@ -144,6 +148,8 @@ Ce fichier est présent à : `public/data/zones.json`
 
 Chaque modification doit être testée à l'issue.
 
+---
+
 ## 3. Modifier les modèles 3D 
 
 C'est de loin la partie la plus fastidieuse. Tous les modèles sont disponibles dans `public/models`.
@@ -204,4 +210,6 @@ respectivement dans `public/models/zones` et `public/models/impostors`
 2 à 7 et à l'étape 8 exécuter `admin/traitement/post_traitement_furnitures.py` après avoir créé un dossier `furnitures` 
 là où se trouvent les fichiers exportés.  
 <br>
+
+---
 > Benjamin LALLEMENT - UFR MIM - Mis à jour le 02/06/2026 
