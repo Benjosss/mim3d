@@ -84,7 +84,7 @@
     "impostorPath": "/models/impostors/imp_0_floor_aisle_b_sized.glb",
     "physics": true,
     "type": "corridor",
-    "description": "Rez de chaussé aile b",
+    "description": "rez-de-chaussée aile b",
     "adjacentZoneNames": [
       "floor1",
       "floor-1",
@@ -114,7 +114,7 @@
     "impostorPath": "/models/impostors/imp_0_floor_aisle_a_sized.glb",
     "physics": true,
     "type": "corridor",
-    "description": "Rez de chaussé aile a",
+    "description": "rez-de-chaussée aile a",
     "adjacentZoneNames": [
       "floor0hall"
     ],
@@ -138,7 +138,7 @@
     "impostorPath": "/models/impostors/imp_0_floor_hall_sized.glb",
     "physics": true,
     "type": "corridor",
-    "description": "Hall rez de chaussé",
+    "description": "Hall rez-de-chaussée",
     "adjacentZoneNames": [
       "floor0",
       "floor0_a"
