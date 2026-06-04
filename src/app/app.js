@@ -519,7 +519,7 @@ async function _initUI() {
 
     panelUtils.onPanelBtnClick("creditsButton", () => {
         const msg =
-            "Crédits : Benjamin LALLEMENT - Département Informatique - Département Sciences pour l'Ingénieur"
+            "Crédits : Benjamin LALLEMENT - Département Informatique, en collaboration avec le Département SPI"
         alert(msg);
     });
 
