@@ -498,11 +498,8 @@
     ]
   },
   {
-    "name": "ARJ-027",
-    "displayName": "ARJ-027",
-    "otherNames": [
-      "Pierre et Marie CURIE"
-    ],
+    "name": "ARJ-024",
+    "displayName": "ARJ-024",
     "path": "/models/furnitures/fur_arj_027_sized.glb",
     "impostorPath": "",
     "physics": false,
@@ -669,17 +666,17 @@
     ]
   },
   {
-    "name": "conseils",
-    "displayName": "Salle des conseils",
+    "name": "ARJ-027",
+    "displayName": "ARJ-027",
     "otherNames": [
-      "Katherine JOHNSON",
+      "Pierre et Marie CURIE",
       "Salle de réunion"
     ],
     "path": "/models/furnitures/fur_conseils_sized.glb",
     "impostorPath": "",
     "physics": false,
     "type": "misc",
-    "description": "Salle des conseils",
+    "description": "Salle de réunion",
     "adjacentZoneNames": [],
     "triggerBox": {
       "min": [
@@ -1286,6 +1283,34 @@
       80.56,
       9.32,
       -16.29
+    ]
+  },
+  {
+    "name": "BN1-001",
+    "displayName": "BN1-001",
+    "otherNames": ["Salle des conseils", "Katherine JOHNSON", "Salle de réunion"],
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Salle réunion de l'UFR",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        80.0183,
+        7.77349,
+        -9.84967
+      ],
+      "max": [
+        81.96401,
+        10.9652,
+        -8.103
+      ]
+    },
+    "pathCoords": [
+      80.75,
+      9.32,
+      -9.52
     ]
   },
   {
