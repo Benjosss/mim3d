@@ -63,7 +63,8 @@ let controls;
 let pathfinding;
 let bvhPhysicsUtils;
 let currentOverlay;
-let startButton, menuPanel, infosPanel, guidedNavPanel, keyBindPanel, walkPanel, helpPanel, settingsPanel, roomFindPanel, personFindPanel, roomFindPanelInput, personFindPanelInput;
+let pmrMode;
+let startButton, menuPanel, infosPanel, guidedNavPanel, keyBindPanel, walkPanel, helpPanel, settingsPanel, roomFindPanel, personFindPanel, roomFindPanelInput, personFindPanelInput, pmrModeHint;
 
 // ================= PARSING DES ZONES DE zones.json =================
 ZONES = await parser.fillZonesTab(ZONES, CONFIG.zonesJsonPath)
@@ -238,6 +239,14 @@ document.querySelectorAll('#roomFilters .chip').forEach(chip => {
 // Changement de la vitesse de marche
 document.getElementById('settings-speed').addEventListener('change', (e) => {
     CONFIG.moveSpeed = parseInt(e.target.value);
+})
+
+// Activation du mode PMR
+document.getElementById('settings-pmr').addEventListener('change', (e) => {
+    pmrMode = e.target.checked;
+    pathfinding.pmrMode = e.target.checked;
+    if (document.getElementById("settings-pmr").checked) pmrModeHint.style.display = 'flex';
+    if (!document.getElementById("settings-pmr").checked) pmrModeHint.style.display = 'none';
 })
 
 // Affichage de la description de la zone en-dessous de son nom
@@ -514,6 +523,10 @@ async function _initUI() {
 
     roomFindPanelInput = document.getElementById("searchBar-input");
     personFindPanelInput = document.getElementById("searchBar-p-input");
+    pmrMode = document.getElementById("settings-pmr").checked;
+    pmrModeHint = document.getElementById("pmrMode");
+    if (document.getElementById("settings-pmr").checked) pmrModeHint.style.display = 'flex';
+    if (!document.getElementById("settings-pmr").checked) pmrModeHint.style.display = 'none';
 
     panelUtils.onPanelBtnClick("startButton", () => controls.lock());
 

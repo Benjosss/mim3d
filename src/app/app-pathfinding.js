@@ -22,6 +22,7 @@ export default class AppPathfinding {
         this.camera = camera;
         this.playerGroup = playerGroup;
         this.debugMode = debugMode;
+        this.pmrMode = document.getElementById('settings-pmr').checked;
 
         /** @type {boolean} État d'affichage du tracé visuel (tube 3D). */
         this.showPath = document.getElementById('settings-show-path').checked;
