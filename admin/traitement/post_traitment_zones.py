@@ -4,6 +4,7 @@ import time
 
 def treat_zones_glb():
     os.makedirs('sized', exist_ok=True)
+    os.makedirs('impostors', exist_ok=True)
 
     files = [f for f in os.listdir('.') if os.path.isfile(f) and f.lower().endswith('.glb')]
 
