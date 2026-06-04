@@ -79,7 +79,7 @@
   },
   {
     "name": "floor0",
-    "displayName": "Rez-de-chaussé, aile B",
+    "displayName": "Rez-de-chaussée, aile B",
     "path": "/models/zones/0_floor_aisle_b_sized.glb",
     "impostorPath": "/models/impostors/imp_0_floor_aisle_b_sized.glb",
     "physics": true,
@@ -109,7 +109,7 @@
   },
   {
     "name": "floor0_a",
-    "displayName": "Rez-de-chaussé, aile A",
+    "displayName": "Rez-de-chaussée, aile A",
     "path": "/models/zones/0_floor_aisle_a_sized.glb",
     "impostorPath": "/models/impostors/imp_0_floor_aisle_a_sized.glb",
     "physics": true,
@@ -133,7 +133,7 @@
   },
   {
     "name": "floor0hall",
-    "displayName": "Hall rez-de-chaussé",
+    "displayName": "Hall rez-de-chaussée",
     "path": "/models/zones/0_floor_hall_sized.glb",
     "impostorPath": "/models/impostors/imp_0_floor_hall_sized.glb",
     "physics": true,
@@ -812,7 +812,7 @@
   },
   {
     "name": "RDC-WC-PMR",
-    "displayName": "Toilettes personnes à mobilité réduite, Rez-de-chaussé, aile B",
+    "displayName": "Toilettes personnes à mobilité réduite, Rez-de-chaussée, aile B",
     "path": "/models/furnitures/blob.glb",
     "impostorPath": "",
     "physics": false,
