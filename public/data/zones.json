@@ -2293,6 +2293,249 @@
     ]
   },
   {
+    "name": "-1_floor_aisle_a_lift",
+    "displayName": "Ascenseur RDJ aile A",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du Rez-de-jardin de l'aile A",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        52.41118,
+        -0.06913,
+        -34.94464
+      ],
+      "max": [
+        54.26988,
+        2.21959,
+        -33.60934
+      ]
+    },
+    "pathCoords": [
+      53.61,
+      0.00,
+      -34.10
+    ]
+  },
+  {
+    "name": "-1_floor_aisle_b_lift",
+    "displayName": "Ascenseur RDJ aile B",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du Rez-de-jardin de l'aile B",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        73.64286,
+        -0.11008,
+        -34.76548
+      ],
+      "max": [
+        75.10079,
+        2.12288,
+        -33.65213
+      ]
+    },
+    "pathCoords": [
+      74.57,
+      -0.00,
+      -34.03
+    ]
+  },
+  {
+    "name": "0_floor_aisle_a_lift",
+    "displayName": "Ascenseur RDC aile A",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du Rez-de-chaussée de l'aile A",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        52.53044,
+        4.20673,
+        -34.76548
+      ],
+      "max": [
+        53.98837,
+        6.4397,
+        -33.65213
+      ]
+    },
+    "pathCoords": [
+      53.66,
+      4.24,
+      -34.10
+    ]
+  },
+  {
+    "name": "0_floor_aisle_b_lift",
+    "displayName": "Ascenseur RDC aile B",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du Rez-de-chaussée de l'aile B",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        73.69124,
+        4.20673,
+        -34.76548
+      ],
+      "max": [
+        75.14917,
+        6.4397,
+        -33.65213
+      ]
+    },
+    "pathCoords": [
+      74.28,
+      4.24,
+      -34.00
+    ]
+  },
+  {
+    "name": "1_floor_aisle_a_lift",
+    "displayName": "Ascenseur 1er étage aile A",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du 1er étage de l'aile A",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        52.6014,
+        7.91384,
+        -34.76548
+      ],
+      "max": [
+        54.05932,
+        10.1468,
+        -33.65213
+      ]
+    },
+    "pathCoords": [
+      53.34,
+      8.02,
+      -34.06
+    ]
+  },
+  {
+    "name": "1_floor_aisle_b_lift",
+    "displayName": "Ascenseur 1er étage aile B",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du 1er étage de l'aile B",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        73.66312,
+        7.91384,
+        -34.76548
+      ],
+      "max": [
+        75.12104,
+        10.1468,
+        -33.65213
+      ]
+    },
+    "pathCoords": [
+      74.14,
+      8.02,
+      -33.99
+    ]
+  },
+  {
+    "name": "2_floor_aisle_a_lift",
+    "displayName": "Ascenseur 2ème étage aile A",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du 2ème étage de l'aile A",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        52.46574,
+        11.36389,
+        -34.53652
+      ],
+      "max": [
+        53.92366,
+        13.59685,
+        -33.42316
+      ]
+    },
+    "pathCoords": [
+      53.36,
+      11.46,
+      -34.07
+    ]
+  },
+  {
+    "name": "2_floor_aisle_b_lift",
+    "displayName": "Ascenseur 2ème étage aile B",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du 2ème étage de l'aile B",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        73.68151,
+        11.36389,
+        -34.53652
+      ],
+      "max": [
+        75.13944,
+        13.59685,
+        -33.42316
+      ]
+    },
+    "pathCoords": [
+      74.59,
+      11.46,
+      -34.03
+    ]
+  },
+  {
+    "name": "3_floor_aisle_b_lift",
+    "displayName": "Ascenseur 3ème étage aile B",
+    "path": "/models/furnitures/blob.glb",
+    "impostorPath": "",
+    "physics": false,
+    "type": "misc",
+    "description": "Ascenseur du 3ème étage de l'aile B",
+    "adjacentZoneNames": [],
+    "triggerBox": {
+      "min": [
+        73.66831,
+        14.86376,
+        -34.53652
+      ],
+      "max": [
+        75.12623,
+        17.09673,
+        -33.42316
+      ]
+    },
+    "pathCoords": [
+      74.59,
+      14.92,
+      -34.03
+    ]
+  },
+  {
     "name": "landscape",
     "displayName": "Terrain",
     "path": "/models/zones/landscape_sized.glb",
